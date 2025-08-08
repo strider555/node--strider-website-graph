@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tag Graph (Standalone)</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="./graph.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>文章 Tag 關聯圖（獨立頁）</h1>
+      <p class="hint">滑鼠：拖曳空白處可平移、滾輪可縮放；點擊 Tag 進行搜尋</p>
+    </header>
+    <main class="app-main">
+      <div id="graph-container">
+        <div id="graph-host" style="width:100%;height:100%"></div>
+      </div>
+    </main>
+    <script>
+      // Use built-in demo data of graph.js
+      TagGraph.createTagGraph(document.getElementById('graph-host'));
+    </script>
+  </body>
+</html>

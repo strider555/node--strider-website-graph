@@ -1,0 +1,1490 @@
+{
+  "articles": [
+    {
+      "id": "article-001",
+      "title": "1941–45 日治時期與戰後復員",
+      "author": "黃國良",
+      "publishedAt": "2010-04-15T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "戰後",
+        "社會",
+        "政治"
+      ]
+    },
+    {
+      "id": "article-002",
+      "title": "1945 英軍重光與重建",
+      "author": "李志強",
+      "publishedAt": "2010-07-14T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "重建",
+        "社會",
+        "基建"
+      ]
+    },
+    {
+      "id": "article-003",
+      "title": "1950年代 難民潮與工業起飛",
+      "author": "李志強",
+      "publishedAt": "2010-10-12T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "工業",
+        "移民",
+        "經濟"
+      ]
+    },
+    {
+      "id": "article-004",
+      "title": "1960年代 教育擴展與社會流動",
+      "author": "陳慧",
+      "publishedAt": "2011-01-10T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "教育",
+        "社會",
+        "政策"
+      ]
+    },
+    {
+      "id": "article-005",
+      "title": "1967 年左派暴動的成因與影響",
+      "author": "林曉彤",
+      "publishedAt": "2011-04-10T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "社會運動",
+        "政治",
+        "工運"
+      ]
+    },
+    {
+      "id": "article-006",
+      "title": "1970年代 公屋與新市鎮發展",
+      "author": "林曉彤",
+      "publishedAt": "2011-07-09T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "公屋",
+        "新市鎮",
+        "規劃"
+      ]
+    },
+    {
+      "id": "article-007",
+      "title": "1974 ICAC 成立與反貪改革",
+      "author": "張嘉欣",
+      "publishedAt": "2011-10-07T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "法治",
+        "廉政",
+        "公共政策"
+      ]
+    },
+    {
+      "id": "article-008",
+      "title": "港鐵規劃與建設：城市交通的轉型",
+      "author": "張嘉欣",
+      "publishedAt": "2012-01-05T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "交通",
+        "基建",
+        "規劃"
+      ]
+    },
+    {
+      "id": "article-009",
+      "title": "1980年代 金融中心崛起",
+      "author": "張嘉欣",
+      "publishedAt": "2012-04-04T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "金融",
+        "經濟",
+        "國際化"
+      ]
+    },
+    {
+      "id": "article-010",
+      "title": "1984 中英聯合聲明與前途談判",
+      "author": "陳慧",
+      "publishedAt": "2012-07-03T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "政治",
+        "外交",
+        "主權移交"
+      ]
+    },
+    {
+      "id": "article-011",
+      "title": "1989 年六四與香港社會",
+      "author": "黃國良",
+      "publishedAt": "2012-10-01T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "社會運動",
+        "政治",
+        "公民社會"
+      ]
+    },
+    {
+      "id": "article-012",
+      "title": "機場核心工程與新機場落成",
+      "author": "林曉彤",
+      "publishedAt": "2012-12-30T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "基建",
+        "交通",
+        "規劃"
+      ]
+    },
+    {
+      "id": "article-013",
+      "title": "1997 主權移交：制度與身份的變遷",
+      "author": "李志強",
+      "publishedAt": "2013-03-30T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "主權移交",
+        "政治",
+        "法律"
+      ]
+    },
+    {
+      "id": "article-014",
+      "title": "2003 沙士衝擊與 23 條立法爭議",
+      "author": "黃國良",
+      "publishedAt": "2013-06-28T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "公共衛生",
+        "政治",
+        "社會"
+      ]
+    },
+    {
+      "id": "article-015",
+      "title": "2008 金融海嘯對香港的影響",
+      "author": "黃國良",
+      "publishedAt": "2013-09-26T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "金融",
+        "經濟",
+        "就業"
+      ]
+    },
+    {
+      "id": "article-016",
+      "title": "2010年代 創科與初創生態",
+      "author": "林曉彤",
+      "publishedAt": "2013-12-25T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "創科",
+        "經濟",
+        "初創"
+      ]
+    },
+    {
+      "id": "article-017",
+      "title": "2014 雨傘運動的背景與後續",
+      "author": "張嘉欣",
+      "publishedAt": "2014-03-25T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "社會運動",
+        "政治",
+        "公民社會"
+      ]
+    },
+    {
+      "id": "article-018",
+      "title": "高鐵與一地兩檢爭議",
+      "author": "黃國良",
+      "publishedAt": "2014-06-23T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "交通",
+        "法律",
+        "公共政策"
+      ]
+    },
+    {
+      "id": "article-019",
+      "title": "2019 反修例運動：緣起與脈絡",
+      "author": "黃國良",
+      "publishedAt": "2014-09-21T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "社會運動",
+        "政治",
+        "公民社會"
+      ]
+    },
+    {
+      "id": "article-020",
+      "title": "粵港澳大灣區與區域合作",
+      "author": "李志強",
+      "publishedAt": "2014-12-20T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "區域合作",
+        "經濟",
+        "規劃"
+      ]
+    },
+    {
+      "id": "article-021",
+      "title": "新聞媒體與新聞自由的變遷",
+      "author": "陳慧",
+      "publishedAt": "2015-03-20T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "傳媒",
+        "新聞自由",
+        "社會"
+      ]
+    },
+    {
+      "id": "article-022",
+      "title": "文化創意產業與本土身份",
+      "author": "林曉彤",
+      "publishedAt": "2015-06-18T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "文化",
+        "創意產業",
+        "身份認同"
+      ]
+    },
+    {
+      "id": "article-023",
+      "title": "地產經濟與樓市周期",
+      "author": "黃國良",
+      "publishedAt": "2015-09-16T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "房屋",
+        "經濟",
+        "地產"
+      ]
+    },
+    {
+      "id": "article-024",
+      "title": "教育改革與通識教育的演變",
+      "author": "李志強",
+      "publishedAt": "2015-12-15T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "教育",
+        "課程",
+        "公共政策"
+      ]
+    },
+    {
+      "id": "article-025",
+      "title": "環境政策與城市規劃",
+      "author": "張嘉欣",
+      "publishedAt": "2016-03-14T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "環保",
+        "規劃",
+        "公共政策"
+      ]
+    },
+    {
+      "id": "article-026",
+      "title": "飲食文化與本土品牌的發展",
+      "author": "林曉彤",
+      "publishedAt": "2016-06-12T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "文化",
+        "飲食",
+        "品牌"
+      ]
+    },
+    {
+      "id": "article-027",
+      "title": "粵語流行文化：音樂與影視",
+      "author": "黃國良",
+      "publishedAt": "2016-09-10T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "文化",
+        "流行音樂",
+        "影視"
+      ]
+    },
+    {
+      "id": "article-028",
+      "title": "醫療體系與公私營分工",
+      "author": "李志強",
+      "publishedAt": "2016-12-09T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "醫療",
+        "公共政策",
+        "社會"
+      ]
+    },
+    {
+      "id": "article-029",
+      "title": "勞工權益與工運歷程",
+      "author": "李志強",
+      "publishedAt": "2017-03-09T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "勞工",
+        "工運",
+        "社會"
+      ]
+    },
+    {
+      "id": "article-030",
+      "title": "人口結構與移民潮的變化",
+      "author": "黃國良",
+      "publishedAt": "2017-06-07T10:00:00+08:00",
+      "tags": [
+        "香港",
+        "近代史",
+        "人口",
+        "移民",
+        "社會"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "id": "香港",
+      "count": 30
+    },
+    {
+      "id": "近代史",
+      "count": 30
+    },
+    {
+      "id": "社會",
+      "count": 8
+    },
+    {
+      "id": "政治",
+      "count": 8
+    },
+    {
+      "id": "經濟",
+      "count": 6
+    },
+    {
+      "id": "規劃",
+      "count": 5
+    },
+    {
+      "id": "公共政策",
+      "count": 5
+    },
+    {
+      "id": "社會運動",
+      "count": 4
+    },
+    {
+      "id": "基建",
+      "count": 3
+    },
+    {
+      "id": "交通",
+      "count": 3
+    },
+    {
+      "id": "公民社會",
+      "count": 3
+    },
+    {
+      "id": "文化",
+      "count": 3
+    },
+    {
+      "id": "移民",
+      "count": 2
+    },
+    {
+      "id": "教育",
+      "count": 2
+    },
+    {
+      "id": "工運",
+      "count": 2
+    },
+    {
+      "id": "金融",
+      "count": 2
+    },
+    {
+      "id": "主權移交",
+      "count": 2
+    },
+    {
+      "id": "法律",
+      "count": 2
+    },
+    {
+      "id": "戰後",
+      "count": 1
+    },
+    {
+      "id": "重建",
+      "count": 1
+    },
+    {
+      "id": "工業",
+      "count": 1
+    },
+    {
+      "id": "政策",
+      "count": 1
+    },
+    {
+      "id": "公屋",
+      "count": 1
+    },
+    {
+      "id": "新市鎮",
+      "count": 1
+    },
+    {
+      "id": "法治",
+      "count": 1
+    },
+    {
+      "id": "廉政",
+      "count": 1
+    },
+    {
+      "id": "國際化",
+      "count": 1
+    },
+    {
+      "id": "外交",
+      "count": 1
+    },
+    {
+      "id": "公共衛生",
+      "count": 1
+    },
+    {
+      "id": "就業",
+      "count": 1
+    },
+    {
+      "id": "創科",
+      "count": 1
+    },
+    {
+      "id": "初創",
+      "count": 1
+    },
+    {
+      "id": "區域合作",
+      "count": 1
+    },
+    {
+      "id": "傳媒",
+      "count": 1
+    },
+    {
+      "id": "新聞自由",
+      "count": 1
+    },
+    {
+      "id": "創意產業",
+      "count": 1
+    },
+    {
+      "id": "身份認同",
+      "count": 1
+    },
+    {
+      "id": "房屋",
+      "count": 1
+    },
+    {
+      "id": "地產",
+      "count": 1
+    },
+    {
+      "id": "課程",
+      "count": 1
+    },
+    {
+      "id": "環保",
+      "count": 1
+    },
+    {
+      "id": "飲食",
+      "count": 1
+    },
+    {
+      "id": "品牌",
+      "count": 1
+    },
+    {
+      "id": "流行音樂",
+      "count": 1
+    },
+    {
+      "id": "影視",
+      "count": 1
+    },
+    {
+      "id": "醫療",
+      "count": 1
+    },
+    {
+      "id": "勞工",
+      "count": 1
+    },
+    {
+      "id": "人口",
+      "count": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "近代史",
+      "target": "香港",
+      "weight": 30
+    },
+    {
+      "source": "社會",
+      "target": "香港",
+      "weight": 8
+    },
+    {
+      "source": "政治",
+      "target": "香港",
+      "weight": 8
+    },
+    {
+      "source": "社會",
+      "target": "近代史",
+      "weight": 8
+    },
+    {
+      "source": "政治",
+      "target": "近代史",
+      "weight": 8
+    },
+    {
+      "source": "經濟",
+      "target": "香港",
+      "weight": 6
+    },
+    {
+      "source": "經濟",
+      "target": "近代史",
+      "weight": 6
+    },
+    {
+      "source": "規劃",
+      "target": "香港",
+      "weight": 5
+    },
+    {
+      "source": "規劃",
+      "target": "近代史",
+      "weight": 5
+    },
+    {
+      "source": "公共政策",
+      "target": "香港",
+      "weight": 5
+    },
+    {
+      "source": "公共政策",
+      "target": "近代史",
+      "weight": 5
+    },
+    {
+      "source": "社會運動",
+      "target": "香港",
+      "weight": 4
+    },
+    {
+      "source": "社會運動",
+      "target": "近代史",
+      "weight": 4
+    },
+    {
+      "source": "政治",
+      "target": "社會運動",
+      "weight": 4
+    },
+    {
+      "source": "基建",
+      "target": "香港",
+      "weight": 3
+    },
+    {
+      "source": "基建",
+      "target": "近代史",
+      "weight": 3
+    },
+    {
+      "source": "交通",
+      "target": "香港",
+      "weight": 3
+    },
+    {
+      "source": "交通",
+      "target": "近代史",
+      "weight": 3
+    },
+    {
+      "source": "公民社會",
+      "target": "香港",
+      "weight": 3
+    },
+    {
+      "source": "公民社會",
+      "target": "近代史",
+      "weight": 3
+    },
+    {
+      "source": "公民社會",
+      "target": "社會運動",
+      "weight": 3
+    },
+    {
+      "source": "公民社會",
+      "target": "政治",
+      "weight": 3
+    },
+    {
+      "source": "文化",
+      "target": "香港",
+      "weight": 3
+    },
+    {
+      "source": "文化",
+      "target": "近代史",
+      "weight": 3
+    },
+    {
+      "source": "政治",
+      "target": "社會",
+      "weight": 2
+    },
+    {
+      "source": "移民",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "移民",
+      "target": "近代史",
+      "weight": 2
+    },
+    {
+      "source": "教育",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "教育",
+      "target": "近代史",
+      "weight": 2
+    },
+    {
+      "source": "工運",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "工運",
+      "target": "近代史",
+      "weight": 2
+    },
+    {
+      "source": "交通",
+      "target": "基建",
+      "weight": 2
+    },
+    {
+      "source": "交通",
+      "target": "規劃",
+      "weight": 2
+    },
+    {
+      "source": "基建",
+      "target": "規劃",
+      "weight": 2
+    },
+    {
+      "source": "金融",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "近代史",
+      "target": "金融",
+      "weight": 2
+    },
+    {
+      "source": "經濟",
+      "target": "金融",
+      "weight": 2
+    },
+    {
+      "source": "主權移交",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "主權移交",
+      "target": "近代史",
+      "weight": 2
+    },
+    {
+      "source": "主權移交",
+      "target": "政治",
+      "weight": 2
+    },
+    {
+      "source": "法律",
+      "target": "香港",
+      "weight": 2
+    },
+    {
+      "source": "法律",
+      "target": "近代史",
+      "weight": 2
+    },
+    {
+      "source": "戰後",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "戰後",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "戰後",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "戰後",
+      "target": "政治",
+      "weight": 1
+    },
+    {
+      "source": "重建",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "近代史",
+      "target": "重建",
+      "weight": 1
+    },
+    {
+      "source": "社會",
+      "target": "重建",
+      "weight": 1
+    },
+    {
+      "source": "基建",
+      "target": "重建",
+      "weight": 1
+    },
+    {
+      "source": "基建",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "工業",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "工業",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "工業",
+      "target": "移民",
+      "weight": 1
+    },
+    {
+      "source": "工業",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "移民",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "政策",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "政策",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "教育",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "政策",
+      "target": "教育",
+      "weight": 1
+    },
+    {
+      "source": "政策",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "工運",
+      "target": "社會運動",
+      "weight": 1
+    },
+    {
+      "source": "工運",
+      "target": "政治",
+      "weight": 1
+    },
+    {
+      "source": "公屋",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "新市鎮",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "公屋",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "新市鎮",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "公屋",
+      "target": "新市鎮",
+      "weight": 1
+    },
+    {
+      "source": "公屋",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "新市鎮",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "法治",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "廉政",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "法治",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "廉政",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "廉政",
+      "target": "法治",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "法治",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "廉政",
+      "weight": 1
+    },
+    {
+      "source": "國際化",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "國際化",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "國際化",
+      "target": "金融",
+      "weight": 1
+    },
+    {
+      "source": "國際化",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "外交",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "外交",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "外交",
+      "target": "政治",
+      "weight": 1
+    },
+    {
+      "source": "主權移交",
+      "target": "外交",
+      "weight": 1
+    },
+    {
+      "source": "主權移交",
+      "target": "法律",
+      "weight": 1
+    },
+    {
+      "source": "政治",
+      "target": "法律",
+      "weight": 1
+    },
+    {
+      "source": "公共衛生",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "公共衛生",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "公共衛生",
+      "target": "政治",
+      "weight": 1
+    },
+    {
+      "source": "公共衛生",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "就業",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "就業",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "就業",
+      "target": "金融",
+      "weight": 1
+    },
+    {
+      "source": "就業",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "創科",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "初創",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "創科",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "初創",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "創科",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "初創",
+      "target": "創科",
+      "weight": 1
+    },
+    {
+      "source": "初創",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "交通",
+      "target": "法律",
+      "weight": 1
+    },
+    {
+      "source": "交通",
+      "target": "公共政策",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "法律",
+      "weight": 1
+    },
+    {
+      "source": "區域合作",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "區域合作",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "區域合作",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "區域合作",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "經濟",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "傳媒",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "新聞自由",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "傳媒",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "新聞自由",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "傳媒",
+      "target": "新聞自由",
+      "weight": 1
+    },
+    {
+      "source": "傳媒",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "新聞自由",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "創意產業",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "身份認同",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "創意產業",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "身份認同",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "創意產業",
+      "target": "文化",
+      "weight": 1
+    },
+    {
+      "source": "文化",
+      "target": "身份認同",
+      "weight": 1
+    },
+    {
+      "source": "創意產業",
+      "target": "身份認同",
+      "weight": 1
+    },
+    {
+      "source": "房屋",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "地產",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "房屋",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "地產",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "房屋",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "地產",
+      "target": "房屋",
+      "weight": 1
+    },
+    {
+      "source": "地產",
+      "target": "經濟",
+      "weight": 1
+    },
+    {
+      "source": "課程",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "課程",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "教育",
+      "target": "課程",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "教育",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "課程",
+      "weight": 1
+    },
+    {
+      "source": "環保",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "環保",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "環保",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "環保",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "規劃",
+      "weight": 1
+    },
+    {
+      "source": "飲食",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "品牌",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "近代史",
+      "target": "飲食",
+      "weight": 1
+    },
+    {
+      "source": "品牌",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "文化",
+      "target": "飲食",
+      "weight": 1
+    },
+    {
+      "source": "品牌",
+      "target": "文化",
+      "weight": 1
+    },
+    {
+      "source": "品牌",
+      "target": "飲食",
+      "weight": 1
+    },
+    {
+      "source": "流行音樂",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "影視",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "流行音樂",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "影視",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "文化",
+      "target": "流行音樂",
+      "weight": 1
+    },
+    {
+      "source": "影視",
+      "target": "文化",
+      "weight": 1
+    },
+    {
+      "source": "影視",
+      "target": "流行音樂",
+      "weight": 1
+    },
+    {
+      "source": "醫療",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "近代史",
+      "target": "醫療",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "醫療",
+      "weight": 1
+    },
+    {
+      "source": "社會",
+      "target": "醫療",
+      "weight": 1
+    },
+    {
+      "source": "公共政策",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "勞工",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "勞工",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "勞工",
+      "target": "工運",
+      "weight": 1
+    },
+    {
+      "source": "勞工",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "工運",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "人口",
+      "target": "香港",
+      "weight": 1
+    },
+    {
+      "source": "人口",
+      "target": "近代史",
+      "weight": 1
+    },
+    {
+      "source": "人口",
+      "target": "移民",
+      "weight": 1
+    },
+    {
+      "source": "人口",
+      "target": "社會",
+      "weight": 1
+    },
+    {
+      "source": "社會",
+      "target": "移民",
+      "weight": 1
+    }
+  ],
+  "tagCounts": {
+    "香港": 30,
+    "近代史": 30,
+    "社會": 8,
+    "政治": 8,
+    "經濟": 6,
+    "規劃": 5,
+    "公共政策": 5,
+    "社會運動": 4,
+    "基建": 3,
+    "交通": 3,
+    "公民社會": 3,
+    "文化": 3,
+    "移民": 2,
+    "教育": 2,
+    "工運": 2,
+    "金融": 2,
+    "主權移交": 2,
+    "法律": 2,
+    "戰後": 1,
+    "重建": 1,
+    "工業": 1,
+    "政策": 1,
+    "公屋": 1,
+    "新市鎮": 1,
+    "法治": 1,
+    "廉政": 1,
+    "國際化": 1,
+    "外交": 1,
+    "公共衛生": 1,
+    "就業": 1,
+    "創科": 1,
+    "初創": 1,
+    "區域合作": 1,
+    "傳媒": 1,
+    "新聞自由": 1,
+    "創意產業": 1,
+    "身份認同": 1,
+    "房屋": 1,
+    "地產": 1,
+    "課程": 1,
+    "環保": 1,
+    "飲食": 1,
+    "品牌": 1,
+    "流行音樂": 1,
+    "影視": 1,
+    "醫療": 1,
+    "勞工": 1,
+    "人口": 1
+  }
+}

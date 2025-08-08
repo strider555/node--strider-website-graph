@@ -5,7 +5,7 @@ A static D3.js force-directed graph to visualize tag relationships with pan/zoom
 ## Demo (GitHub Pages)
 Once GitHub Pages finishes deploying from `main`, the site will be available at:
 
-- URL: https://newyellow.github.io/node--strider-website-graph/
+- URL: https://newyellow.github.io/node--strider-website-graph/graph.html
 
 If you get a 404 at first, wait a minute and refresh.
 
@@ -31,3 +31,14 @@ Open `viewArticle.html` with an `articleId` query parameter:
 
 - `https://newyellow.github.io/node--strider-website-graph/viewArticle.html?articleId=article-001`
 - Sample IDs: `article-001` … `article-030`
+
+## Data processing tool
+- `tools/dataProcess.js`: read `articles/` and generate `data/articles-index.json` with:
+  - `articles`: id, title, author, publishedAt, tags
+  - `tagCounts`: map of tag -> count
+  - `tags`: array for graph nodes `{ id, count }`
+  - `links`: tag co-occurrence edges `{ source, target, weight }`
+- Run locally:
+  ```bash
+  node tools/dataProcess.js
+  ```

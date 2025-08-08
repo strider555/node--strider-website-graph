@@ -19,9 +19,17 @@
       a:hover { text-decoration: underline; }
 
       header { border-bottom: 1px solid var(--border); background: var(--card); }
-      .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
       .brand { display: flex; align-items: center; gap: 12px; }
       .brand h1 { font-size: 18px; margin: 0; }
+
+      main .layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; }
+      aside.sidebar { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: sticky; top: 8px; max-height: calc(100vh - 100px); overflow: auto; }
+      .list-title { margin: 0 0 8px; font-size: 16px; color: var(--muted); }
+      .article-list { list-style: none; padding: 0; margin: 0; }
+      .article-list li { margin: 0; padding: 6px 0; border-bottom: 1px dashed #233046; }
+      .article-list a { color: #e5e7eb; text-decoration: none; }
+      .article-list a:hover { text-decoration: underline; }
 
       main .article { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-top: 16px; }
       .title { font-size: 28px; line-height: 1.25; margin: 0 0 8px; }
@@ -29,6 +37,12 @@
       .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
       .tag { border: 1px solid var(--border); background: #0b1028; color: #cbd5e1; padding: 4px 8px; border-radius: 999px; font-size: 12px; }
       .content { line-height: 1.8; font-size: 16px; white-space: pre-wrap; }
+
+      #graph-embed { height: 420px; margin-top: 16px; border: 1px solid var(--border); border-radius: 10px; }
+      @media (max-width: 900px) {
+        main .layout { grid-template-columns: 1fr; }
+        aside.sidebar { position: static; max-height: none; }
+      }
 
       .toolbar { display: flex; gap: 8px; margin-top: 16px; }
       .btn { border: 1px solid var(--border); background: #0b1328; color: var(--fg); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
@@ -50,17 +64,26 @@
 
     <main>
       <div class="container">
-        <article class="article" id="article">
-          <h2 class="title" id="title">載入中…</h2>
-          <div class="meta" id="meta"></div>
-          <div class="tags" id="tags"></div>
-          <div class="content" id="content"></div>
-          <div class="toolbar">
-            <button class="btn" id="openGraph">回到關聯圖</button>
-            <button class="btn" id="share">分享連結</button>
+        <div class="layout">
+          <aside class="sidebar">
+            <h3 class="list-title">文章列表</h3>
+            <ul class="article-list" id="articleList"></ul>
+          </aside>
+          <div>
+            <article class="article" id="article">
+              <h2 class="title" id="title">載入中…</h2>
+              <div class="meta" id="meta"></div>
+              <div class="tags" id="tags"></div>
+              <div class="content" id="content"></div>
+              <div class="toolbar">
+                <button class="btn" id="openGraph">回到關聯圖</button>
+                <button class="btn" id="share">分享連結</button>
+              </div>
+            </article>
+            <div id="graph-embed"></div>
+            <div id="error" class="error" style="display:none"></div>
           </div>
-        </article>
-        <div id="error" class="error" style="display:none"></div>
+        </div>
       </div>
     </main>
 
@@ -68,6 +91,8 @@
       <div class="container">© 2025 Tag Graph Demo</div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="./graph.js"></script>
     <script>
       function getQueryParam(name) {
         const url = new URL(window.location.href);
@@ -114,6 +139,47 @@
         document.getElementById('content').textContent = data.content;
       }
 
+      async function loadIndex() {
+        const res = await fetch('./data/articles-index.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('無法載入文章列表');
+        return res.json();
+      }
+
+      function renderList(indexData) {
+        const ul = document.getElementById('articleList');
+        ul.innerHTML = '';
+        indexData.articles.forEach(a => {
+          const li = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = `./viewArticle.html?articleId=${encodeURIComponent(a.id)}`;
+          link.textContent = `${a.title}`;
+          li.appendChild(link);
+          ul.appendChild(li);
+        });
+      }
+
+      function buildGraphFromIndex(indexData) {
+        // Build nodes and links from index data
+        const nodes = indexData.tags.map(t => ({ id: t.id, count: t.count }));
+        const links = indexData.links.map(l => ({ source: l.source, target: l.target, weight: l.weight }));
+        return { nodes, links };
+      }
+
+      async function bootstrap() {
+        const id = getQueryParam('articleId');
+        const [indexData] = await Promise.all([loadIndex()]);
+        renderList(indexData);
+        if (id) await loadArticle(id);
+        const data = buildGraphFromIndex(indexData);
+        TagGraph.createTagGraph(document.getElementById('graph-embed'), data);
+      }
+
+      bootstrap().catch(err => {
+        const errorEl = document.getElementById('error');
+        errorEl.textContent = `初始化失敗：${err.message}`;
+        errorEl.style.display = 'block';
+      });
+
       document.getElementById('openGraph').addEventListener('click', () => {
         window.location.href = './index.html';
       });
@@ -126,13 +192,6 @@
           alert('複製失敗，請手動複製網址');
         }
       });
-
-      const id = getQueryParam('articleId');
-      if (!id) {
-        document.getElementById('title').textContent = '缺少 articleId 參數';
-      } else {
-        loadArticle(id);
-      }
     </script>
   </body>
 </html>

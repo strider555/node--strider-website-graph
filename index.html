@@ -3,23 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tag Graph</title>
+    <title>Site Home</title>
     <link rel="stylesheet" href="./styles.css" />
-    <!-- D3 v7 -->
-    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <style>
+      .home { max-width: 960px; margin: 0 auto; padding: 24px; color: #e5e7eb; }
+      .home a { color: #38bdf8; }
+      .card { background: #0f172a; border: 1px solid #1e293b; padding: 16px; border-radius: 12px; margin: 16px 0; }
+    </style>
   </head>
   <body>
     <header class="app-header">
-      <h1>文章 Tag 關聯圖</h1>
-      <p class="hint">滑鼠：拖曳空白處可平移、滾輪可縮放；點擊 Tag 進行搜尋</p>
+      <h1>範例網站首頁</h1>
+      <p class="hint">前往關聯圖或文章頁進行測試</p>
     </header>
-
-    <main class="app-main">
-      <div id="graph-container">
-        <svg id="graph" role="img" aria-label="Tags force-directed graph"></svg>
+    <main class="home">
+      <div class="card">
+        <h3>關聯圖（獨立頁）</h3>
+        <p><a href="./graph.html">打開 graph.html</a></p>
+      </div>
+      <div class="card">
+        <h3>文章頁</h3>
+        <p><a href="./viewArticle.html?articleId=article-001">檢視文章 article-001</a></p>
       </div>
     </main>
-
-    <script src="./main.js"></script>
   </body>
 </html>
