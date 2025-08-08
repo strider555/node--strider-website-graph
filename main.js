@@ -104,7 +104,33 @@ const nodes = nodeGroup
         d.fx = null;
         d.fy = null;
       })
-  );
+  )
+  .on('click', (event, d) => {
+    const detail = { tag: d.id };
+    console.log('Search by tag:', detail);
+    window.dispatchEvent(new CustomEvent('tag:search', { detail }));
+  });
+
+// Quick-click detection to open category list
+const downInfo = new WeakMap();
+nodes
+  .on('mousedown', function(event, d){
+    downInfo.set(this, { t: Date.now(), x: event.clientX, y: event.clientY });
+  })
+  .on('mouseup', function(event, d){
+    const info = downInfo.get(this);
+    if (!info) return;
+    const dt = Date.now() - info.t;
+    const dx = event.clientX - info.x;
+    const dy = event.clientY - info.y;
+    const dist = Math.hypot(dx, dy);
+    const isQuick = dt < 220 && dist < 6;
+    const wasDragged = event.defaultPrevented === true;
+    if (isQuick && !wasDragged) {
+      const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
+      window.open(url, '_blank', 'noopener');
+    }
+  });
 
 nodes
   .append('circle')

@@ -100,7 +100,7 @@
           })
       )
       .on('click', (event, d) => {
-        event.stopPropagation();
+        // Keep emitting for integrations; do not open link here to avoid conflict with drag
         const detail = { tag: d.id };
         window.dispatchEvent(new CustomEvent('tag:search', { detail }));
       })
@@ -114,6 +114,27 @@
         nodes.selectAll('circle').attr('opacity', 1);
         nodes.selectAll('text').attr('opacity', 1);
         links.attr('stroke-opacity', 0.5);
+      });
+
+    // Quick-click detection: open category list on short click without drag
+    const downInfo = new WeakMap();
+    nodes
+      .on('mousedown', function(event, d){
+        downInfo.set(this, { t: Date.now(), x: event.clientX, y: event.clientY });
+      })
+      .on('mouseup', function(event, d){
+        const info = downInfo.get(this);
+        if (!info) return;
+        const dt = Date.now() - info.t;
+        const dx = event.clientX - info.x;
+        const dy = event.clientY - info.y;
+        const dist = Math.hypot(dx, dy);
+        const isQuick = dt < 220 && dist < 6;
+        const wasDragged = event.defaultPrevented === true; // d3-drag sets this when drag occurred
+        if (isQuick && !wasDragged) {
+          const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
+          window.open(url, '_blank', 'noopener');
+        }
       });
 
     nodes.append('circle')

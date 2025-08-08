@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>分類文章列表</title>
+    <style>
+      :root {
+        --bg: #0b1020; --fg: #e5e7eb; --muted: #94a3b8; --card:#0f172a; --border:#1e293b; --accent:#38bdf8;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial; }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      header { border-bottom: 1px solid var(--border); background: var(--card); }
+      .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
+      h1 { font-size: 20px; margin: 0; }
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 16px; }
+      .list { list-style: none; padding: 0; margin: 0; }
+      .list li { padding: 10px 0; border-bottom: 1px dashed #223146; }
+      .meta { color: var(--muted); font-size: 12px; }
+      .error { color: #fca5a5; padding: 12px; background: #1a1020; border: 1px solid #3f1f2f; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>分類文章列表</h1>
+        <div><a href="./index.html">回首頁</a></div>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="card">
+          <h2 id="title">載入中…</h2>
+          <ul class="list" id="list"></ul>
+          <div id="error" class="error" style="display:none"></div>
+        </div>
+      </div>
+    </main>
+    <script>
+      function getQueryParam(name) { const u = new URL(window.location.href); return u.searchParams.get(name); }
+      function formatDate(dt) { try { const d = new Date(dt); return d.toLocaleDateString('zh-Hant'); } catch(e){ return dt; } }
+      async function loadIndex(){ const r = await fetch('./data/articles-index.json', { cache:'no-store' }); if(!r.ok) throw new Error('無法載入索引'); return r.json(); }
+      function render(category, index){
+        const list = document.getElementById('list'); list.innerHTML = '';
+        const title = document.getElementById('title');
+        title.textContent = `分類：${category}`;
+        const filtered = index.articles.filter(a => (a.tags||[]).includes(category));
+        if(filtered.length === 0){
+          const li = document.createElement('li'); li.textContent = '沒有符合的文章'; list.appendChild(li); return;
+        }
+        filtered.forEach(a => {
+          const li = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = `./viewArticle.html?articleId=${encodeURIComponent(a.id)}`;
+          link.textContent = a.title;
+          const meta = document.createElement('div'); meta.className = 'meta'; meta.textContent = `${formatDate(a.publishedAt)} ・ ${a.author}`;
+          li.appendChild(link); li.appendChild(meta); list.appendChild(li);
+        });
+      }
+      (async function(){
+        const category = getQueryParam('category');
+        if(!category){ document.getElementById('title').textContent = '缺少 category 參數'; return; }
+        try{ const index = await loadIndex(); render(category, index); }
+        catch(e){ const er = document.getElementById('error'); er.style.display='block'; er.textContent = e.message; }
+      })();
+    </script>
+  </body>
+</html>

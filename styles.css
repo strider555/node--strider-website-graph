@@ -16,4 +16,6 @@ html, body { height: 100%; margin: 0; font-family: ui-sans-serif, system-ui, -ap
 
 .node circle { stroke: #0b1020; stroke-width: 1.5px; }
 
+.node { cursor: pointer; }
+
 .badge { fill: #94a3b8; font-size: 10px; dominant-baseline: middle; text-anchor: middle; pointer-events: none; }
