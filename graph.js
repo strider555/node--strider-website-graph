@@ -133,8 +133,7 @@
         const dy = event.clientY - info.y;
         const dist = Math.hypot(dx, dy);
         const isQuick = dt < 220 && dist < 6;
-        const wasDragged = event.defaultPrevented === true; // d3-drag marks defaultPrevented when dragging
-        if (isQuick && !wasDragged) {
+        if (isQuick) {
           const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
           window.open(url, '_blank', 'noopener');
         }

@@ -128,8 +128,7 @@ nodes
     const dy = event.clientY - info.y;
     const dist = Math.hypot(dx, dy);
     const isQuick = dt < 220 && dist < 6;
-    const wasDragged = event.defaultPrevented === true;
-    if (isQuick && !wasDragged) {
+    if (isQuick) {
       const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
       window.open(url, '_blank', 'noopener');
     }
