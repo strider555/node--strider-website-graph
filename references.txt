@@ -1,0 +1,15 @@
+D3.js Force-Directed Graph
+- API: https://github.com/d3/d3-force
+- Force Simulation Examples: https://observablehq.com/@d3/force-directed-graph
+- Zoom & Pan: https://github.com/d3/d3-zoom
+- Drag Behavior: https://github.com/d3/d3-drag
+
+Alternatives / Similar Libraries
+- Cytoscape.js: https://js.cytoscape.org/
+- Sigma.js: https://www.sigmajs.org/
+- Vis Network: https://visjs.github.io/vis-network/
+- ECharts Graph: https://echarts.apache.org/en/option.html#series-graph
+
+Export / Build Notes
+- This demo uses plain HTML/JS and loads D3 from CDN, so you can host the built files as-is.
+- If switching to Vite + Node build: create a Vite project, import d3 (npm i d3), and configure build to generate static assets.
