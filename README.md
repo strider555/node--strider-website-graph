@@ -25,3 +25,9 @@ If you get a 404 at first, wait a minute and refresh.
 
 ## GitHub Pages
 This repo is configured to auto-deploy `main` to GitHub Pages via GitHub Actions (`.github/workflows/deploy-pages.yml`).
+
+## View a specific article
+Open `viewArticle.html` with an `articleId` query parameter:
+
+- `https://newyellow.github.io/node--strider-website-graph/viewArticle.html?articleId=article-001`
+- Sample IDs: `article-001` … `article-030`

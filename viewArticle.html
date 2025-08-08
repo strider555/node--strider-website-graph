@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文章內容</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --fg: #e5e7eb;
+        --muted: #94a3b8;
+        --card: #0f172a;
+        --border: #1e293b;
+        --accent: #38bdf8;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial; background: var(--bg); color: var(--fg); }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      header { border-bottom: 1px solid var(--border); background: var(--card); }
+      .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .brand h1 { font-size: 18px; margin: 0; }
+
+      main .article { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-top: 16px; }
+      .title { font-size: 28px; line-height: 1.25; margin: 0 0 8px; }
+      .meta { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+      .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .tag { border: 1px solid var(--border); background: #0b1028; color: #cbd5e1; padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+      .content { line-height: 1.8; font-size: 16px; white-space: pre-wrap; }
+
+      .toolbar { display: flex; gap: 8px; margin-top: 16px; }
+      .btn { border: 1px solid var(--border); background: #0b1328; color: var(--fg); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+      .btn:hover { background: #0d1830; }
+
+      footer { color: var(--muted); text-align: center; padding: 16px; }
+      .error { color: #fca5a5; padding: 12px; background: #1a1020; border: 1px solid #3f1f2f; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container brand">
+        <a href="./index.html" class="logo" aria-label="回首頁">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-6v-7H10v7H4a1 1 0 0 1-1-1v-10.5z" fill="#38bdf8"/></svg>
+        </a>
+        <h1>文章內容</h1>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <article class="article" id="article">
+          <h2 class="title" id="title">載入中…</h2>
+          <div class="meta" id="meta"></div>
+          <div class="tags" id="tags"></div>
+          <div class="content" id="content"></div>
+          <div class="toolbar">
+            <button class="btn" id="openGraph">回到關聯圖</button>
+            <button class="btn" id="share">分享連結</button>
+          </div>
+        </article>
+        <div id="error" class="error" style="display:none"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">© 2025 Tag Graph Demo</div>
+    </footer>
+
+    <script>
+      function getQueryParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      function formatDate(dt) {
+        try {
+          const d = new Date(dt);
+          return d.toLocaleString('zh-Hant', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        } catch(e) { return dt; }
+      }
+
+      async function loadArticle(articleId) {
+        const errorEl = document.getElementById('error');
+        errorEl.style.display = 'none';
+        try {
+          const res = await fetch(`./articles/${articleId}.json`, { cache: 'no-store' });
+          if (!res.ok) throw new Error('無法載入文章');
+          const data = await res.json();
+          render(data);
+        } catch (e) {
+          errorEl.textContent = `載入失敗：${e.message}`;
+          errorEl.style.display = 'block';
+          document.getElementById('title').textContent = '找不到文章';
+          document.getElementById('meta').textContent = '';
+          document.getElementById('tags').innerHTML = '';
+          document.getElementById('content').textContent = '';
+        }
+      }
+
+      function render(data) {
+        document.getElementById('title').textContent = data.title;
+        document.getElementById('meta').textContent = `作者：${data.author}｜發布：${formatDate(data.publishedAt)}｜ID：${data.id}`;
+        const tagsEl = document.getElementById('tags');
+        tagsEl.innerHTML = '';
+        (data.tags || []).forEach(t => {
+          const a = document.createElement('a');
+          a.className = 'tag';
+          a.textContent = t;
+          a.href = `./index.html#tag=${encodeURIComponent(t)}`;
+          tagsEl.appendChild(a);
+        });
+        document.getElementById('content').textContent = data.content;
+      }
+
+      document.getElementById('openGraph').addEventListener('click', () => {
+        window.location.href = './index.html';
+      });
+
+      document.getElementById('share').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('已複製分享連結');
+        } catch (e) {
+          alert('複製失敗，請手動複製網址');
+        }
+      });
+
+      const id = getQueryParam('articleId');
+      if (!id) {
+        document.getElementById('title').textContent = '缺少 articleId 參數';
+      } else {
+        loadArticle(id);
+      }
+    </script>
+  </body>
+</html>

@@ -153,12 +153,20 @@ nodes
   })
   .on('click', (event, d) => {
     event.stopPropagation();
-    // Replace this with your search integration. For now, we just log.
-    // You could emit a CustomEvent for your app to listen to.
     const detail = { tag: d.id };
     console.log('Search by tag:', detail);
     window.dispatchEvent(new CustomEvent('tag:search', { detail }));
+    // Optional: navigate to a filtered list page if implemented
   });
+
+// Navigate to view a demo article when pressing number keys (quick test)
+document.addEventListener('keydown', (e) => {
+  if (e.key >= '1' && e.key <= '9') {
+    const n = Number(e.key);
+    const id = `article-${String(n).padStart(3, '0')}`;
+    window.location.href = `./viewArticle.html?articleId=${id}`;
+  }
+});
 
 simulation.on('tick', () => {
   links
