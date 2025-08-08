@@ -87,10 +87,17 @@
           .drag()
           .on('start', (event, d) => {
             if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.__down = { t: Date.now(), x: event.x, y: event.y };
+            d.__moved = false;
             d.fx = d.x;
             d.fy = d.y;
           })
           .on('drag', (event, d) => {
+            if (d.__down && !d.__moved) {
+              const dx = event.x - d.__down.x;
+              const dy = event.y - d.__down.y;
+              if (Math.hypot(dx, dy) > 5) d.__moved = true;
+            }
             d.fx = event.x;
             d.fy = event.y;
           })
@@ -101,9 +108,14 @@
           })
       )
       .on('click', (event, d) => {
-        // Keep emitting for integrations; do not open link here to avoid conflict with drag
+        const dt = d.__down ? (Date.now() - d.__down.t) : 9999;
+        const isQuick = dt < 300 && !d.__moved;
         const detail = { tag: d.id };
         window.dispatchEvent(new CustomEvent('tag:search', { detail }));
+        if (isQuick) {
+          const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
+          window.open(url, '_blank', 'noopener');
+        }
       })
       .on('mouseover', function (event, d) {
         nodes.selectAll('circle').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.25));
@@ -115,28 +127,6 @@
         nodes.selectAll('circle').attr('opacity', 1);
         nodes.selectAll('text').attr('opacity', 1);
         links.attr('stroke-opacity', 0.5);
-      });
-
-    // Quick-click detection: open category list on short click without drag
-    const downInfo = new WeakMap();
-    nodes
-      .on('mousedown', function(event, d){
-        if (event.button !== 0) return; // only left button starts click tracking
-        downInfo.set(this, { t: Date.now(), x: event.clientX, y: event.clientY });
-      })
-      .on('mouseup', function(event, d){
-        if (event.button !== 0) return; // only left button triggers
-        const info = downInfo.get(this);
-        if (!info) return;
-        const dt = Date.now() - info.t;
-        const dx = event.clientX - info.x;
-        const dy = event.clientY - info.y;
-        const dist = Math.hypot(dx, dy);
-        const isQuick = dt < 220 && dist < 6;
-        if (isQuick) {
-          const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
-          window.open(url, '_blank', 'noopener');
-        }
       });
 
     nodes.append('circle')
