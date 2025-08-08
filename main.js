@@ -87,6 +87,7 @@ const nodes = nodeGroup
   .data(demoData.nodes)
   .join('g')
   .attr('class', 'node')
+  .style('cursor', 'pointer')
   .call(
     d3
       .drag()
@@ -115,9 +116,11 @@ const nodes = nodeGroup
 const downInfo = new WeakMap();
 nodes
   .on('mousedown', function(event, d){
+    if (event.button !== 0) return;
     downInfo.set(this, { t: Date.now(), x: event.clientX, y: event.clientY });
   })
   .on('mouseup', function(event, d){
+    if (event.button !== 0) return;
     const info = downInfo.get(this);
     if (!info) return;
     const dt = Date.now() - info.t;

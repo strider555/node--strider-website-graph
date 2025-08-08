@@ -81,6 +81,7 @@
       .data(dataset.nodes)
       .join('g')
       .attr('class', 'node')
+      .style('cursor', 'pointer')
       .call(
         d3
           .drag()
@@ -120,9 +121,11 @@
     const downInfo = new WeakMap();
     nodes
       .on('mousedown', function(event, d){
+        if (event.button !== 0) return; // only left button starts click tracking
         downInfo.set(this, { t: Date.now(), x: event.clientX, y: event.clientY });
       })
       .on('mouseup', function(event, d){
+        if (event.button !== 0) return; // only left button triggers
         const info = downInfo.get(this);
         if (!info) return;
         const dt = Date.now() - info.t;
@@ -130,7 +133,7 @@
         const dy = event.clientY - info.y;
         const dist = Math.hypot(dx, dy);
         const isQuick = dt < 220 && dist < 6;
-        const wasDragged = event.defaultPrevented === true; // d3-drag sets this when drag occurred
+        const wasDragged = event.defaultPrevented === true; // d3-drag marks defaultPrevented when dragging
         if (isQuick && !wasDragged) {
           const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
           window.open(url, '_blank', 'noopener');
