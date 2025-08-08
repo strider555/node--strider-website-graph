@@ -5,7 +5,7 @@ A static D3.js force-directed graph to visualize tag relationships with pan/zoom
 ## Demo (GitHub Pages)
 Once GitHub Pages finishes deploying from `main`, the site will be available at:
 
-- URL: https://newyellow.github.io/node--strider-website-graph/graph.html
+- URL: https://newyellow.github.io/node--strider-website-graph/
 
 If you get a 404 at first, wait a minute and refresh.
 
