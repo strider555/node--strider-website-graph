@@ -195,5 +195,54 @@
     };
   }
 
-  window.TagGraph = { createTagGraph };
+  function filterDataByTags(fullData, seedTags, depth = 1) {
+    const seeds = new Set((seedTags || []).filter(Boolean));
+    if (seeds.size === 0) return { nodes: [], links: [] };
+
+    // Build adjacency
+    const neighbors = new Map(); // tag -> Set(tag)
+    for (const link of fullData.links || []) {
+      const s = typeof link.source === 'object' ? link.source.id : link.source;
+      const t = typeof link.target === 'object' ? link.target.id : link.target;
+      if (!neighbors.has(s)) neighbors.set(s, new Set());
+      if (!neighbors.has(t)) neighbors.set(t, new Set());
+      neighbors.get(s).add(t);
+      neighbors.get(t).add(s);
+    }
+
+    // BFS up to depth
+    const visited = new Set();
+    const queue = [];
+    for (const s of seeds) {
+      queue.push({ id: s, d: 0 });
+      visited.add(s);
+    }
+    while (queue.length) {
+      const { id, d } = queue.shift();
+      if (d === depth) continue;
+      const nbrs = neighbors.get(id);
+      if (!nbrs) continue;
+      for (const n of nbrs) {
+        if (!visited.has(n)) {
+          visited.add(n);
+          queue.push({ id: n, d: d + 1 });
+        }
+      }
+    }
+
+    // Map nodes
+    const nodeById = new Map((fullData.nodes || []).map(n => [n.id, n]));
+    const nodes = [...visited].map(id => nodeById.get(id) || { id, count: 1 });
+
+    // Keep links where both ends are included
+    const links = (fullData.links || []).filter(l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      return visited.has(s) && visited.has(t);
+    });
+
+    return { nodes, links };
+  }
+
+  window.TagGraph = { createTagGraph, filterDataByTags };
 })();

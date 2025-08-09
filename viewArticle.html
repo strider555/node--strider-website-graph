@@ -170,9 +170,16 @@
         const id = getQueryParam('articleId');
         const [indexData] = await Promise.all([loadIndex()]);
         renderList(indexData);
-        if (id) await loadArticle(id);
-        const data = buildGraphFromIndex(indexData);
-        TagGraph.createTagGraph(document.getElementById('graph-embed'), data);
+        let articleData = null;
+        if (id) { await loadArticle(id); }
+        try {
+          const res = await fetch(`./articles/${id}.json`, { cache: 'no-store' });
+          if (res.ok) articleData = await res.json();
+        } catch (_) {}
+        const fullGraph = buildGraphFromIndex(indexData);
+        const seeds = (articleData && articleData.tags) ? articleData.tags : [];
+        const filtered = TagGraph.filterDataByTags(fullGraph, seeds, 1);
+        TagGraph.createTagGraph(document.getElementById('graph-embed'), filtered);
       }
 
       bootstrap().catch(err => {
