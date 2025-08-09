@@ -193,7 +193,11 @@
         const fullGraph = buildGraphFromIndex(indexData);
         const seeds = (articleData && articleData.tags) ? articleData.tags : [];
         const filtered = TagGraph.filterDataByTags(fullGraph, seeds, 1);
-        TagGraph.createTagGraph(document.getElementById('graph-embed'), filtered);
+        TagGraph.createTagGraph(
+          document.getElementById('graph-embed'),
+          filtered,
+          { highlightIds: seeds, highlightStroke: '#facc15', highlightWidth: 3 }
+        );
       }
 
       bootstrap().catch(err => {

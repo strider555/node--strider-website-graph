@@ -35,6 +35,10 @@
     const width = options.width || containerSel.node().clientWidth || 800;
     const height = options.height || containerSel.node().clientHeight || 600;
 
+    const highlightIds = new Set((options.highlightIds || []).filter(Boolean));
+    const highlightStroke = options.highlightStroke || '#facc15'; // amber-400
+    const highlightWidth = options.highlightWidth != null ? options.highlightWidth : 3;
+
     // Create SVG if container is not an SVG
     let svg;
     if (containerSel.node().tagName.toLowerCase() === 'svg') {
@@ -133,7 +137,14 @@
       .attr('r', (d, i) => radius(d.count || 1))
       .attr('fill', (d, i) => d3.interpolateCool(i / (dataset.nodes.length + 1)))
       .attr('stroke', '#0b1020')
-      .attr('stroke-width', 1.5);
+      .attr('stroke-width', 1.5)
+      .each(function(d){
+        if (highlightIds.has(d.id)) {
+          d3.select(this)
+            .style('stroke', highlightStroke)
+            .style('stroke-width', `${highlightWidth}px`);
+        }
+      });
 
     nodes.append('text')
       .attr('text-anchor', 'middle')
