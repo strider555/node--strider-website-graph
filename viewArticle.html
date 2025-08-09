@@ -166,6 +166,19 @@
         return { nodes, links };
       }
 
+      function ensureGraphAPI() {
+        if (window.TagGraph && typeof TagGraph.filterDataByTags === 'function') {
+          return Promise.resolve();
+        }
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = `./graph.js?v=${Date.now()}`;
+          s.onload = () => resolve();
+          s.onerror = () => reject(new Error('graph.js 載入失敗'));
+          document.head.appendChild(s);
+        });
+      }
+
       async function bootstrap() {
         const id = getQueryParam('articleId');
         const [indexData] = await Promise.all([loadIndex()]);
@@ -176,6 +189,7 @@
           const res = await fetch(`./articles/${id}.json`, { cache: 'no-store' });
           if (res.ok) articleData = await res.json();
         } catch (_) {}
+        await ensureGraphAPI();
         const fullGraph = buildGraphFromIndex(indexData);
         const seeds = (articleData && articleData.tags) ? articleData.tags : [];
         const filtered = TagGraph.filterDataByTags(fullGraph, seeds, 1);
