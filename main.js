@@ -282,6 +282,124 @@ function filterByArea(area) {
   customizeGraph(radiusScale);
 }
 
+// Populate legend submenus with tags and handle expand/collapse
+function setupLegendSubmenus() {
+  if (!museumData) return;
+
+  const types = ['area', 'category', 'medium', 'nationality', 'decade'];
+
+  types.forEach(type => {
+    const subContainer = document.getElementById(`sub-${type}`);
+    if (!subContainer) return;
+
+    // Get tags of this type, sorted by count descending
+    const tags = museumData.tags
+      .filter(t => t.type === type)
+      .sort((a, b) => b.count - a.count);
+
+    // Populate sub-items
+    subContainer.innerHTML = '';
+    tags.forEach(tag => {
+      const item = document.createElement('div');
+      item.className = 'legend-sub-item';
+      item.dataset.tagId = tag.id;
+      item.innerHTML = `<span>${tag.id}</span><span class="sub-count">${tag.count.toLocaleString()}</span>`;
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        focusNode(tag.id);
+      });
+      subContainer.appendChild(item);
+    });
+  });
+
+  // Handle legend group expand/collapse
+  document.querySelectorAll('.legend-group').forEach(group => {
+    const headerItem = group.querySelector('.legend-item');
+    headerItem.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Toggle this group
+      const wasOpen = group.classList.contains('open');
+
+      // Close all groups
+      document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+
+      // Open this one if it was closed
+      if (!wasOpen) {
+        group.classList.add('open');
+      }
+
+      // Also apply type filter
+      filterByType(wasOpen ? 'all' : headerItem.dataset.type);
+    });
+  });
+
+  // "All Types" button
+  const allItem = document.querySelector('.legend-item[data-type="all"]');
+  if (allItem) {
+    allItem.addEventListener('click', () => {
+      document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+      filterByType('all');
+    });
+  }
+}
+
+// Focus on a specific node: zoom to it, highlight it, open its panel
+function focusNode(tagId) {
+  const svg = d3.select('#graph');
+  const nodes = svg.selectAll('g.node');
+
+  // Find the target node data
+  let targetNode = null;
+  nodes.each(function(d) {
+    if (d.id === tagId) {
+      targetNode = d;
+    }
+  });
+
+  if (!targetNode || targetNode.x == null) {
+    // Node not found in current graph, just open panel
+    showSidePanel(tagId);
+    return;
+  }
+
+  // Get SVG dimensions from viewBox
+  const svgNode = svg.node();
+  const viewBox = svgNode.viewBox.baseVal;
+  const vw = viewBox.width || svgNode.clientWidth || 800;
+  const vh = viewBox.height || svgNode.clientHeight || 600;
+
+  // Calculate transform to center on node with zoom
+  const scale = 1.8;
+  const tx = vw / 2 - targetNode.x * scale;
+  const ty = vh / 2 - targetNode.y * scale;
+
+  const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
+  // Smooth zoom transition
+  svg.transition()
+    .duration(600)
+    .call(d3.zoom().scaleExtent([0.3, 4]).on('zoom', (event) => {
+      svg.select('g.zoom-layer').attr('transform', event.transform);
+    }).transform, transform);
+
+  // Highlight the target node
+  nodes.selectAll('circle')
+    .transition().duration(400)
+    .attr('opacity', d => d.id === tagId ? 1 : 0.15);
+  nodes.selectAll('text')
+    .transition().duration(400)
+    .attr('opacity', d => d.id === tagId ? 1 : 0.15);
+
+  // Reset highlight after 2 seconds
+  setTimeout(() => {
+    nodes.selectAll('circle').transition().duration(400).attr('opacity', 1);
+    nodes.selectAll('text').transition().duration(400).attr('opacity', 1);
+  }, 2000);
+
+  // Open side panel
+  showSidePanel(tagId);
+}
+
 // Filter graph by tag type (area/category/medium/nationality/decade)
 function filterByType(type) {
   if (!museumData) return;
@@ -496,12 +614,8 @@ async function init() {
       });
     });
 
-    // Setup legend type filters
-    document.querySelectorAll('.legend-item[data-type]').forEach(item => {
-      item.addEventListener('click', () => {
-        filterByType(item.dataset.type);
-      });
-    });
+    // Setup legend type filters + expandable submenus
+    setupLegendSubmenus();
 
     // Setup close panel button
     document.getElementById('closePanel').addEventListener('click', closeSidePanel);

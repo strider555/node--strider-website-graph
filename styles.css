@@ -280,7 +280,9 @@ html, body {
   padding: 16px;
   backdrop-filter: blur(8px);
   z-index: 10;
-  max-width: 220px;
+  max-width: 240px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
 }
 
 .legend h3 {
@@ -320,6 +322,57 @@ html, body {
   height: 20px;
   border-radius: 50%;
   border: 2px solid var(--bg-dark);
+  flex-shrink: 0;
+}
+
+.legend-group {
+  margin-bottom: 2px;
+}
+
+.legend-expand {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.legend-group.open .legend-expand {
+  transform: rotate(90deg);
+}
+
+.legend-sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  padding-left: 16px;
+}
+
+.legend-group.open .legend-sub {
+  max-height: 500px;
+}
+
+.legend-sub-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  margin: 1px 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.legend-sub-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.legend-sub-item .sub-count {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: 8px;
 }
 
 /* Side panel */
