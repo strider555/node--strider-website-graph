@@ -117,6 +117,10 @@ function showSidePanel(tagId) {
       ? `Showing ${objects.length} of ${totalCount.toLocaleString()} artworks`
       : `${objects.length} artworks`;
 
+  // Set details button URL
+  document.getElementById('viewDetailsBtn').href =
+    `./viewByCategory.html?category=${encodeURIComponent(tagId)}`;
+
   // Render object cards
   const grid = document.getElementById('objectGrid');
   grid.innerHTML = '';
@@ -388,6 +392,13 @@ async function init() {
 
     // Setup close panel button
     document.getElementById('closePanel').addEventListener('click', closeSidePanel);
+
+    // Listen for node click events from graph.js
+    window.addEventListener('tag:click', (e) => {
+      if (e.detail && e.detail.tag) {
+        showSidePanel(e.detail.tag);
+      }
+    });
 
     // Close panel when clicking outside
     document.addEventListener('click', (e) => {

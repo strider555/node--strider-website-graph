@@ -312,6 +312,28 @@ html, body {
   color: var(--text-primary);
 }
 
+.panel-actions {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--gold);
+  color: var(--bg-dark);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.detail-btn:hover {
+  background: #f0b830;
+  transform: translateY(-1px);
+}
+
 .panel-content {
   padding: 24px;
 }

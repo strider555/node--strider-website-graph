@@ -118,11 +118,9 @@
       .on('click', (event, d) => {
         const dt = d.__down ? (Date.now() - d.__down.t) : 9999;
         const isQuick = dt < 300 && !d.__moved;
-        const detail = { tag: d.id };
-        window.dispatchEvent(new CustomEvent('tag:search', { detail }));
         if (isQuick) {
-          const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
-          window.open(url, '_blank', 'noopener');
+          // Dispatch event for main.js to handle (open side panel)
+          window.dispatchEvent(new CustomEvent('tag:click', { detail: { tag: d.id } }));
         }
       })
       .on('mouseover', function (event, d) {
