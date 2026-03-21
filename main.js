@@ -33,8 +33,8 @@ async function loadData() {
 // Initialize graph
 function initGraph(data) {
   const container = document.getElementById('graph');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || (window.innerHeight - 80);
 
   // Get node size scale
   const countExtent = d3.extent(data.tags, d => d.count);
@@ -322,6 +322,9 @@ async function init() {
     // Hide loading, show graph
     document.getElementById('loading').style.display = 'none';
     document.getElementById('graph-container').style.display = 'block';
+
+    // Wait for browser reflow before measuring container dimensions
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
     // Initialize graph
     initGraph(museumData);

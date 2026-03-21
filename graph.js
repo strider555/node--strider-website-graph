@@ -32,8 +32,8 @@
     };
 
     const containerSel = typeof container === 'string' ? d3.select(container) : d3.select(container);
-    const width = options.width || containerSel.node().clientWidth || 800;
-    const height = options.height || containerSel.node().clientHeight || 600;
+    const width = options.width || containerSel.node().clientWidth || window.innerWidth || 800;
+    const height = options.height || containerSel.node().clientHeight || (window.innerHeight - 80) || 600;
 
     const highlightIds = new Set((options.highlightIds || []).filter(Boolean));
     const highlightStroke = options.highlightStroke || '#facc15'; // amber-400
@@ -43,7 +43,7 @@
     let svg;
     if (containerSel.node().tagName.toLowerCase() === 'svg') {
       svg = containerSel;
-      svg.attr('width', width).attr('height', height);
+      svg.attr('viewBox', `0 0 ${width} ${height}`).attr('preserveAspectRatio', 'xMidYMid meet');
     } else {
       svg = containerSel.append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', `0 0 ${width} ${height}`);
     }
@@ -155,23 +155,21 @@
 
     nodes.append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em')
+      .attr('dy', (d) => radius(d.count || 1) + 14)
       .attr('fill', '#e5e7eb')
-      .style('font-size', (d) => {
-        const r = radius(d.count || 1);
-        if (r > 18) return '11px';
-        if (r > 12) return '9px';
-        return '8px';
-      })
+      .style('font-size', '11px')
+      .style('font-weight', '500')
       .style('pointer-events', 'none')
-      .text((d) => {
-        const r = radius(d.count || 1);
-        const maxLen = r > 15 ? 20 : r > 10 ? 12 : 8;
-        return d.id.length > maxLen ? d.id.substring(0, maxLen) + '…' : d.id;
-      });
+      .text((d) => d.id.length > 18 ? d.id.substring(0, 18) + '…' : d.id);
 
-    nodes.append('title')
-      .text((d) => `${d.id}\n${(d.count || 0).toLocaleString()} artworks`);
+    nodes.append('text')
+      .attr('class', 'badge')
+      .attr('text-anchor', 'middle')
+      .attr('dy', (d) => radius(d.count || 1) + 26)
+      .attr('fill', '#8b949e')
+      .style('font-size', '10px')
+      .style('pointer-events', 'none')
+      .text((d) => (d.count || 0).toLocaleString());
 
     const adjacency = new Map();
     for (const l of dataset.links) {
