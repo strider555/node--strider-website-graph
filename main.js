@@ -242,15 +242,13 @@ function filterByArea(area) {
   // Destroy old graph
   if (currentGraph) {
     currentGraph.destroy();
+    currentGraph = null;
   }
-
-  // Clear SVG
-  d3.select('#graph').selectAll('*').remove();
 
   // Create new graph
   const container = document.getElementById('graph');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || (window.innerHeight - 80);
 
   currentGraph = window.TagGraph.createTagGraph(
     '#graph',

@@ -207,7 +207,8 @@
       destroy() {
         window.removeEventListener('resize', resize);
         simulation.stop();
-        svg.remove();
+        // Only clear children, don't remove the SVG element itself
+        svg.selectAll('*').remove();
       },
       resetZoom() {
         svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
