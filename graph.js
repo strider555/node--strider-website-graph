@@ -59,22 +59,21 @@
     const nodeGroup = zoomLayer.append('g').attr('class', 'nodes');
 
     const countExtent = d3.extent(dataset.nodes, (d) => d.count || 1);
-    const radius = d3.scaleSqrt().domain(countExtent).range([6, 24]);
-    const linkWidth = d3.scaleLinear().domain(d3.extent(dataset.links, (d) => d.weight || 1)).range([0.5, 3]);
-
-    const nodeCount = dataset.nodes.length;
-    const chargeStrength = Math.min(-120, -400 - nodeCount * 8);
+    const radius = d3.scaleSqrt().domain(countExtent).range([5, 30]);
+    const linkWeightExtent = d3.extent(dataset.links, (d) => d.weight || 1);
+    const linkWidth = d3.scaleLinear().domain(linkWeightExtent).range([0.5, 4]);
+    const linkOpacityScale = d3.scaleLinear().domain(linkWeightExtent).range([0.15, 0.6]);
 
     const simulation = d3
       .forceSimulation(dataset.nodes)
       .force('link', d3.forceLink(dataset.links).id((d) => d.id)
-        .distance((d) => 80 + 20 * (3 - Math.min(3, d.weight || 1)))
-        .strength((d) => 0.05 + 0.05 * Math.min(d.weight || 1, 5)))
-      .force('charge', d3.forceManyBody().strength(chargeStrength).distanceMax(600))
+        .distance(120)
+        .strength(0.15))
+      .force('charge', d3.forceManyBody().strength(-800).distanceMax(800))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + 12))
-      .force('x', d3.forceX(width / 2).strength(0.03))
-      .force('y', d3.forceY(height / 2).strength(0.03));
+      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + 15))
+      .force('x', d3.forceX(width / 2).strength(0.04))
+      .force('y', d3.forceY(height / 2).strength(0.04));
 
     const links = linkGroup
       .selectAll('line')
@@ -82,7 +81,7 @@
       .join('line')
       .attr('class', 'link')
       .attr('stroke', '#64748b')
-      .attr('stroke-opacity', 0.5)
+      .attr('stroke-opacity', (d) => linkOpacityScale(d.weight || 1))
       .attr('stroke-width', (d) => linkWidth(d.weight || 1));
 
     const nodes = nodeGroup
@@ -127,15 +126,18 @@
         }
       })
       .on('mouseover', function (event, d) {
-        nodes.selectAll('circle').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.25));
-        nodes.selectAll('text').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.25));
+        nodes.selectAll('circle').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.15));
+        nodes.selectAll('text').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.15));
         links
-          .attr('stroke-opacity', (l) => (l.source.id === d.id || l.target.id === d.id ? 0.9 : 0.1));
+          .attr('stroke-opacity', (l) => (l.source.id === d.id || l.target.id === d.id ? 0.85 : 0.03))
+          .attr('stroke', (l) => (l.source.id === d.id || l.target.id === d.id ? '#E6A817' : '#64748b'));
       })
       .on('mouseout', function () {
         nodes.selectAll('circle').attr('opacity', 1);
         nodes.selectAll('text').attr('opacity', 1);
-        links.attr('stroke-opacity', 0.5);
+        links
+          .attr('stroke-opacity', (d) => linkOpacityScale(d.weight || 1))
+          .attr('stroke', '#64748b');
       });
 
     nodes.append('circle')
