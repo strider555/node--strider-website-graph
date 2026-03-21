@@ -59,17 +59,22 @@
     const nodeGroup = zoomLayer.append('g').attr('class', 'nodes');
 
     const countExtent = d3.extent(dataset.nodes, (d) => d.count || 1);
-    const radius = d3.scaleSqrt().domain(countExtent).range([6, 28]);
-    const linkWidth = d3.scaleLinear().domain(d3.extent(dataset.links, (d) => d.weight || 1)).range([1, 4]);
+    const radius = d3.scaleSqrt().domain(countExtent).range([6, 24]);
+    const linkWidth = d3.scaleLinear().domain(d3.extent(dataset.links, (d) => d.weight || 1)).range([0.5, 3]);
+
+    const nodeCount = dataset.nodes.length;
+    const chargeStrength = Math.min(-120, -400 - nodeCount * 8);
 
     const simulation = d3
       .forceSimulation(dataset.nodes)
       .force('link', d3.forceLink(dataset.links).id((d) => d.id)
-        .distance((d) => 50 + 8 * (3 - Math.min(3, d.weight || 1)))
-        .strength((d) => 0.1 + 0.1 * (d.weight || 1)))
-      .force('charge', d3.forceManyBody().strength(-200))
+        .distance((d) => 80 + 20 * (3 - Math.min(3, d.weight || 1)))
+        .strength((d) => 0.05 + 0.05 * Math.min(d.weight || 1, 5)))
+      .force('charge', d3.forceManyBody().strength(chargeStrength).distanceMax(600))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + 4));
+      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + 12))
+      .force('x', d3.forceX(width / 2).strength(0.03))
+      .force('y', d3.forceY(height / 2).strength(0.03));
 
     const links = linkGroup
       .selectAll('line')
@@ -135,9 +140,9 @@
 
     nodes.append('circle')
       .attr('r', (d, i) => radius(d.count || 1))
-      .attr('fill', (d, i) => d3.interpolateCool(i / (dataset.nodes.length + 1)))
-      .attr('stroke', '#0b1020')
-      .attr('stroke-width', 1.5)
+      .attr('fill', (d) => d.color || d3.interpolateCool(i / (dataset.nodes.length + 1)))
+      .attr('stroke', '#0b1120')
+      .attr('stroke-width', 2)
       .each(function(d){
         if (highlightIds.has(d.id)) {
           d3.select(this)
@@ -150,16 +155,21 @@
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em')
       .attr('fill', '#e5e7eb')
-      .style('font-size', '12px')
-      .text((d) => d.id);
+      .style('font-size', (d) => {
+        const r = radius(d.count || 1);
+        if (r > 18) return '11px';
+        if (r > 12) return '9px';
+        return '8px';
+      })
+      .style('pointer-events', 'none')
+      .text((d) => {
+        const r = radius(d.count || 1);
+        const maxLen = r > 15 ? 20 : r > 10 ? 12 : 8;
+        return d.id.length > maxLen ? d.id.substring(0, maxLen) + '…' : d.id;
+      });
 
-    nodes.append('text')
-      .attr('class', 'badge')
-      .attr('dy', (d) => (radius(d.count || 1) + 12))
-      .attr('fill', '#94a3b8')
-      .style('font-size', '10px')
-      .attr('text-anchor', 'middle')
-      .text((d) => d.count || 0);
+    nodes.append('title')
+      .text((d) => `${d.id}\n${(d.count || 0).toLocaleString()} artworks`);
 
     const adjacency = new Map();
     for (const l of dataset.links) {

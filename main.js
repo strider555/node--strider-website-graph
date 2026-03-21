@@ -68,42 +68,34 @@ function initGraph(data) {
   customizeGraph(radiusScale);
 }
 
-// Customize graph with proper colors and interactions
+// Customize graph with proper interactions (colors already set by graph.js via d.color)
 function customizeGraph(radiusScale) {
   const svg = d3.select('#graph');
   const nodes = svg.selectAll('g.node');
   const links = svg.selectAll('line.link');
 
-  // Update node colors based on type
-  nodes.selectAll('circle')
-    .attr('r', d => radiusScale(d.count))
-    .attr('fill', d => d.color)
-    .attr('stroke', '#0d1117')
-    .attr('stroke-width', 2);
-
   // Update link styles
   links
     .attr('stroke', '#30363d')
-    .attr('stroke-opacity', 0.4)
-    .attr('stroke-width', d => Math.sqrt(d.weight || 1));
+    .attr('stroke-opacity', 0.3);
 
   // Add hover tooltip
   const tooltip = d3.select('#tooltip');
 
   nodes
-    .on('mouseover', function(event, d) {
+    .on('mouseover.tooltip', function(event, d) {
       tooltip
         .style('left', `${event.pageX + 10}px`)
         .style('top', `${event.pageY - 10}px`)
         .classed('show', true);
 
       d3.select('#tooltipTitle').text(d.id);
-      d3.select('#tooltipDetail').text(`${d.count.toLocaleString()} artworks · ${d.type}`);
+      d3.select('#tooltipDetail').text(`${(d.count || 0).toLocaleString()} artworks · ${d.type || ''}`);
     })
-    .on('mouseout', function() {
+    .on('mouseout.tooltip', function() {
       tooltip.classed('show', false);
     })
-    .on('click', function(event, d) {
+    .on('click.panel', function(event, d) {
       event.stopPropagation();
       showSidePanel(d.id);
     });
