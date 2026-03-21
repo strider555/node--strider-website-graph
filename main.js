@@ -1,189 +1,371 @@
-// Demo data. Replace with your real tags/articles data loader.
-const demoData = {
-  nodes: [
-    { id: 'JavaScript', count: 42 },
-    { id: 'Node.js', count: 28 },
-    { id: 'Frontend', count: 36 },
-    { id: 'Backend', count: 22 },
-    { id: 'CSS', count: 18 },
-    { id: 'React', count: 30 },
-    { id: 'D3', count: 12 },
-    { id: 'Database', count: 15 },
-    { id: 'DevOps', count: 10 },
-    { id: 'TypeScript', count: 26 },
-  ],
-  links: [
-    { source: 'JavaScript', target: 'Frontend', weight: 5 },
-    { source: 'JavaScript', target: 'Node.js', weight: 3 },
-    { source: 'Node.js', target: 'Backend', weight: 4 },
-    { source: 'Frontend', target: 'CSS', weight: 4 },
-    { source: 'React', target: 'Frontend', weight: 5 },
-    { source: 'D3', target: 'JavaScript', weight: 3 },
-    { source: 'TypeScript', target: 'JavaScript', weight: 4 },
-    { source: 'Database', target: 'Backend', weight: 2 },
-    { source: 'DevOps', target: 'Backend', weight: 1 },
-    { source: 'TypeScript', target: 'Frontend', weight: 2 },
-  ],
+// M+ Museum Collection Explorer
+let museumData = null;
+let currentGraph = null;
+let currentFilter = 'all';
+
+// Color scheme for tag types
+const tagColors = {
+  area: '#E6A817',       // Gold
+  category: '#4ecdc4',   // Teal
+  medium: '#ff6b6b',     // Coral
+  nationality: '#45b7d1', // Blue
+  decade: '#96ceb4'      // Green
 };
 
-const svg = d3.select('#graph');
-const width = svg.node().clientWidth;
-const height = svg.node().clientHeight;
+// Load museum data
+async function loadData() {
+  try {
+    const response = await fetch('./data/museum-index.json');
+    if (!response.ok) throw new Error('Failed to load data');
+    museumData = await response.json();
+    console.log('Museum data loaded:', museumData.stats);
+    return museumData;
+  } catch (error) {
+    console.error('Error loading data:', error);
+    document.getElementById('loading').innerHTML = `
+      <div class="spinner"></div>
+      <div>Error loading collection data</div>
+    `;
+    throw error;
+  }
+}
 
-// Zoom/pan behavior on an inner group
-const zoomLayer = svg.append('g').attr('class', 'zoom-layer');
+// Initialize graph
+function initGraph(data) {
+  const container = document.getElementById('graph');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
 
-const zoom = d3
-  .zoom()
-  .scaleExtent([0.3, 4])
-  .on('zoom', (event) => {
-    zoomLayer.attr('transform', event.transform);
+  // Get node size scale
+  const countExtent = d3.extent(data.tags, d => d.count);
+  const radiusScale = d3.scaleSqrt()
+    .domain(countExtent)
+    .range([8, 35]);
+
+  // Create graph data with proper structure
+  const graphData = {
+    nodes: data.tags.map(tag => ({
+      id: tag.id,
+      count: tag.count,
+      type: tag.type,
+      color: tagColors[tag.type] || '#888'
+    })),
+    links: data.links.map(link => ({
+      source: link.source,
+      target: link.target,
+      weight: link.weight
+    }))
+  };
+
+  // Create graph using the TagGraph component
+  currentGraph = window.TagGraph.createTagGraph(
+    '#graph',
+    graphData,
+    { width, height }
+  );
+
+  // Customize the graph appearance
+  customizeGraph(radiusScale);
+}
+
+// Customize graph with proper colors and interactions
+function customizeGraph(radiusScale) {
+  const svg = d3.select('#graph');
+  const nodes = svg.selectAll('g.node');
+  const links = svg.selectAll('line.link');
+
+  // Update node colors based on type
+  nodes.selectAll('circle')
+    .attr('r', d => radiusScale(d.count))
+    .attr('fill', d => d.color)
+    .attr('stroke', '#0d1117')
+    .attr('stroke-width', 2);
+
+  // Update link styles
+  links
+    .attr('stroke', '#30363d')
+    .attr('stroke-opacity', 0.4)
+    .attr('stroke-width', d => Math.sqrt(d.weight || 1));
+
+  // Add hover tooltip
+  const tooltip = d3.select('#tooltip');
+
+  nodes
+    .on('mouseover', function(event, d) {
+      tooltip
+        .style('left', `${event.pageX + 10}px`)
+        .style('top', `${event.pageY - 10}px`)
+        .classed('show', true);
+
+      d3.select('#tooltipTitle').text(d.id);
+      d3.select('#tooltipDetail').text(`${d.count.toLocaleString()} artworks · ${d.type}`);
+    })
+    .on('mouseout', function() {
+      tooltip.classed('show', false);
+    })
+    .on('click', function(event, d) {
+      event.stopPropagation();
+      showSidePanel(d.id);
+    });
+}
+
+// Show side panel with objects
+function showSidePanel(tagId) {
+  const panel = document.getElementById('sidePanel');
+  const objects = museumData.objectsByTag[tagId] || [];
+
+  // Update panel header
+  const tag = museumData.tags.find(t => t.id === tagId);
+  const totalCount = tag ? tag.count : objects.length;
+
+  document.getElementById('panelTitle').textContent = tagId;
+  document.getElementById('panelSubtitle').textContent =
+    objects.length >= 50
+      ? `Showing ${objects.length} of ${totalCount.toLocaleString()} artworks`
+      : `${objects.length} artworks`;
+
+  // Render object cards
+  const grid = document.getElementById('objectGrid');
+  grid.innerHTML = '';
+
+  objects.forEach(obj => {
+    const card = document.createElement('div');
+    card.className = 'object-card';
+
+    const title = document.createElement('div');
+    title.className = 'object-title';
+    title.textContent = obj.title || 'Untitled';
+
+    const titleTC = document.createElement('div');
+    titleTC.className = 'object-title-tc';
+    titleTC.textContent = obj.titleTC || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'object-meta';
+
+    if (obj.date) {
+      const dateRow = document.createElement('div');
+      dateRow.className = 'object-meta-row';
+      dateRow.innerHTML = `<span class="object-meta-label">Date:</span><span>${obj.date}</span>`;
+      meta.appendChild(dateRow);
+    }
+
+    if (obj.artistName) {
+      const artistRow = document.createElement('div');
+      artistRow.className = 'object-meta-row';
+      const artistDisplay = obj.artistNameTC
+        ? `${obj.artistName} (${obj.artistNameTC})`
+        : obj.artistName;
+      artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><span>${artistDisplay}</span>`;
+      meta.appendChild(artistRow);
+    }
+
+    if (obj.medium) {
+      const mediumRow = document.createElement('div');
+      mediumRow.className = 'object-meta-row';
+      mediumRow.innerHTML = `<span class="object-meta-label">Medium:</span><span>${obj.medium}</span>`;
+      meta.appendChild(mediumRow);
+    }
+
+    if (obj.areas && obj.areas.length > 0) {
+      const areaRow = document.createElement('div');
+      areaRow.className = 'object-meta-row';
+      areaRow.innerHTML = `<span class="object-meta-label">Area:</span><span>${obj.areas.join(', ')}</span>`;
+      meta.appendChild(areaRow);
+    }
+
+    card.appendChild(title);
+    if (titleTC.textContent) card.appendChild(titleTC);
+    card.appendChild(meta);
+
+    grid.appendChild(card);
   });
 
-svg.call(zoom).on('dblclick.zoom', null); // disable dblclick to center
+  // Show panel
+  panel.classList.add('open');
+}
 
-// Define groups for links and nodes
-const linkGroup = zoomLayer.append('g').attr('class', 'links');
-const nodeGroup = zoomLayer.append('g').attr('class', 'nodes');
+// Close side panel
+function closeSidePanel() {
+  document.getElementById('sidePanel').classList.remove('open');
+}
 
-// Scales
-const countExtent = d3.extent(demoData.nodes, (d) => d.count);
-const radius = d3
-  .scaleSqrt()
-  .domain(countExtent)
-  .range([6, 28]);
+// Filter graph by area
+function filterByArea(area) {
+  if (!museumData) return;
 
-const linkWidth = d3
-  .scaleLinear()
-  .domain(d3.extent(demoData.links, (d) => d.weight))
-  .range([1, 4]);
+  currentFilter = area;
 
-// Simulation
-const simulation = d3
-  .forceSimulation(demoData.nodes)
-  .force(
-    'link',
-    d3
-      .forceLink(demoData.links)
-      .id((d) => d.id)
-      .distance((d) => 50 + 8 * (3 - Math.min(3, d.weight || 1)))
-      .strength((d) => 0.1 + 0.1 * (d.weight || 1))
-  )
-  .force('charge', d3.forceManyBody().strength(-200))
-  .force('center', d3.forceCenter(width / 2, height / 2))
-  .force('collision', d3.forceCollide((d) => radius(d.count) + 4));
+  // Update button states
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.area === area);
+  });
 
-// Draw links
-const links = linkGroup
-  .selectAll('line')
-  .data(demoData.links)
-  .join('line')
-  .attr('class', 'link')
-  .attr('stroke-width', (d) => linkWidth(d.weight || 1));
+  // Filter data
+  let filteredTags = museumData.tags;
 
-// Draw nodes: group contains circle + text + badge count
-const nodes = nodeGroup
-  .selectAll('g.node')
-  .data(demoData.nodes)
-  .join('g')
-  .attr('class', 'node')
-  .style('cursor', 'pointer')
-  .call(
-    d3
-      .drag()
-      .on('start', (event, d) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.__down = { t: Date.now(), x: event.x, y: event.y };
-        d.__moved = false;
-        d.fx = d.x;
-        d.fy = d.y;
-      })
-      .on('drag', (event, d) => {
-        if (d.__down && !d.__moved) {
-          const dx = event.x - d.__down.x;
-          const dy = event.y - d.__down.y;
-          if (Math.hypot(dx, dy) > 5) d.__moved = true;
-        }
-        d.fx = event.x;
-        d.fy = event.y;
-      })
-      .on('end', (event, d) => {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      })
-  )
-  .on('click', (event, d) => {
-    const dt = d.__down ? (Date.now() - d.__down.t) : 9999;
-    const isQuick = dt < 300 && !d.__moved;
-    const detail = { tag: d.id };
-    console.log('Search by tag:', detail);
-    window.dispatchEvent(new CustomEvent('tag:search', { detail }));
-    if (isQuick) {
-      const url = `./viewByCategory.html?category=${encodeURIComponent(d.id)}`;
-      window.open(url, '_blank', 'noopener');
+  if (area !== 'all') {
+    // Get tags that are either the area itself or co-occur with objects in that area
+    const areaObjects = museumData.objectsByTag[area] || [];
+    const relevantTagIds = new Set([area]);
+
+    // Add all tags that appear in objects of this area
+    areaObjects.forEach(obj => {
+      if (obj.areas) obj.areas.forEach(a => relevantTagIds.add(a));
+      if (obj.categories) obj.categories.forEach(c => relevantTagIds.add(c));
+    });
+
+    // Filter tags and links
+    filteredTags = museumData.tags.filter(tag => {
+      // Keep the main area tag
+      if (tag.id === area) return true;
+      // Keep tags that appear in area objects
+      const tagObjects = museumData.objectsByTag[tag.id] || [];
+      return tagObjects.some(obj => obj.areas && obj.areas.includes(area));
+    });
+  }
+
+  // Rebuild graph
+  const filteredLinks = museumData.links.filter(link => {
+    const sourceExists = filteredTags.find(t => t.id === link.source);
+    const targetExists = filteredTags.find(t => t.id === link.target);
+    return sourceExists && targetExists;
+  });
+
+  const countExtent = d3.extent(filteredTags, d => d.count);
+  const radiusScale = d3.scaleSqrt()
+    .domain(countExtent)
+    .range([8, 35]);
+
+  const graphData = {
+    nodes: filteredTags.map(tag => ({
+      id: tag.id,
+      count: tag.count,
+      type: tag.type,
+      color: tagColors[tag.type] || '#888'
+    })),
+    links: filteredLinks
+  };
+
+  // Destroy old graph
+  if (currentGraph) {
+    currentGraph.destroy();
+  }
+
+  // Clear SVG
+  d3.select('#graph').selectAll('*').remove();
+
+  // Create new graph
+  const container = document.getElementById('graph');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  currentGraph = window.TagGraph.createTagGraph(
+    '#graph',
+    graphData,
+    { width, height }
+  );
+
+  customizeGraph(radiusScale);
+}
+
+// Search functionality
+function setupSearch() {
+  const searchInput = document.getElementById('searchInput');
+  let searchTimeout;
+
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      const query = e.target.value.toLowerCase().trim();
+
+      if (!query) {
+        // Reset all nodes
+        d3.select('#graph').selectAll('g.node')
+          .style('opacity', 1);
+        d3.select('#graph').selectAll('line.link')
+          .style('opacity', 0.4);
+        return;
+      }
+
+      // Highlight matching nodes
+      d3.select('#graph').selectAll('g.node')
+        .style('opacity', d => {
+          return d.id.toLowerCase().includes(query) ? 1 : 0.2;
+        });
+
+      // Dim links
+      d3.select('#graph').selectAll('line.link')
+        .style('opacity', 0.1);
+    }, 300);
+  });
+}
+
+// Zoom controls
+function setupZoomControls() {
+  const svg = d3.select('#graph');
+  const zoom = d3.zoom().scaleExtent([0.3, 4]);
+
+  document.getElementById('zoomIn').addEventListener('click', () => {
+    svg.transition().call(zoom.scaleBy, 1.3);
+  });
+
+  document.getElementById('zoomOut').addEventListener('click', () => {
+    svg.transition().call(zoom.scaleBy, 0.7);
+  });
+
+  document.getElementById('resetZoom').addEventListener('click', () => {
+    if (currentGraph && currentGraph.resetZoom) {
+      currentGraph.resetZoom();
     }
   });
-
-// Interactions: highlight connected on hover
-const adjacency = new Map();
-for (const l of demoData.links) {
-  const keyA = `${l.source}|${l.target}`;
-  const keyB = `${l.target}|${l.source}`;
-  adjacency.set(keyA, true);
-  adjacency.set(keyB, true);
 }
 
-function isConnected(a, b) {
-  if (a.id === b.id) return true;
-  return adjacency.get(`${a.id}|${b.id}`) || false;
-}
+// Initialize app
+async function init() {
+  try {
+    // Load data
+    await loadData();
 
-nodes
-  .on('mouseover', function (event, d) {
-    nodes.selectAll('circle').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.25));
-    nodes.selectAll('text').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.25));
-    links
-      .classed('highlight', (l) => l.source.id === d.id || l.target.id === d.id)
-      .attr('stroke-opacity', (l) => (l.source.id === d.id || l.target.id === d.id ? 0.9 : 0.1));
-  })
-  .on('mouseout', function () {
-    nodes.selectAll('circle').attr('opacity', 1);
-    nodes.selectAll('text').attr('opacity', 1);
-    links.classed('highlight', false).attr('stroke-opacity', 0.5);
-  })
-  .on('click', (event, d) => {
-    event.stopPropagation();
-    const detail = { tag: d.id };
-    console.log('Search by tag:', detail);
-    window.dispatchEvent(new CustomEvent('tag:search', { detail }));
-    // Optional: navigate to a filtered list page if implemented
-  });
+    // Hide loading, show graph
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('graph-container').style.display = 'block';
 
-// Navigate to view a demo article when pressing number keys (quick test)
-document.addEventListener('keydown', (e) => {
-  if (e.key >= '1' && e.key <= '9') {
-    const n = Number(e.key);
-    const id = `article-${String(n).padStart(3, '0')}`;
-    window.location.href = `./viewArticle.html?articleId=${id}`;
+    // Initialize graph
+    initGraph(museumData);
+
+    // Setup interactions
+    setupSearch();
+    setupZoomControls();
+
+    // Setup filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterByArea(btn.dataset.area);
+      });
+    });
+
+    // Setup close panel button
+    document.getElementById('closePanel').addEventListener('click', closeSidePanel);
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('sidePanel');
+      if (panel.classList.contains('open') &&
+          !panel.contains(e.target) &&
+          !e.target.closest('.node')) {
+        closeSidePanel();
+      }
+    });
+
+  } catch (error) {
+    console.error('Failed to initialize app:', error);
   }
-});
-
-simulation.on('tick', () => {
-  links
-    .attr('x1', (d) => d.source.x)
-    .attr('y1', (d) => d.source.y)
-    .attr('x2', (d) => d.target.x)
-    .attr('y2', (d) => d.target.y);
-
-  nodes.attr('transform', (d) => `translate(${d.x},${d.y})`);
-});
-
-// Resize handling
-function resize() {
-  const w = svg.node().clientWidth;
-  const h = svg.node().clientHeight;
-  simulation.force('center', d3.forceCenter(w / 2, h / 2));
-  simulation.alpha(0.2).restart();
 }
-window.addEventListener('resize', resize);
+
+// Start app when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

@@ -1,30 +1,100 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Site Home</title>
-    <link rel="stylesheet" href="./styles.css" />
-    <style>
-      .home { max-width: 960px; margin: 0 auto; padding: 24px; color: #e5e7eb; }
-      .home a { color: #38bdf8; }
-      .card { background: #0f172a; border: 1px solid #1e293b; padding: 16px; border-radius: 12px; margin: 16px 0; }
-    </style>
-  </head>
-  <body>
-    <header class="app-header">
-      <h1>範例網站首頁</h1>
-      <p class="hint">前往關聯圖或文章頁進行測試</p>
-    </header>
-    <main class="home">
-      <div class="card">
-        <h3>關聯圖（獨立頁）</h3>
-        <p><a href="./graph.html">打開 graph.html</a></p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M+ Museum Collection Explorer</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>M+ Collection Explorer</h1>
+      <div class="subtitle">Interactive visualization of 13,000+ artworks</div>
+    </div>
+    <div class="controls">
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search tags..."
+          autocomplete="off"
+        >
       </div>
-      <div class="card">
-        <h3>文章頁</h3>
-        <p><a href="./viewArticle.html?articleId=article-001">檢視文章 article-001</a></p>
+      <div class="filter-buttons" id="filterButtons">
+        <button class="filter-btn active" data-area="all">All</button>
+        <button class="filter-btn" data-area="Visual Art">Visual Art</button>
+        <button class="filter-btn" data-area="Design and Architecture">Design</button>
+        <button class="filter-btn" data-area="Moving Image">Moving Image</button>
       </div>
-    </main>
-  </body>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <div>Loading collection data...</div>
+    </div>
+
+    <div id="graph-container" style="display: none;">
+      <svg id="graph"></svg>
+
+      <div class="legend">
+        <h3>Tag Types</h3>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #E6A817;"></div>
+          <span>Area</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #4ecdc4;"></div>
+          <span>Category</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ff6b6b;"></div>
+          <span>Medium</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #45b7d1;"></div>
+          <span>Nationality</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #96ceb4;"></div>
+          <span>Decade</span>
+        </div>
+      </div>
+
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoomIn" title="Zoom In">+</button>
+        <button class="zoom-btn" id="zoomOut" title="Zoom Out">−</button>
+        <button class="zoom-btn" id="resetZoom" title="Reset View">⟲</button>
+      </div>
+    </div>
+
+    <div class="side-panel" id="sidePanel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title" id="panelTitle">Tag Name</div>
+          <div class="panel-subtitle" id="panelSubtitle">0 artworks</div>
+        </div>
+        <button class="close-btn" id="closePanel">×</button>
+      </div>
+      <div class="panel-content">
+        <div class="object-grid" id="objectGrid"></div>
+      </div>
+    </div>
+
+    <div class="tooltip" id="tooltip">
+      <div class="tooltip-title" id="tooltipTitle"></div>
+      <div class="tooltip-detail" id="tooltipDetail"></div>
+    </div>
+  </main>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="./graph.js"></script>
+  <script src="./main.js"></script>
+</body>
 </html>

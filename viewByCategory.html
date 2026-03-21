@@ -1,70 +1,415 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>分類文章列表</title>
-    <style>
-      :root {
-        --bg: #0b1020; --fg: #e5e7eb; --muted: #94a3b8; --card:#0f172a; --border:#1e293b; --accent:#38bdf8;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tag View - M+ Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1a1f2e;
+      --border-color: #30363d;
+      --text-primary: #e6e8eb;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --gold: #E6A817;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      padding: 20px 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .breadcrumb {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .breadcrumb a {
+      color: var(--text-secondary);
+    }
+
+    main {
+      padding: 32px 0;
+    }
+
+    .tag-info {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .tag-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .tag-stats {
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .object-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .object-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.2s;
+    }
+
+    .object-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .object-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .object-title-tc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .object-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .object-meta-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+    }
+
+    .object-meta-label {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .error {
+      color: #ff6b6b;
+      padding: 16px;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-secondary);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(230, 168, 23, 0.15);
+      border: 1px solid rgba(230, 168, 23, 0.3);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-right: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .object-grid {
+        grid-template-columns: 1fr;
       }
-      * { box-sizing: border-box; }
-      html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial; }
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      header { border-bottom: 1px solid var(--border); background: var(--card); }
-      .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
-      h1 { font-size: 20px; margin: 0; }
-      .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-top: 16px; }
-      .list { list-style: none; padding: 0; margin: 0; }
-      .list li { padding: 10px 0; border-bottom: 1px dashed #223146; }
-      .meta { color: var(--muted); font-size: 12px; }
-      .error { color: #fca5a5; padding: 12px; background: #1a1020; border: 1px solid #3f1f2f; border-radius: 8px; }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1>分類文章列表</h1>
-        <div><a href="./index.html">回首頁</a></div>
+
+      .tag-title {
+        font-size: 24px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>M+ Collection</h1>
+      <div class="breadcrumb">
+        <a href="./index.html">← Back to Explorer</a>
       </div>
-    </header>
-    <main>
-      <div class="container">
-        <div class="card">
-          <h2 id="title">載入中…</h2>
-          <ul class="list" id="list"></ul>
-          <div id="error" class="error" style="display:none"></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <div>Loading artworks...</div>
+      </div>
+
+      <div id="content" style="display: none;">
+        <div class="tag-info">
+          <div class="tag-title" id="tagTitle">Loading...</div>
+          <div class="tag-stats">
+            <div class="stat">
+              <span>Artworks:</span>
+              <span class="stat-value" id="artworkCount">0</span>
+            </div>
+            <div class="stat">
+              <span>Type:</span>
+              <span class="stat-value" id="tagType">-</span>
+            </div>
+          </div>
         </div>
+
+        <div class="object-grid" id="objectGrid"></div>
       </div>
-    </main>
-    <script>
-      function getQueryParam(name) { const u = new URL(window.location.href); return u.searchParams.get(name); }
-      function formatDate(dt) { try { const d = new Date(dt); return d.toLocaleDateString('zh-Hant'); } catch(e){ return dt; } }
-      async function loadIndex(){ const r = await fetch('./data/articles-index.json', { cache:'no-store' }); if(!r.ok) throw new Error('無法載入索引'); return r.json(); }
-      function render(category, index){
-        const list = document.getElementById('list'); list.innerHTML = '';
-        const title = document.getElementById('title');
-        title.textContent = `分類：${category}`;
-        const filtered = index.articles.filter(a => (a.tags||[]).includes(category));
-        if(filtered.length === 0){
-          const li = document.createElement('li'); li.textContent = '沒有符合的文章'; list.appendChild(li); return;
-        }
-        filtered.forEach(a => {
-          const li = document.createElement('li');
-          const link = document.createElement('a');
-          link.href = `./viewArticle.html?articleId=${encodeURIComponent(a.id)}`;
-          link.textContent = a.title;
-          const meta = document.createElement('div'); meta.className = 'meta'; meta.textContent = `${formatDate(a.publishedAt)} ・ ${a.author}`;
-          li.appendChild(link); li.appendChild(meta); list.appendChild(li);
-        });
+
+      <div id="error" class="error" style="display: none;"></div>
+    </div>
+  </main>
+
+  <script>
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    async function loadData() {
+      const response = await fetch('./data/museum-index.json');
+      if (!response.ok) throw new Error('Failed to load collection data');
+      return response.json();
+    }
+
+    function renderObjects(category, data) {
+      const tag = data.tags.find(t => t.id === category);
+      const objects = data.objectsByTag[category] || [];
+
+      // Update tag info
+      document.getElementById('tagTitle').textContent = category;
+
+      const displayCount = objects.length >= 50
+        ? `${objects.length} (showing sample of ${tag.count.toLocaleString()})`
+        : objects.length;
+
+      document.getElementById('artworkCount').textContent = displayCount;
+      document.getElementById('tagType').textContent = tag ? tag.type : 'unknown';
+
+      // Render object cards
+      const grid = document.getElementById('objectGrid');
+      grid.innerHTML = '';
+
+      if (objects.length === 0) {
+        grid.innerHTML = '<div class="error">No artworks found for this tag.</div>';
+        return;
       }
-      (async function(){
-        const category = getQueryParam('category');
-        if(!category){ document.getElementById('title').textContent = '缺少 category 參數'; return; }
-        try{ const index = await loadIndex(); render(category, index); }
-        catch(e){ const er = document.getElementById('error'); er.style.display='block'; er.textContent = e.message; }
-      })();
-    </script>
-  </body>
+
+      objects.forEach(obj => {
+        const card = document.createElement('div');
+        card.className = 'object-card';
+
+        const title = document.createElement('div');
+        title.className = 'object-title';
+        title.textContent = obj.title || 'Untitled';
+        card.appendChild(title);
+
+        if (obj.titleTC) {
+          const titleTC = document.createElement('div');
+          titleTC.className = 'object-title-tc';
+          titleTC.textContent = obj.titleTC;
+          card.appendChild(titleTC);
+        }
+
+        const meta = document.createElement('div');
+        meta.className = 'object-meta';
+
+        if (obj.date) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          row.innerHTML = `
+            <span class="object-meta-label">Date</span>
+            <span>${obj.date}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        if (obj.artistName) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          const artistDisplay = obj.artistNameTC
+            ? `${obj.artistName} (${obj.artistNameTC})`
+            : obj.artistName;
+          row.innerHTML = `
+            <span class="object-meta-label">Artist</span>
+            <span>${artistDisplay}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        if (obj.nationality) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          row.innerHTML = `
+            <span class="object-meta-label">Nationality</span>
+            <span>${obj.nationality}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        if (obj.medium) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          row.innerHTML = `
+            <span class="object-meta-label">Medium</span>
+            <span>${obj.medium}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        if (obj.areas && obj.areas.length > 0) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          row.innerHTML = `
+            <span class="object-meta-label">Area</span>
+            <span>${obj.areas.join(', ')}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        if (obj.categories && obj.categories.length > 0) {
+          const row = document.createElement('div');
+          row.className = 'object-meta-row';
+          row.innerHTML = `
+            <span class="object-meta-label">Categories</span>
+            <span>${obj.categories.slice(0, 3).join(', ')}</span>
+          `;
+          meta.appendChild(row);
+        }
+
+        card.appendChild(meta);
+        grid.appendChild(card);
+      });
+    }
+
+    async function init() {
+      const category = getQueryParam('category');
+
+      if (!category) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = 'Missing category parameter';
+        return;
+      }
+
+      try {
+        const data = await loadData();
+        renderObjects(category, data);
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = `Error: ${error.message}`;
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
 </html>
