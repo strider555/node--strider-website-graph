@@ -24,6 +24,7 @@
           placeholder="Search tags..."
           autocomplete="off"
         >
+        <div class="search-dropdown" id="searchDropdown"></div>
       </div>
       <div class="filter-buttons" id="filterButtons">
         <button class="filter-btn active" data-area="all">All</button>
@@ -36,7 +37,11 @@
 
   <main class="app-main">
     <div id="loading" class="loading">
-      <div class="spinner"></div>
+      <div class="spinner">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <div>Loading collection data...</div>
     </div>
 
@@ -80,23 +85,30 @@
 
     <div class="side-panel" id="sidePanel">
       <div class="panel-header">
-        <div>
-          <div class="panel-title" id="panelTitle">Tag Name</div>
-          <div class="panel-subtitle" id="panelSubtitle">0 artworks</div>
+        <div class="panel-header-content">
+          <div class="panel-title-wrapper">
+            <div class="panel-color-indicator" id="panelColorIndicator"></div>
+            <div>
+              <div class="panel-title" id="panelTitle">Tag Name</div>
+              <div class="panel-type-label" id="panelTypeLabel">Category</div>
+            </div>
+          </div>
+          <div class="panel-summary" id="panelSummary">Tag · Type · 0 artworks</div>
         </div>
         <button class="close-btn" id="closePanel">×</button>
       </div>
-      <div class="panel-actions">
-        <a class="detail-btn" id="viewDetailsBtn" href="#" target="_blank">View Full Details →</a>
-      </div>
       <div class="panel-content">
         <div class="object-grid" id="objectGrid"></div>
+      </div>
+      <div class="panel-footer">
+        <a class="detail-btn" id="viewDetailsBtn" href="#" target="_blank">View Full Details →</a>
       </div>
     </div>
 
     <div class="tooltip" id="tooltip">
       <div class="tooltip-title" id="tooltipTitle"></div>
       <div class="tooltip-detail" id="tooltipDetail"></div>
+      <div class="tooltip-detail">Click to explore →</div>
     </div>
   </main>
 

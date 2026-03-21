@@ -47,6 +47,7 @@
       border-bottom: 1px solid var(--border-color);
       background: var(--bg-secondary);
       padding: 20px 0;
+      box-shadow: 0 1px 8px rgba(230, 168, 23, 0.15);
     }
 
     .container {
@@ -69,7 +70,20 @@
     }
 
     .breadcrumb a {
-      color: var(--text-secondary);
+      color: var(--gold);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      background: rgba(230, 168, 23, 0.1);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      background: rgba(230, 168, 23, 0.2);
+      transform: translateX(-2px);
     }
 
     main {
@@ -112,22 +126,25 @@
 
     .object-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
 
     .object-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
+      border-left: 3px solid var(--gold);
       border-radius: 12px;
       padding: 20px;
-      transition: all 0.2s;
+      transition: all 0.3s ease-out;
     }
 
     .object-card:hover {
+      border-left-color: #f0b830;
       border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(230, 168, 23, 0.2);
+      background: rgba(26, 31, 46, 0.8);
     }
 
     .object-title {
@@ -205,6 +222,38 @@
       margin-right: 8px;
     }
 
+    .sort-controls {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sort-btn {
+      padding: 6px 12px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .sort-btn:hover {
+      background: var(--bg-card);
+      border-color: var(--gold);
+      color: var(--text-primary);
+    }
+
+    .sort-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-dark);
+      font-weight: 600;
+    }
+
     @media (max-width: 768px) {
       .object-grid {
         grid-template-columns: 1fr;
@@ -216,6 +265,10 @@
 
       h1 {
         font-size: 22px;
+      }
+
+      .tag-info {
+        padding: 16px;
       }
     }
   </style>
@@ -250,6 +303,12 @@
               <span class="stat-value" id="tagType">-</span>
             </div>
           </div>
+          <div class="sort-controls">
+            <span style="font-size: 12px; color: var(--text-muted); margin-right: 4px;">Sort by:</span>
+            <button class="sort-btn active" data-sort="default">Default</button>
+            <button class="sort-btn" data-sort="title">Title (A-Z)</button>
+            <button class="sort-btn" data-sort="date">Date</button>
+          </div>
         </div>
 
         <div class="object-grid" id="objectGrid"></div>
@@ -271,9 +330,33 @@
       return response.json();
     }
 
-    function renderObjects(category, data) {
+    function sortObjects(objects, sortBy) {
+      if (sortBy === 'title') {
+        return objects.sort((a, b) => {
+          const titleA = (a.title || 'Untitled').toLowerCase();
+          const titleB = (b.title || 'Untitled').toLowerCase();
+          return titleA.localeCompare(titleB);
+        });
+      } else if (sortBy === 'date') {
+        return objects.sort((a, b) => {
+          // Extract year from date string (e.g., "1990" or "1990-2000")
+          const yearA = a.date ? parseInt(a.date.match(/\d{4}/)?.[0] || '0') : 0;
+          const yearB = b.date ? parseInt(b.date.match(/\d{4}/)?.[0] || '0') : 0;
+          return yearB - yearA; // Newest first
+        });
+      }
+      return objects; // default order
+    }
+
+    let currentObjects = [];
+    let currentTag = null;
+
+    function renderObjects(category, data, sortBy = 'default') {
       const tag = data.tags.find(t => t.id === category);
-      const objects = data.objectsByTag[category] || [];
+      let objects = data.objectsByTag[category] || [];
+
+      currentTag = tag;
+      currentObjects = objects;
 
       // Update tag info
       document.getElementById('tagTitle').textContent = category;
@@ -284,6 +367,9 @@
 
       document.getElementById('artworkCount').textContent = displayCount;
       document.getElementById('tagType').textContent = tag ? tag.type : 'unknown';
+
+      // Sort objects
+      objects = sortObjects([...objects], sortBy);
 
       // Render object cards
       const grid = document.getElementById('objectGrid');
@@ -397,6 +483,16 @@
 
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
+
+        // Setup sort buttons
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const sortBy = btn.dataset.sort;
+            renderObjects(category, data, sortBy);
+          });
+        });
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('loading').style.display = 'none';

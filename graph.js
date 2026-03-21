@@ -76,13 +76,14 @@
       .force('y', d3.forceY(height / 2).strength(0.04));
 
     const links = linkGroup
-      .selectAll('line')
+      .selectAll('path')
       .data(dataset.links)
-      .join('line')
+      .join('path')
       .attr('class', 'link')
       .attr('stroke', '#64748b')
       .attr('stroke-opacity', (d) => linkOpacityScale(d.weight || 1))
-      .attr('stroke-width', (d) => linkWidth(d.weight || 1));
+      .attr('stroke-width', (d) => linkWidth(d.weight || 1))
+      .attr('fill', 'none');
 
     const nodes = nodeGroup
       .selectAll('g.node')
@@ -124,18 +125,26 @@
         }
       })
       .on('mouseover', function (event, d) {
-        nodes.selectAll('circle').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.15));
+        nodes.selectAll('circle')
+          .attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.15))
+          .style('filter', (o) => isConnected(d, o) && o.id !== d.id ? 'brightness(1.3) drop-shadow(0 0 8px currentColor)' : null);
         nodes.selectAll('text').attr('opacity', (o) => (isConnected(d, o) ? 1 : 0.15));
         links
-          .attr('stroke-opacity', (l) => (l.source.id === d.id || l.target.id === d.id ? 0.85 : 0.03))
-          .attr('stroke', (l) => (l.source.id === d.id || l.target.id === d.id ? '#E6A817' : '#64748b'));
+          .attr('stroke-opacity', (l) => (l.source.id === d.id || l.target.id === d.id ? 0.9 : 0.03))
+          .attr('stroke', (l) => (l.source.id === d.id || l.target.id === d.id ? '#E6A817' : '#64748b'))
+          .attr('stroke-dasharray', (l) => (l.source.id === d.id || l.target.id === d.id ? '5,3' : '0'))
+          .style('animation', (l) => (l.source.id === d.id || l.target.id === d.id ? 'dash 0.5s linear infinite' : 'none'));
       })
       .on('mouseout', function () {
-        nodes.selectAll('circle').attr('opacity', 1);
+        nodes.selectAll('circle')
+          .attr('opacity', 1)
+          .style('filter', null);
         nodes.selectAll('text').attr('opacity', 1);
         links
           .attr('stroke-opacity', (d) => linkOpacityScale(d.weight || 1))
-          .attr('stroke', '#64748b');
+          .attr('stroke', '#64748b')
+          .attr('stroke-dasharray', '0')
+          .style('animation', 'none');
       });
 
     nodes.append('circle')
@@ -182,11 +191,12 @@
     }
 
     simulation.on('tick', () => {
-      links
-        .attr('x1', (d) => d.source.x)
-        .attr('y1', (d) => d.source.y)
-        .attr('x2', (d) => d.target.x)
-        .attr('y2', (d) => d.target.y);
+      links.attr('d', (d) => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy) * 1.5; // Curve radius
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
       nodes.attr('transform', (d) => `translate(${d.x},${d.y})`);
     });

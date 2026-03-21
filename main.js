@@ -73,7 +73,7 @@ function initGraph(data) {
 function customizeGraph(radiusScale) {
   const svg = d3.select('#graph');
   const nodes = svg.selectAll('g.node');
-  const links = svg.selectAll('line.link');
+  const links = svg.selectAll('path.link');
 
   // Update link styles
   links
@@ -86,12 +86,21 @@ function customizeGraph(radiusScale) {
   nodes
     .on('mouseover.tooltip', function(event, d) {
       tooltip
-        .style('left', `${event.pageX + 10}px`)
+        .style('left', `${event.pageX + 12}px`)
         .style('top', `${event.pageY - 10}px`)
         .classed('show', true);
 
+      const typeColor = tagColors[d.type] || '#888';
       d3.select('#tooltipTitle').text(d.id);
-      d3.select('#tooltipDetail').text(`${(d.count || 0).toLocaleString()} artworks · ${d.type || ''}`);
+      d3.select('#tooltipDetail').html(`
+        <span style="display: inline-block; padding: 2px 6px; background: ${typeColor}; color: #0d1117; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; margin-right: 6px;">${d.type || 'unknown'}</span>
+        ${(d.count || 0).toLocaleString()} artworks
+      `);
+    })
+    .on('mousemove.tooltip', function(event) {
+      tooltip
+        .style('left', `${event.pageX + 12}px`)
+        .style('top', `${event.pageY - 10}px`);
     })
     .on('mouseout.tooltip', function() {
       tooltip.classed('show', false);
@@ -110,12 +119,21 @@ function showSidePanel(tagId) {
   // Update panel header
   const tag = museumData.tags.find(t => t.id === tagId);
   const totalCount = tag ? tag.count : objects.length;
+  const tagType = tag ? tag.type : 'unknown';
+  const tagColor = tagColors[tagType] || '#888';
 
+  // Update color indicator
+  document.getElementById('panelColorIndicator').style.background = tagColor;
+
+  // Update title and type
   document.getElementById('panelTitle').textContent = tagId;
-  document.getElementById('panelSubtitle').textContent =
-    objects.length >= 50
-      ? `Showing ${objects.length} of ${totalCount.toLocaleString()} artworks`
-      : `${objects.length} artworks`;
+  document.getElementById('panelTypeLabel').textContent = tagType;
+
+  // Update summary bar
+  const summaryText = objects.length >= 50
+    ? `${tagId} · ${tagType} · Showing ${objects.length} of ${totalCount.toLocaleString()} artworks`
+    : `${tagId} · ${tagType} · ${totalCount.toLocaleString()} artworks`;
+  document.getElementById('panelSummary').textContent = summaryText;
 
   // Set details button URL
   document.getElementById('viewDetailsBtn').href =
@@ -280,7 +298,7 @@ function filterByType(type) {
     d3.select('#graph').selectAll('g.node')
       .transition().duration(300)
       .style('opacity', 1);
-    d3.select('#graph').selectAll('line.link')
+    d3.select('#graph').selectAll('path.link')
       .transition().duration(300)
       .style('opacity', null); // Reset to default
     return;
@@ -295,7 +313,7 @@ function filterByType(type) {
     .transition().duration(300)
     .style('opacity', d => matchingIds.has(d.id) ? 1 : 0.08);
 
-  d3.select('#graph').selectAll('line.link')
+  d3.select('#graph').selectAll('path.link')
     .transition().duration(300)
     .style('opacity', l => {
       const sId = typeof l.source === 'object' ? l.source.id : l.source;
@@ -307,32 +325,127 @@ function filterByType(type) {
 // Search functionality
 function setupSearch() {
   const searchInput = document.getElementById('searchInput');
+  const searchDropdown = document.getElementById('searchDropdown');
   let searchTimeout;
+  let selectedIndex = -1;
+  let currentResults = [];
+
+  function showSearchResults(query) {
+    if (!query) {
+      searchDropdown.classList.remove('show');
+      searchDropdown.innerHTML = '';
+      // Reset all nodes
+      d3.select('#graph').selectAll('g.node')
+        .style('opacity', 1);
+      d3.select('#graph').selectAll('path.link')
+        .style('opacity', 0.4);
+      return;
+    }
+
+    // Find matching tags
+    const matches = museumData.tags
+      .filter(tag => tag.id.toLowerCase().includes(query))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 8);
+
+    currentResults = matches;
+    selectedIndex = -1;
+
+    if (matches.length === 0) {
+      searchDropdown.innerHTML = '<div style="padding: 12px 16px; color: var(--text-muted); text-align: center;">No matches found</div>';
+      searchDropdown.classList.add('show');
+      return;
+    }
+
+    // Render dropdown items
+    searchDropdown.innerHTML = matches.map((tag, index) => {
+      const typeColor = tagColors[tag.type] || '#888';
+      return `
+        <div class="search-item" data-index="${index}" data-tag="${tag.id}">
+          <div class="search-item-info">
+            <div class="search-item-name">${tag.id}</div>
+            <div class="search-item-meta">
+              <span class="search-type-badge" style="background: ${typeColor}; color: #0d1117;">${tag.type}</span>
+              <span class="search-item-count">${tag.count.toLocaleString()} artworks</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    searchDropdown.classList.add('show');
+
+    // Add click handlers
+    searchDropdown.querySelectorAll('.search-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const tagId = item.dataset.tag;
+        showSidePanel(tagId);
+        searchInput.value = '';
+        searchDropdown.classList.remove('show');
+        // Reset graph opacity
+        d3.select('#graph').selectAll('g.node').style('opacity', 1);
+        d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
+      });
+    });
+
+    // Highlight matching nodes
+    const matchingIds = new Set(matches.map(t => t.id));
+    d3.select('#graph').selectAll('g.node')
+      .style('opacity', d => matchingIds.has(d.id) ? 1 : 0.2);
+    d3.select('#graph').selectAll('path.link')
+      .style('opacity', 0.1);
+  }
 
   searchInput.addEventListener('input', (e) => {
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      const query = e.target.value.toLowerCase().trim();
+    const query = e.target.value.toLowerCase().trim();
+    searchTimeout = setTimeout(() => showSearchResults(query), 150);
+  });
 
-      if (!query) {
-        // Reset all nodes
-        d3.select('#graph').selectAll('g.node')
-          .style('opacity', 1);
-        d3.select('#graph').selectAll('line.link')
-          .style('opacity', 0.4);
-        return;
+  searchInput.addEventListener('keydown', (e) => {
+    if (!searchDropdown.classList.contains('show')) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      searchInput.value = '';
+      searchDropdown.classList.remove('show');
+      d3.select('#graph').selectAll('g.node').style('opacity', 1);
+      d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (currentResults.length > 0) {
+        const tag = currentResults[selectedIndex >= 0 ? selectedIndex : 0];
+        if (tag) {
+          showSidePanel(tag.id);
+          searchInput.value = '';
+          searchDropdown.classList.remove('show');
+          d3.select('#graph').selectAll('g.node').style('opacity', 1);
+          d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
+        }
       }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, currentResults.length - 1);
+      updateSelectedItem();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, -1);
+      updateSelectedItem();
+    }
+  });
 
-      // Highlight matching nodes
-      d3.select('#graph').selectAll('g.node')
-        .style('opacity', d => {
-          return d.id.toLowerCase().includes(query) ? 1 : 0.2;
-        });
+  function updateSelectedItem() {
+    const items = searchDropdown.querySelectorAll('.search-item');
+    items.forEach((item, index) => {
+      item.classList.toggle('selected', index === selectedIndex);
+    });
+  }
 
-      // Dim links
-      d3.select('#graph').selectAll('line.link')
-        .style('opacity', 0.1);
-    }, 300);
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+      searchDropdown.classList.remove('show');
+    }
   });
 }
 
