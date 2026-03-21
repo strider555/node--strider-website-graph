@@ -2,6 +2,7 @@
 let museumData = null;
 let currentGraph = null;
 let currentFilter = 'all';
+let currentTypeFilter = 'all';
 
 // Color scheme for tag types
 const tagColors = {
@@ -259,6 +260,46 @@ function filterByArea(area) {
   customizeGraph(radiusScale);
 }
 
+// Filter graph by tag type (area/category/medium/nationality/decade)
+function filterByType(type) {
+  if (!museumData) return;
+
+  currentTypeFilter = type;
+
+  // Update legend active state
+  document.querySelectorAll('.legend-item[data-type]').forEach(item => {
+    item.classList.toggle('active', item.dataset.type === type);
+  });
+
+  if (type === 'all') {
+    // Show all nodes
+    d3.select('#graph').selectAll('g.node')
+      .transition().duration(300)
+      .style('opacity', 1);
+    d3.select('#graph').selectAll('line.link')
+      .transition().duration(300)
+      .style('opacity', null); // Reset to default
+    return;
+  }
+
+  // Highlight nodes of selected type, dim others
+  const matchingIds = new Set(
+    museumData.tags.filter(t => t.type === type).map(t => t.id)
+  );
+
+  d3.select('#graph').selectAll('g.node')
+    .transition().duration(300)
+    .style('opacity', d => matchingIds.has(d.id) ? 1 : 0.08);
+
+  d3.select('#graph').selectAll('line.link')
+    .transition().duration(300)
+    .style('opacity', l => {
+      const sId = typeof l.source === 'object' ? l.source.id : l.source;
+      const tId = typeof l.target === 'object' ? l.target.id : l.target;
+      return (matchingIds.has(sId) || matchingIds.has(tId)) ? 0.4 : 0.02;
+    });
+}
+
 // Search functionality
 function setupSearch() {
   const searchInput = document.getElementById('searchInput');
@@ -331,10 +372,17 @@ async function init() {
     setupSearch();
     setupZoomControls();
 
-    // Setup filter buttons
+    // Setup filter buttons (area)
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         filterByArea(btn.dataset.area);
+      });
+    });
+
+    // Setup legend type filters
+    document.querySelectorAll('.legend-item[data-type]').forEach(item => {
+      item.addEventListener('click', () => {
+        filterByType(item.dataset.type);
       });
     });
 

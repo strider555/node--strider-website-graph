@@ -43,25 +43,29 @@
     <div id="graph-container" style="display: none;">
       <svg id="graph"></svg>
 
-      <div class="legend">
+      <div class="legend" id="legend">
         <h3>Tag Types</h3>
-        <div class="legend-item">
+        <div class="legend-item active" data-type="all">
+          <div class="legend-color" style="background: linear-gradient(135deg, #E6A817, #4ecdc4, #ff6b6b);"></div>
+          <span>All Types</span>
+        </div>
+        <div class="legend-item" data-type="area">
           <div class="legend-color" style="background: #E6A817;"></div>
           <span>Area</span>
         </div>
-        <div class="legend-item">
+        <div class="legend-item" data-type="category">
           <div class="legend-color" style="background: #4ecdc4;"></div>
           <span>Category</span>
         </div>
-        <div class="legend-item">
+        <div class="legend-item" data-type="medium">
           <div class="legend-color" style="background: #ff6b6b;"></div>
           <span>Medium</span>
         </div>
-        <div class="legend-item">
+        <div class="legend-item" data-type="nationality">
           <div class="legend-color" style="background: #45b7d1;"></div>
           <span>Nationality</span>
         </div>
-        <div class="legend-item">
+        <div class="legend-item" data-type="decade">
           <div class="legend-color" style="background: #96ceb4;"></div>
           <span>Decade</span>
         </div>
