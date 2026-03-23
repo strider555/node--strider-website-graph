@@ -10,7 +10,8 @@ const tagColors = {
   category: '#4ecdc4',   // Teal
   medium: '#ff6b6b',     // Coral
   nationality: '#45b7d1', // Blue
-  decade: '#96ceb4'      // Green
+  decade: '#96ceb4',     // Green
+  collection: '#c084fc'  // Purple
 };
 
 // Load museum data
@@ -286,7 +287,7 @@ function filterByArea(area) {
 function setupLegendSubmenus() {
   if (!museumData) return;
 
-  const types = ['area', 'category', 'medium', 'nationality', 'decade'];
+  const types = ['area', 'category', 'medium', 'nationality', 'decade', 'collection'];
 
   types.forEach(type => {
     const subContainer = document.getElementById(`sub-${type}`);
