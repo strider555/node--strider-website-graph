@@ -3,6 +3,7 @@ let museumData = null;
 let currentGraph = null;
 let currentFilter = 'all';
 let currentTypeFilter = 'all';
+let siggMode = false;
 
 // Color scheme for tag types
 const tagColors = {
@@ -13,6 +14,25 @@ const tagColors = {
   decade: '#96ceb4',     // Green
   collection: '#c084fc'  // Purple
 };
+
+// Get current data source based on mode
+function getCurrentData() {
+  if (!museumData) return null;
+
+  if (siggMode) {
+    return {
+      tags: museumData.siggTags,
+      links: museumData.siggLinks,
+      objectsByTag: museumData.siggObjectsByTag
+    };
+  }
+
+  return {
+    tags: museumData.tags,
+    links: museumData.links,
+    objectsByTag: museumData.objectsByTag
+  };
+}
 
 // Load museum data
 async function loadData() {
@@ -115,10 +135,11 @@ function customizeGraph(radiusScale) {
 // Show side panel with objects
 function showSidePanel(tagId) {
   const panel = document.getElementById('sidePanel');
-  const objects = museumData.objectsByTag[tagId] || [];
+  const currentData = getCurrentData();
+  const objects = currentData.objectsByTag[tagId] || [];
 
   // Update panel header
-  const tag = museumData.tags.find(t => t.id === tagId);
+  const tag = currentData.tags.find(t => t.id === tagId);
   const totalCount = tag ? tag.count : objects.length;
   const tagType = tag ? tag.type : 'unknown';
   const tagColor = tagColors[tagType] || '#888';
@@ -206,23 +227,50 @@ function closeSidePanel() {
   document.getElementById('sidePanel').classList.remove('open');
 }
 
+// Toggle Sigg Collection mode
+function toggleSiggMode() {
+  siggMode = !siggMode;
+
+  // Update button state
+  const siggToggle = document.getElementById('siggToggle');
+  siggToggle.classList.toggle('active', siggMode);
+
+  // Update graph container visual indicator
+  const graphContainer = document.getElementById('graph-container');
+  graphContainer.classList.toggle('sigg-mode', siggMode);
+
+  // Rebuild graph with current filter
+  filterByArea(currentFilter);
+
+  // Update legend submenus
+  setupLegendSubmenus();
+
+  // Update type filter if one is active
+  if (currentTypeFilter !== 'all') {
+    filterByType(currentTypeFilter);
+  }
+}
+
 // Filter graph by area
 function filterByArea(area) {
   if (!museumData) return;
 
   currentFilter = area;
 
-  // Update button states
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  // Update button states (but not the Sigg toggle)
+  document.querySelectorAll('.filter-btn[data-area]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.area === area);
   });
 
+  // Get current data source
+  const currentData = getCurrentData();
+
   // Filter data
-  let filteredTags = museumData.tags;
+  let filteredTags = currentData.tags;
 
   if (area !== 'all') {
     // Get tags that are either the area itself or co-occur with objects in that area
-    const areaObjects = museumData.objectsByTag[area] || [];
+    const areaObjects = currentData.objectsByTag[area] || [];
     const relevantTagIds = new Set([area]);
 
     // Add all tags that appear in objects of this area
@@ -232,17 +280,17 @@ function filterByArea(area) {
     });
 
     // Filter tags and links
-    filteredTags = museumData.tags.filter(tag => {
+    filteredTags = currentData.tags.filter(tag => {
       // Keep the main area tag
       if (tag.id === area) return true;
       // Keep tags that appear in area objects
-      const tagObjects = museumData.objectsByTag[tag.id] || [];
+      const tagObjects = currentData.objectsByTag[tag.id] || [];
       return tagObjects.some(obj => obj.areas && obj.areas.includes(area));
     });
   }
 
   // Rebuild graph
-  const filteredLinks = museumData.links.filter(link => {
+  const filteredLinks = currentData.links.filter(link => {
     const sourceExists = filteredTags.find(t => t.id === link.source);
     const targetExists = filteredTags.find(t => t.id === link.target);
     return sourceExists && targetExists;
@@ -287,6 +335,7 @@ function filterByArea(area) {
 function setupLegendSubmenus() {
   if (!museumData) return;
 
+  const currentData = getCurrentData();
   const types = ['area', 'category', 'medium', 'nationality', 'decade', 'collection'];
 
   types.forEach(type => {
@@ -294,7 +343,7 @@ function setupLegendSubmenus() {
     if (!subContainer) return;
 
     // Get tags of this type, sorted by count descending
-    const tags = museumData.tags
+    const tags = currentData.tags
       .filter(t => t.type === type)
       .sort((a, b) => b.count - a.count);
 
@@ -424,8 +473,9 @@ function filterByType(type) {
   }
 
   // Highlight nodes of selected type, dim others
+  const currentData = getCurrentData();
   const matchingIds = new Set(
-    museumData.tags.filter(t => t.type === type).map(t => t.id)
+    currentData.tags.filter(t => t.type === type).map(t => t.id)
   );
 
   d3.select('#graph').selectAll('g.node')
@@ -462,7 +512,8 @@ function setupSearch() {
     }
 
     // Find matching tags
-    const matches = museumData.tags
+    const currentData = getCurrentData();
+    const matches = currentData.tags
       .filter(tag => tag.id.toLowerCase().includes(query))
       .sort((a, b) => b.count - a.count)
       .slice(0, 8);
@@ -609,11 +660,14 @@ async function init() {
     setupZoomControls();
 
     // Setup filter buttons (area)
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    document.querySelectorAll('.filter-btn[data-area]').forEach(btn => {
       btn.addEventListener('click', () => {
         filterByArea(btn.dataset.area);
       });
     });
+
+    // Setup Sigg Collection toggle
+    document.getElementById('siggToggle').addEventListener('click', toggleSiggMode);
 
     // Setup legend type filters + expandable submenus
     setupLegendSubmenus();

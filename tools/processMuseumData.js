@@ -95,12 +95,49 @@ constituentsData.forEach(c => {
 
 console.log(`Loaded ${objectsData.length} objects, ${constituentsData.length} constituents`);
 
+// Sigg Collection Related Artist names (137 artists from M+ Sigg Prize)
+const siggArtistNames = [
+  "Ai Weiwei", "An Hong", "Bai Yiluo", "Cao Fei", "Cao Kai", "Chang-Jin Lee", "Chen Chieh-Jen", "Chen Linggang",
+  "Chen Qiulin", "Chen Shaoxiong", "Chen Wenbo", "Chen Xiaoyun", "Chen Zhen", "Chi Peng", "Chu Yun", "Cui Xiuwen",
+  "Ding Yi", "Fang Lijun", "Feng Mengbo", "Geng Jianyi", "Gu Dexin", "Gu Wenda", "Guo Fengyi", "Hai Bo", "He An",
+  "He Yunchang", "Hong Hao", "Hong Lei", "Huang Kui", "Huang Yan", "Huang Yong Ping", "Ji Dachun", "Jian Jun Xi",
+  "Jiang Pengyi", "Jiang Zhi", "Kan Xuan", "Li Dafang", "Li Hui", "Li Liao", "Li Qing", "Li Shurui", "Li Songsong",
+  "Li Wei", "Li Zhanyang", "Liang Shaoji", "Liang Shuo", "Liang Yuanwei", "Lin Tianmiao", "Lin Yilin", "Liu Ding",
+  "Liu Wei", "Liu Xiaodong", "Lu Hao", "Lu Lei", "Luo Yongjin", "Ma Han", "Ma Liuming", "Ma Qiusha", "Mao Tongqiang",
+  "Mao Yan", "Mu Chen", "MadeIn Company", "Ni Haifeng", "Peng Yu", "Pu Jie", "Qin Ga", "Qiu Anxiong", "Qiu Shihua",
+  "Qiu Xiaofei", "Qiu Zhijie", "Shao Yinong", "Shen Fan", "Shen Shaomin", "Shi Guorui", "Shi Xinning", "Song Dong",
+  "Song Tao", "Sui Jianguo", "Sun Yuan", "Tang Maohong", "Wang Du", "Wang Gongxin", "Wang Guangyi", "Wang Jianwei",
+  "Wang Jin", "Wang Keping", "Wang Luyan", "Wang Peng", "Wang Qingsong", "Wang Sishun", "Wang Tuo", "Wang Xingwei",
+  "Wang Yin", "Weng Fen", "Wong Hoy Cheong", "Wu Shanzhuan", "Xiang Liqing", "Xiao Yu", "Xu Bing", "Xu Zhen",
+  "Yan Lei", "Yan Peiming", "Yang Fudong", "Yang Jiechang", "Yang Shaobin", "Yang Yongliang", "Yang Zhenzhong",
+  "Yangjiang Group", "Yao Jui-Chung", "Yi Zhou", "Yin Xiuzhen", "Yu Ji", "Yuan Shun", "Zeng Fanzhi", "Zeng Hao",
+  "Zhang Dali", "Zhang Enli", "Zhang Huan", "Zhang Peili", "Zhang Xiaogang", "Zheng Guogu", "Zhou Chunya",
+  "Zhou Tiehai", "Zhu Fadong", "Zhu Jia", "Zhu Jinshi", "Zhuang Hui", "Heidi Lau", "Wong Ping", "Samson Young"
+];
+
+// Find Sigg artist IDs by matching names
+const siggArtistIds = new Set();
+constituentsData.forEach(c => {
+  const name = c.name || '';
+  if (siggArtistNames.includes(name)) {
+    siggArtistIds.add(c.id);
+  }
+});
+
+console.log(`Found ${siggArtistIds.size} Sigg artists in collection`);
+
 // Process objects and collect tag statistics
 const tagCounts = new Map();
 const tagTypes = new Map(); // tag -> type (area/category/medium/nationality/decade)
 const linkPairs = new Map(); // "tag1|tag2" -> weight
 const objectsByTag = new Map(); // tag -> [object objects (compact)]
 const artistCounts = new Map();
+
+// Sigg-specific data structures
+const siggTagCounts = new Map();
+const siggLinkPairs = new Map();
+const siggObjectsByTag = new Map();
+const siggObjects = []; // Track all Sigg objects
 
 objectsData.forEach((obj, idx) => {
   const id = obj.id;
@@ -133,6 +170,9 @@ objectsData.forEach((obj, idx) => {
     }
   }
 
+  // Check if this is a Sigg Collection object
+  const isSiggObject = artistId && siggArtistIds.has(artistId);
+
   // Compact object representation
   const objCompact = {
     id,
@@ -162,6 +202,15 @@ objectsData.forEach((obj, idx) => {
       if (objectsByTag.get(area).length < 50) {
         objectsByTag.get(area).push(objCompact);
       }
+
+      // Track Sigg data
+      if (isSiggObject) {
+        siggTagCounts.set(area, (siggTagCounts.get(area) || 0) + 1);
+        if (!siggObjectsByTag.has(area)) siggObjectsByTag.set(area, []);
+        if (siggObjectsByTag.get(area).length < 50) {
+          siggObjectsByTag.get(area).push(objCompact);
+        }
+      }
     }
   });
 
@@ -174,6 +223,15 @@ objectsData.forEach((obj, idx) => {
       if (!objectsByTag.has(cat)) objectsByTag.set(cat, []);
       if (objectsByTag.get(cat).length < 50) {
         objectsByTag.get(cat).push(objCompact);
+      }
+
+      // Track Sigg data
+      if (isSiggObject) {
+        siggTagCounts.set(cat, (siggTagCounts.get(cat) || 0) + 1);
+        if (!siggObjectsByTag.has(cat)) siggObjectsByTag.set(cat, []);
+        if (siggObjectsByTag.get(cat).length < 50) {
+          siggObjectsByTag.get(cat).push(objCompact);
+        }
       }
     }
   });
@@ -189,6 +247,15 @@ objectsData.forEach((obj, idx) => {
       if (objectsByTag.get(mediumTag).length < 50) {
         objectsByTag.get(mediumTag).push(objCompact);
       }
+
+      // Track Sigg data
+      if (isSiggObject) {
+        siggTagCounts.set(mediumTag, (siggTagCounts.get(mediumTag) || 0) + 1);
+        if (!siggObjectsByTag.has(mediumTag)) siggObjectsByTag.set(mediumTag, []);
+        if (siggObjectsByTag.get(mediumTag).length < 50) {
+          siggObjectsByTag.get(mediumTag).push(objCompact);
+        }
+      }
     }
   }
 
@@ -200,6 +267,15 @@ objectsData.forEach((obj, idx) => {
     if (!objectsByTag.has(nationality)) objectsByTag.set(nationality, []);
     if (objectsByTag.get(nationality).length < 50) {
       objectsByTag.get(nationality).push(objCompact);
+    }
+
+    // Track Sigg data
+    if (isSiggObject) {
+      siggTagCounts.set(nationality, (siggTagCounts.get(nationality) || 0) + 1);
+      if (!siggObjectsByTag.has(nationality)) siggObjectsByTag.set(nationality, []);
+      if (siggObjectsByTag.get(nationality).length < 50) {
+        siggObjectsByTag.get(nationality).push(objCompact);
+      }
     }
   }
 
@@ -214,6 +290,15 @@ objectsData.forEach((obj, idx) => {
       if (objectsByTag.get(decade).length < 50) {
         objectsByTag.get(decade).push(objCompact);
       }
+
+      // Track Sigg data
+      if (isSiggObject) {
+        siggTagCounts.set(decade, (siggTagCounts.get(decade) || 0) + 1);
+        if (!siggObjectsByTag.has(decade)) siggObjectsByTag.set(decade, []);
+        if (siggObjectsByTag.get(decade).length < 50) {
+          siggObjectsByTag.get(decade).push(objCompact);
+        }
+      }
     }
   }
 
@@ -224,7 +309,17 @@ objectsData.forEach((obj, idx) => {
       const tag2 = objTags[j];
       const pair = tag1 < tag2 ? `${tag1}|${tag2}` : `${tag2}|${tag1}`;
       linkPairs.set(pair, (linkPairs.get(pair) || 0) + 1);
+
+      // Track Sigg links
+      if (isSiggObject) {
+        siggLinkPairs.set(pair, (siggLinkPairs.get(pair) || 0) + 1);
+      }
     }
+  }
+
+  // Track Sigg object
+  if (isSiggObject) {
+    siggObjects.push(objCompact);
   }
 });
 
@@ -283,6 +378,78 @@ filteredTags.forEach((data, tag) => {
   });
 });
 
+// Process Sigg Collection data (lower thresholds due to smaller dataset)
+console.log(`\nProcessing Sigg Collection data (${siggObjects.length} objects)...`);
+const minSiggTagCount = 2; // Lower threshold for Sigg data
+const filteredSiggTags = new Map();
+
+// Keep all area tags for Sigg
+for (const [tag, count] of siggTagCounts.entries()) {
+  if (tagTypes.get(tag) === 'area') {
+    filteredSiggTags.set(tag, { count, type: 'area' });
+  }
+}
+
+// Select top Sigg categories, mediums, nationalities, decades
+const siggCategories = [...siggTagCounts.entries()]
+  .filter(([tag]) => tagTypes.get(tag) === 'category')
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 20)
+  .filter(([, count]) => count >= minSiggTagCount);
+
+const siggMediums = [...siggTagCounts.entries()]
+  .filter(([tag]) => tagTypes.get(tag) === 'medium')
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 20)
+  .filter(([, count]) => count >= minSiggTagCount);
+
+const siggNationalities = [...siggTagCounts.entries()]
+  .filter(([tag]) => tagTypes.get(tag) === 'nationality')
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 15)
+  .filter(([, count]) => count >= minSiggTagCount);
+
+const siggDecades = [...siggTagCounts.entries()]
+  .filter(([tag]) => tagTypes.get(tag) === 'decade')
+  .sort((a, b) => b[1] - a[1])
+  .filter(([, count]) => count >= minSiggTagCount);
+
+siggCategories.forEach(([tag, count]) => filteredSiggTags.set(tag, { count, type: 'category' }));
+siggMediums.forEach(([tag, count]) => filteredSiggTags.set(tag, { count, type: 'medium' }));
+siggNationalities.forEach(([tag, count]) => filteredSiggTags.set(tag, { count, type: 'nationality' }));
+siggDecades.forEach(([tag, count]) => filteredSiggTags.set(tag, { count, type: 'decade' }));
+
+console.log(`Filtered Sigg tags: ${filteredSiggTags.size} (areas: ${[...filteredSiggTags.values()].filter(t => t.type === 'area').length}, categories: ${siggCategories.length}, mediums: ${siggMediums.length}, nationalities: ${siggNationalities.length}, decades: ${siggDecades.length})`);
+
+// Build Sigg tag nodes array
+const siggTagNodes = [];
+filteredSiggTags.forEach((data, tag) => {
+  siggTagNodes.push({
+    id: tag,
+    count: data.count,
+    type: data.type
+  });
+});
+
+// Filter Sigg links - only keep links between filtered Sigg tags with weight >= 2
+const minSiggLinkWeight = 2;
+const siggLinks = [];
+siggLinkPairs.forEach((weight, pair) => {
+  if (weight < minSiggLinkWeight) return;
+  const [tag1, tag2] = pair.split('|');
+  if (filteredSiggTags.has(tag1) && filteredSiggTags.has(tag2)) {
+    siggLinks.push({ source: tag1, target: tag2, weight });
+  }
+});
+
+console.log(`Filtered Sigg links: ${siggLinks.length}`);
+
+// Build Sigg objectsByTag for filtered tags only
+const siggObjectsByTagFiltered = {};
+filteredSiggTags.forEach((data, tag) => {
+  siggObjectsByTagFiltered[tag] = siggObjectsByTag.get(tag) || [];
+});
+
 // Filter links - only keep links between filtered tags with weight >= 3
 const minLinkWeight = 3;
 const links = [];
@@ -335,6 +502,17 @@ const output = {
     totalArtists: artists.length,
     totalTags: tagNodes.length,
     totalLinks: links.length
+  },
+  // Sigg Collection data
+  siggTags: siggTagNodes,
+  siggLinks: siggLinks,
+  siggObjectsByTag: siggObjectsByTagFiltered,
+  siggArtistIds: Array.from(siggArtistIds),
+  siggStats: {
+    totalObjects: siggObjects.length,
+    totalArtists: siggArtistIds.size,
+    totalTags: siggTagNodes.length,
+    totalLinks: siggLinks.length
   }
 };
 
@@ -352,3 +530,8 @@ console.log(`  - Tags: ${tagNodes.length}`);
 console.log(`  - Links: ${links.length}`);
 console.log(`  - Artists (top): ${topArtists.length}`);
 console.log(`  - Objects stored per tag (max 50 each)`);
+console.log(`\nSigg Collection:`);
+console.log(`  - Sigg objects: ${siggObjects.length}`);
+console.log(`  - Sigg artists: ${siggArtistIds.size}`);
+console.log(`  - Sigg tags: ${siggTagNodes.length}`);
+console.log(`  - Sigg links: ${siggLinks.length}`);
