@@ -64,16 +64,22 @@
     const linkWidth = d3.scaleLinear().domain(linkWeightExtent).range([0.5, 4]);
     const linkOpacityScale = d3.scaleLinear().domain(linkWeightExtent).range([0.15, 0.6]);
 
+    // Adaptive force parameters based on node count
+    const nodeCount = dataset.nodes.length;
+    const chargeStrength = nodeCount > 50 ? -1200 : nodeCount > 30 ? -1000 : -800;
+    const linkDist = nodeCount > 50 ? 200 : nodeCount > 30 ? 160 : 120;
+    const collisionPad = nodeCount > 50 ? 25 : 20;
+
     const simulation = d3
       .forceSimulation(dataset.nodes)
       .force('link', d3.forceLink(dataset.links).id((d) => d.id)
-        .distance(120)
-        .strength(0.15))
-      .force('charge', d3.forceManyBody().strength(-800).distanceMax(800))
+        .distance(linkDist)
+        .strength(0.08))
+      .force('charge', d3.forceManyBody().strength(chargeStrength).distanceMax(1200))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + 15))
-      .force('x', d3.forceX(width / 2).strength(0.04))
-      .force('y', d3.forceY(height / 2).strength(0.04));
+      .force('collision', d3.forceCollide((d) => radius(d.count || 1) + collisionPad))
+      .force('x', d3.forceX(width / 2).strength(0.03))
+      .force('y', d3.forceY(height / 2).strength(0.03));
 
     const links = linkGroup
       .selectAll('path')

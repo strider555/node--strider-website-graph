@@ -358,94 +358,19 @@
   ],
   "links": [
     {
+      "source": "1980s",
+      "target": "Design and Architecture",
+      "weight": 1953
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Hong Kong",
+      "weight": 1951
+    },
+    {
       "source": "Photography",
       "target": "Visual Art",
       "weight": 1919
-    },
-    {
-      "source": "Visual Art",
-      "target": "black and white print",
-      "weight": 117
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Visual Art",
-      "weight": 1518
-    },
-    {
-      "source": "1950s",
-      "target": "Visual Art",
-      "weight": 334
-    },
-    {
-      "source": "Photography",
-      "target": "black and white print",
-      "weight": 117
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Photography",
-      "weight": 863
-    },
-    {
-      "source": "1950s",
-      "target": "Photography",
-      "weight": 212
-    },
-    {
-      "source": "Hong Kong",
-      "target": "black and white print",
-      "weight": 58
-    },
-    {
-      "source": "1950s",
-      "target": "black and white print",
-      "weight": 40
-    },
-    {
-      "source": "1950s",
-      "target": "Hong Kong",
-      "weight": 197
-    },
-    {
-      "source": "1960s",
-      "target": "Visual Art",
-      "weight": 642
-    },
-    {
-      "source": "1960s",
-      "target": "Photography",
-      "weight": 412
-    },
-    {
-      "source": "1960s",
-      "target": "black and white print",
-      "weight": 48
-    },
-    {
-      "source": "1960s",
-      "target": "Hong Kong",
-      "weight": 794
-    },
-    {
-      "source": "Visual Art",
-      "target": "gelatin silver print",
-      "weight": 645
-    },
-    {
-      "source": "Photography",
-      "target": "gelatin silver print",
-      "weight": 802
-    },
-    {
-      "source": "Hong Kong",
-      "target": "gelatin silver print",
-      "weight": 256
-    },
-    {
-      "source": "1960s",
-      "target": "gelatin silver print",
-      "weight": 276
     },
     {
       "source": "Chinese",
@@ -453,269 +378,14 @@
       "weight": 1907
     },
     {
-      "source": "Chinese",
-      "target": "Photography",
-      "weight": 629
+      "source": "Design and Architecture",
+      "target": "Japanese",
+      "weight": 1716
     },
     {
-      "source": "Chinese",
-      "target": "gelatin silver print",
-      "weight": 167
-    },
-    {
-      "source": "1950s",
-      "target": "gelatin silver print",
-      "weight": 97
-    },
-    {
-      "source": "1950s",
-      "target": "Chinese",
-      "weight": 220
-    },
-    {
-      "source": "1990s",
-      "target": "Visual Art",
-      "weight": 805
-    },
-    {
-      "source": "1990s",
-      "target": "Photography",
-      "weight": 393
-    },
-    {
-      "source": "1990s",
-      "target": "Hong Kong",
-      "weight": 362
-    },
-    {
-      "source": "Visual Art",
-      "target": "chromogenic print",
-      "weight": 470
-    },
-    {
-      "source": "Photography",
-      "target": "chromogenic print",
-      "weight": 638
-    },
-    {
-      "source": "Hong Kong",
-      "target": "chromogenic print",
-      "weight": 224
-    },
-    {
-      "source": "1990s",
-      "target": "chromogenic print",
-      "weight": 195
-    },
-    {
-      "source": "1980s",
-      "target": "Visual Art",
-      "weight": 526
-    },
-    {
-      "source": "1980s",
-      "target": "Photography",
-      "weight": 374
-    },
-    {
-      "source": "1980s",
-      "target": "Hong Kong",
-      "weight": 962
-    },
-    {
-      "source": "Chinese",
-      "target": "black and white print",
-      "weight": 55
-    },
-    {
-      "source": "1940s",
-      "target": "Visual Art",
-      "weight": 59
-    },
-    {
-      "source": "1940s",
-      "target": "Photography",
-      "weight": 30
-    },
-    {
-      "source": "1940s",
-      "target": "black and white print",
-      "weight": 15
-    },
-    {
-      "source": "1940s",
-      "target": "Hong Kong",
-      "weight": 19
-    },
-    {
-      "source": "1940s",
-      "target": "Chinese",
-      "weight": 17
-    },
-    {
-      "source": "1940s",
-      "target": "gelatin silver print",
-      "weight": 13
-    },
-    {
-      "source": "1930s",
-      "target": "Visual Art",
-      "weight": 27
-    },
-    {
-      "source": "1930s",
-      "target": "Photography",
-      "weight": 14
-    },
-    {
-      "source": "1930s",
-      "target": "gelatin silver print",
-      "weight": 5
-    },
-    {
-      "source": "1930s",
-      "target": "Chinese",
-      "weight": 8
-    },
-    {
-      "source": "1930s",
-      "target": "black and white print",
-      "weight": 3
-    },
-    {
-      "source": "Architectural Model",
+      "source": "Architectural Drawing",
       "target": "Design and Architecture",
-      "weight": 251
-    },
-    {
-      "source": "Chinese",
-      "target": "Design and Architecture",
-      "weight": 540
-    },
-    {
-      "source": "2010s",
-      "target": "Design and Architecture",
-      "weight": 398
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Chinese",
-      "weight": 34
-    },
-    {
-      "source": "2010s",
-      "target": "Architectural Model",
-      "weight": 50
-    },
-    {
-      "source": "2010s",
-      "target": "Chinese",
-      "weight": 259
-    },
-    {
-      "source": "2000s",
-      "target": "Design and Architecture",
-      "weight": 775
-    },
-    {
-      "source": "2000s",
-      "target": "Architectural Model",
-      "weight": 73
-    },
-    {
-      "source": "2000s",
-      "target": "Chinese",
-      "weight": 1140
-    },
-    {
-      "source": "Visual Art",
-      "target": "inkjet print",
-      "weight": 205
-    },
-    {
-      "source": "1970s",
-      "target": "Visual Art",
-      "weight": 653
-    },
-    {
-      "source": "Photography",
-      "target": "inkjet print",
-      "weight": 207
-    },
-    {
-      "source": "1970s",
-      "target": "Photography",
-      "weight": 366
-    },
-    {
-      "source": "Chinese",
-      "target": "inkjet print",
-      "weight": 91
-    },
-    {
-      "source": "1970s",
-      "target": "inkjet print",
-      "weight": 41
-    },
-    {
-      "source": "1970s",
-      "target": "Chinese",
-      "weight": 110
-    },
-    {
-      "source": "Ink Art",
-      "target": "Visual Art",
-      "weight": 423
-    },
-    {
-      "source": "Sculpture",
-      "target": "Visual Art",
-      "weight": 362
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Ink Art",
-      "weight": 164
-    },
-    {
-      "source": "1990s",
-      "target": "Ink Art",
-      "weight": 93
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Sculpture",
-      "weight": 47
-    },
-    {
-      "source": "1990s",
-      "target": "Sculpture",
-      "weight": 54
-    },
-    {
-      "source": "Painting",
-      "target": "Visual Art",
-      "weight": 1170
-    },
-    {
-      "source": "Ink Art",
-      "target": "Painting",
-      "weight": 254
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Painting",
-      "weight": 162
-    },
-    {
-      "source": "1990s",
-      "target": "Painting",
-      "weight": 262
-    },
-    {
-      "source": "American",
-      "target": "Visual Art",
-      "weight": 325
+      "weight": 1687
     },
     {
       "source": "2000s",
@@ -723,34 +393,169 @@
       "weight": 1523
     },
     {
-      "source": "American",
-      "target": "Sculpture",
-      "weight": 61
+      "source": "Hong Kong",
+      "target": "Visual Art",
+      "weight": 1518
     },
     {
-      "source": "2000s",
-      "target": "Sculpture",
-      "weight": 125
-    },
-    {
-      "source": "2000s",
-      "target": "American",
-      "weight": 65
+      "source": "1970s",
+      "target": "Design and Architecture",
+      "weight": 1229
     },
     {
       "source": "1990s",
-      "target": "American",
-      "weight": 205
+      "target": "Design and Architecture",
+      "weight": 1225
+    },
+    {
+      "source": "Painting",
+      "target": "Visual Art",
+      "weight": 1170
+    },
+    {
+      "source": "1960s",
+      "target": "Design and Architecture",
+      "weight": 1158
     },
     {
       "source": "2000s",
+      "target": "Chinese",
+      "weight": 1140
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Poster",
+      "weight": 1087
+    },
+    {
+      "source": "Architectural Photography",
+      "target": "Design and Architecture",
+      "weight": 1079
+    },
+    {
+      "source": "1980s",
+      "target": "Hong Kong",
+      "weight": 962
+    },
+    {
+      "source": "2010s",
+      "target": "Visual Art",
+      "weight": 952
+    },
+    {
+      "source": "Hong Kong",
       "target": "Photography",
-      "weight": 420
+      "weight": 863
+    },
+    {
+      "source": "Japanese",
+      "target": "Poster",
+      "weight": 862
     },
     {
       "source": "1990s",
-      "target": "inkjet print",
-      "weight": 20
+      "target": "Visual Art",
+      "weight": 805
+    },
+    {
+      "source": "Photography",
+      "target": "gelatin silver print",
+      "weight": 802
+    },
+    {
+      "source": "1960s",
+      "target": "Hong Kong",
+      "weight": 794
+    },
+    {
+      "source": "Chinese",
+      "target": "Painting",
+      "weight": 794
+    },
+    {
+      "source": "Moving Image",
+      "target": "Visual Art",
+      "weight": 778
+    },
+    {
+      "source": "2000s",
+      "target": "Design and Architecture",
+      "weight": 775
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Taiwanese",
+      "weight": 712
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Thai",
+      "weight": 706
+    },
+    {
+      "source": "Book/Periodical",
+      "target": "Design and Architecture",
+      "weight": 680
+    },
+    {
+      "source": "1980s",
+      "target": "Architectural Drawing",
+      "weight": 672
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Digital",
+      "weight": 667
+    },
+    {
+      "source": "1970s",
+      "target": "Hong Kong",
+      "weight": 655
+    },
+    {
+      "source": "1970s",
+      "target": "Visual Art",
+      "weight": 653
+    },
+    {
+      "source": "Visual Art",
+      "target": "gelatin silver print",
+      "weight": 645
+    },
+    {
+      "source": "1960s",
+      "target": "Visual Art",
+      "weight": 642
+    },
+    {
+      "source": "Photography",
+      "target": "chromogenic print",
+      "weight": 638
+    },
+    {
+      "source": "American",
+      "target": "Design and Architecture",
+      "weight": 634
+    },
+    {
+      "source": "Chinese",
+      "target": "Photography",
+      "weight": 629
+    },
+    {
+      "source": "Moving Image",
+      "target": "Video",
+      "weight": 624
+    },
+    {
+      "source": "South Korean",
+      "target": "Visual Art",
+      "weight": 600
+    },
+    {
+      "source": "Architectural Drawing",
+      "target": "Hong Kong",
+      "weight": 570
     },
     {
       "source": "1990s",
@@ -759,353 +564,8 @@
     },
     {
       "source": "Chinese",
-      "target": "Sculpture",
-      "weight": 168
-    },
-    {
-      "source": "1980s",
-      "target": "Sculpture",
-      "weight": 36
-    },
-    {
-      "source": "1980s",
-      "target": "Chinese",
-      "weight": 110
-    },
-    {
-      "source": "1950s",
-      "target": "inkjet print",
-      "weight": 11
-    },
-    {
-      "source": "1960s",
-      "target": "inkjet print",
-      "weight": 21
-    },
-    {
-      "source": "1960s",
-      "target": "Chinese",
-      "weight": 43
-    },
-    {
-      "source": "Installation",
-      "target": "Visual Art",
-      "weight": 270
-    },
-    {
-      "source": "Print",
-      "target": "Visual Art",
-      "weight": 215
-    },
-    {
-      "source": "Installation",
-      "target": "Print",
-      "weight": 8
-    },
-    {
-      "source": "Chinese",
-      "target": "Installation",
-      "weight": 104
-    },
-    {
-      "source": "1990s",
-      "target": "Installation",
-      "weight": 32
-    },
-    {
-      "source": "Chinese",
-      "target": "Print",
-      "weight": 54
-    },
-    {
-      "source": "1990s",
-      "target": "Print",
-      "weight": 69
-    },
-    {
-      "source": "1980s",
-      "target": "Installation",
-      "weight": 13
-    },
-    {
-      "source": "1970s",
-      "target": "Ink Art",
-      "weight": 37
-    },
-    {
-      "source": "1970s",
-      "target": "Painting",
-      "weight": 101
-    },
-    {
-      "source": "1970s",
-      "target": "Hong Kong",
-      "weight": 655
-    },
-    {
-      "source": "2000s",
-      "target": "Ink Art",
-      "weight": 110
-    },
-    {
-      "source": "2000s",
-      "target": "Painting",
-      "weight": 450
-    },
-    {
-      "source": "2000s",
-      "target": "Hong Kong",
-      "weight": 354
-    },
-    {
-      "source": "Visual Art",
-      "target": "Work on Paper",
-      "weight": 236
-    },
-    {
-      "source": "Ink Art",
-      "target": "Work on Paper",
-      "weight": 91
-    },
-    {
-      "source": "1960s",
-      "target": "Ink Art",
-      "weight": 62
-    },
-    {
-      "source": "Painting",
-      "target": "Work on Paper",
-      "weight": 70
-    },
-    {
-      "source": "1960s",
-      "target": "Painting",
-      "weight": 67
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Work on Paper",
-      "weight": 141
-    },
-    {
-      "source": "1960s",
-      "target": "Work on Paper",
-      "weight": 34
-    },
-    {
-      "source": "1970s",
-      "target": "Work on Paper",
-      "weight": 32
-    },
-    {
-      "source": "1990s",
-      "target": "Work on Paper",
-      "weight": 35
-    },
-    {
-      "source": "2000s",
-      "target": "Work on Paper",
-      "weight": 30
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Print",
-      "weight": 135
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "offset print on paper",
-      "weight": 112
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Japanese",
-      "weight": 1716
-    },
-    {
-      "source": "1970s",
       "target": "Design and Architecture",
-      "weight": 1229
-    },
-    {
-      "source": "Print",
-      "target": "offset print on paper",
-      "weight": 5
-    },
-    {
-      "source": "Japanese",
-      "target": "Print",
-      "weight": 79
-    },
-    {
-      "source": "1970s",
-      "target": "Print",
-      "weight": 66
-    },
-    {
-      "source": "Japanese",
-      "target": "offset print on paper",
-      "weight": 99
-    },
-    {
-      "source": "1970s",
-      "target": "offset print on paper",
-      "weight": 30
-    },
-    {
-      "source": "1970s",
-      "target": "Japanese",
-      "weight": 483
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Poster",
-      "weight": 1087
-    },
-    {
-      "source": "Poster",
-      "target": "Print",
-      "weight": 42
-    },
-    {
-      "source": "Poster",
-      "target": "offset print on paper",
-      "weight": 98
-    },
-    {
-      "source": "Japanese",
-      "target": "Poster",
-      "weight": 862
-    },
-    {
-      "source": "1970s",
-      "target": "Poster",
-      "weight": 261
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "offset lithograph",
-      "weight": 490
-    },
-    {
-      "source": "Poster",
-      "target": "offset lithograph",
-      "weight": 408
-    },
-    {
-      "source": "Print",
-      "target": "offset lithograph",
-      "weight": 31
-    },
-    {
-      "source": "Japanese",
-      "target": "offset lithograph",
-      "weight": 308
-    },
-    {
-      "source": "1970s",
-      "target": "offset lithograph",
-      "weight": 91
-    },
-    {
-      "source": "1960s",
-      "target": "Design and Architecture",
-      "weight": 1158
-    },
-    {
-      "source": "1960s",
-      "target": "Poster",
-      "weight": 117
-    },
-    {
-      "source": "1960s",
-      "target": "Print",
-      "weight": 60
-    },
-    {
-      "source": "1960s",
-      "target": "Japanese",
-      "weight": 252
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Painting",
-      "weight": 21
-    },
-    {
-      "source": "1930s",
-      "target": "Design and Architecture",
-      "weight": 38
-    },
-    {
-      "source": "Painting",
-      "target": "oil on canvas",
-      "weight": 399
-    },
-    {
-      "source": "Japanese",
-      "target": "Painting",
-      "weight": 37
-    },
-    {
-      "source": "Japanese",
-      "target": "oil on canvas",
-      "weight": 8
-    },
-    {
-      "source": "1930s",
-      "target": "Japanese",
-      "weight": 9
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "screen print",
-      "weight": 439
-    },
-    {
-      "source": "1980s",
-      "target": "Design and Architecture",
-      "weight": 1953
-    },
-    {
-      "source": "Poster",
-      "target": "screen print",
-      "weight": 424
-    },
-    {
-      "source": "1980s",
-      "target": "Poster",
-      "weight": 278
-    },
-    {
-      "source": "Print",
-      "target": "screen print",
-      "weight": 55
-    },
-    {
-      "source": "1980s",
-      "target": "Print",
-      "weight": 36
-    },
-    {
-      "source": "Japanese",
-      "target": "screen print",
-      "weight": 434
-    },
-    {
-      "source": "1980s",
-      "target": "screen print",
-      "weight": 109
-    },
-    {
-      "source": "1980s",
-      "target": "Japanese",
-      "weight": 484
-    },
-    {
-      "source": "1990s",
-      "target": "Design and Architecture",
-      "weight": 1225
+      "weight": 540
     },
     {
       "source": "1990s",
@@ -1113,89 +573,34 @@
       "weight": 536
     },
     {
-      "source": "1990s",
-      "target": "Poster",
-      "weight": 276
-    },
-    {
-      "source": "1990s",
-      "target": "screen print",
-      "weight": 130
-    },
-    {
-      "source": "1990s",
-      "target": "offset lithograph",
-      "weight": 142
-    },
-    {
-      "source": "2000s",
-      "target": "Poster",
-      "weight": 107
-    },
-    {
-      "source": "2000s",
-      "target": "Print",
-      "weight": 44
-    },
-    {
-      "source": "2000s",
-      "target": "screen print",
-      "weight": 24
-    },
-    {
-      "source": "2000s",
-      "target": "Japanese",
-      "weight": 168
-    },
-    {
-      "source": "1960s",
-      "target": "screen print",
-      "weight": 49
-    },
-    {
-      "source": "1970s",
-      "target": "screen print",
-      "weight": 144
-    },
-    {
-      "source": "2000s",
-      "target": "Installation",
-      "weight": 102
+      "source": "1950s",
+      "target": "Design and Architecture",
+      "weight": 531
     },
     {
       "source": "1980s",
-      "target": "Painting",
-      "weight": 100
-    },
-    {
-      "source": "Chinese",
-      "target": "chromogenic print",
-      "weight": 268
-    },
-    {
-      "source": "1980s",
-      "target": "chromogenic print",
-      "weight": 119
-    },
-    {
-      "source": "Moving Image",
       "target": "Visual Art",
-      "weight": 778
+      "weight": 526
     },
     {
       "source": "Moving Image",
-      "target": "Photography",
-      "weight": 205
+      "target": "South Korean",
+      "weight": 525
     },
     {
-      "source": "Chinese",
-      "target": "Moving Image",
-      "weight": 166
+      "source": "Digital",
+      "target": "Visual Art",
+      "weight": 525
     },
     {
-      "source": "2000s",
+      "source": "Digital",
       "target": "Moving Image",
-      "weight": 408
+      "weight": 523
+    },
+    {
+      "source": "Digital",
+      "target": "South Korean",
+      "weight": 519
     },
     {
       "source": "Video",
@@ -1203,29 +608,324 @@
       "weight": 510
     },
     {
-      "source": "Installation",
-      "target": "Moving Image",
-      "weight": 24
+      "source": "Design and Architecture",
+      "target": "offset lithograph",
+      "weight": 490
     },
     {
-      "source": "Moving Image",
-      "target": "Video",
-      "weight": 624
+      "source": "Design Drawing",
+      "target": "Design and Architecture",
+      "weight": 489
     },
     {
-      "source": "Installation",
-      "target": "Video",
-      "weight": 23
+      "source": "Design Object",
+      "target": "Design and Architecture",
+      "weight": 488
     },
     {
-      "source": "Chinese",
-      "target": "Video",
-      "weight": 121
+      "source": "Visual Art",
+      "target": "chromogenic print",
+      "weight": 470
     },
     {
       "source": "2000s",
+      "target": "Painting",
+      "weight": 450
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "screen print",
+      "weight": 439
+    },
+    {
+      "source": "Japanese",
+      "target": "screen print",
+      "weight": 434
+    },
+    {
+      "source": "Poster",
+      "target": "screen print",
+      "weight": 424
+    },
+    {
+      "source": "Ink Art",
+      "target": "Visual Art",
+      "weight": 423
+    },
+    {
+      "source": "Poster",
+      "target": "offset lithograph",
+      "weight": 408
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "TIF file",
+      "weight": 405
+    },
+    {
+      "source": "Visual Art",
+      "target": "oil on canvas",
+      "weight": 401
+    },
+    {
+      "source": "Painting",
+      "target": "oil on canvas",
+      "weight": 399
+    },
+    {
+      "source": "Digital",
+      "target": "TIF file",
+      "weight": 399
+    },
+    {
+      "source": "Hong Kong",
+      "target": "TIF file",
+      "weight": 399
+    },
+    {
+      "source": "2010s",
+      "target": "Design and Architecture",
+      "weight": 398
+    },
+    {
+      "source": "Drawing",
+      "target": "Visual Art",
+      "weight": 397
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Product Design",
+      "weight": 372
+    },
+    {
+      "source": "Book/Periodical",
+      "target": "print on paper",
+      "weight": 368
+    },
+    {
+      "source": "Sculpture",
+      "target": "Visual Art",
+      "weight": 362
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "print on paper",
+      "weight": 354
+    },
+    {
+      "source": "Chinese",
+      "target": "oil on canvas",
+      "weight": 350
+    },
+    {
+      "source": "Digital",
       "target": "Video",
+      "weight": 343
+    },
+    {
+      "source": "1950s",
+      "target": "Visual Art",
+      "weight": 334
+    },
+    {
+      "source": "American",
+      "target": "Visual Art",
+      "weight": 325
+    },
+    {
+      "source": "American",
+      "target": "Architectural Drawing",
+      "weight": 314
+    },
+    {
+      "source": "Japanese",
+      "target": "offset lithograph",
+      "weight": 308
+    },
+    {
+      "source": "2010s",
+      "target": "Moving Image",
+      "weight": 305
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "printing ink on paper",
+      "weight": 300
+    },
+    {
+      "source": "Animation",
+      "target": "Moving Image",
+      "weight": 297
+    },
+    {
+      "source": "1980s",
+      "target": "Architectural Photography",
+      "weight": 296
+    },
+    {
+      "source": "Architectural Photography",
+      "target": "Hong Kong",
+      "weight": 292
+    },
+    {
+      "source": "Moving Image",
+      "target": "single-channel digital video (colour",
+      "weight": 290
+    },
+    {
+      "source": "Animation",
+      "target": "Visual Art",
+      "weight": 288
+    },
+    {
+      "source": "Drawing",
+      "target": "Hong Kong",
+      "weight": 285
+    },
+    {
+      "source": "Architectural Drawing",
+      "target": "Taiwanese",
+      "weight": 283
+    },
+    {
+      "source": "Video",
+      "target": "single-channel digital video (colour",
+      "weight": 282
+    },
+    {
+      "source": "1960s",
+      "target": "gelatin silver print",
+      "weight": 276
+    },
+    {
+      "source": "Animation",
+      "target": "Digital",
+      "weight": 272
+    },
+    {
+      "source": "Installation",
+      "target": "Visual Art",
+      "weight": 270
+    },
+    {
+      "source": "Chinese",
+      "target": "chromogenic print",
+      "weight": 268
+    },
+    {
+      "source": "Design Drawing",
+      "target": "Hong Kong",
+      "weight": 262
+    },
+    {
+      "source": "Architectural Photography",
+      "target": "Thai",
+      "weight": 260
+    },
+    {
+      "source": "Visual Art",
+      "target": "ink on paper",
+      "weight": 259
+    },
+    {
+      "source": "Ink Art",
+      "target": "Painting",
+      "weight": 254
+    },
+    {
+      "source": "Architectural Model",
+      "target": "Design and Architecture",
+      "weight": 251
+    },
+    {
+      "source": "Archival Documentation",
+      "target": "Design and Architecture",
+      "weight": 240
+    },
+    {
+      "source": "1980s",
+      "target": "Taiwanese",
+      "weight": 240
+    },
+    {
+      "source": "1980s",
+      "target": "Thai",
       "weight": 239
+    },
+    {
+      "source": "Visual Art",
+      "target": "Work on Paper",
+      "weight": 236
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Singaporean",
+      "weight": 232
+    },
+    {
+      "source": "Moving Image",
+      "target": "single-channel digital video (black and white",
+      "weight": 227
+    },
+    {
+      "source": "Video",
+      "target": "single-channel digital video (black and white",
+      "weight": 226
+    },
+    {
+      "source": "1950s",
+      "target": "Chinese",
+      "weight": 220
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "JPG file",
+      "weight": 217
+    },
+    {
+      "source": "Book/Periodical",
+      "target": "Visual Art",
+      "weight": 216
+    },
+    {
+      "source": "Print",
+      "target": "Visual Art",
+      "weight": 215
+    },
+    {
+      "source": "Visual Art",
+      "target": "single-channel digital video (colour",
+      "weight": 214
+    },
+    {
+      "source": "Photography",
+      "target": "inkjet print",
+      "weight": 207
+    },
+    {
+      "source": "Visual Art",
+      "target": "inkjet print",
+      "weight": 205
+    },
+    {
+      "source": "Visual Art",
+      "target": "single-channel digital video (black and white",
+      "weight": 203
+    },
+    {
+      "source": "British",
+      "target": "Design and Architecture",
+      "weight": 196
+    },
+    {
+      "source": "1990s",
+      "target": "Design Object",
+      "weight": 196
+    },
+    {
+      "source": "Book/Periodical",
+      "target": "printing ink on paper",
+      "weight": 191
     },
     {
       "source": "Chinese",
@@ -1234,238 +934,8 @@
     },
     {
       "source": "Chinese",
-      "target": "Painting",
-      "weight": 794
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Hong Kong",
-      "weight": 1951
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Hong Kong",
-      "weight": 52
-    },
-    {
-      "source": "1990s",
-      "target": "Architectural Model",
-      "weight": 25
-    },
-    {
-      "source": "2010s",
-      "target": "Hong Kong",
-      "weight": 298
-    },
-    {
-      "source": "German",
-      "target": "Visual Art",
-      "weight": 105
-    },
-    {
-      "source": "2010s",
-      "target": "Visual Art",
-      "weight": 952
-    },
-    {
-      "source": "German",
-      "target": "Photography",
-      "weight": 74
-    },
-    {
-      "source": "2010s",
-      "target": "Photography",
-      "weight": 197
-    },
-    {
-      "source": "German",
-      "target": "chromogenic print",
-      "weight": 74
-    },
-    {
-      "source": "2010s",
-      "target": "chromogenic print",
-      "weight": 40
-    },
-    {
-      "source": "2010s",
-      "target": "German",
-      "weight": 27
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Design and Architecture",
-      "weight": 680
-    },
-    {
-      "source": "Design and Architecture",
       "target": "print on paper",
-      "weight": 354
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "print on paper",
-      "weight": 368
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Hong Kong",
-      "weight": 194
-    },
-    {
-      "source": "1970s",
-      "target": "Book/Periodical",
-      "weight": 194
-    },
-    {
-      "source": "Hong Kong",
-      "target": "print on paper",
-      "weight": 22
-    },
-    {
-      "source": "1970s",
-      "target": "print on paper",
-      "weight": 52
-    },
-    {
-      "source": "1980s",
-      "target": "inkjet print",
-      "weight": 32
-    },
-    {
-      "source": "2010s",
-      "target": "Moving Image",
-      "weight": 305
-    },
-    {
-      "source": "Moving Image",
-      "target": "single-channel digital video (colour",
-      "weight": 290
-    },
-    {
-      "source": "Visual Art",
-      "target": "single-channel digital video (colour",
-      "weight": 214
-    },
-    {
-      "source": "Chinese",
-      "target": "single-channel digital video (colour",
-      "weight": 91
-    },
-    {
-      "source": "2010s",
-      "target": "single-channel digital video (colour",
-      "weight": 100
-    },
-    {
-      "source": "2000s",
-      "target": "inkjet print",
-      "weight": 53
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Product Design",
-      "weight": 372
-    },
-    {
-      "source": "British",
-      "target": "Design and Architecture",
-      "weight": 196
-    },
-    {
-      "source": "British",
-      "target": "Product Design",
-      "weight": 5
-    },
-    {
-      "source": "2010s",
-      "target": "Product Design",
-      "weight": 22
-    },
-    {
-      "source": "2010s",
-      "target": "British",
-      "weight": 83
-    },
-    {
-      "source": "2000s",
-      "target": "British",
-      "weight": 12
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Moving Image",
-      "weight": 285
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Installation",
-      "weight": 66
-    },
-    {
-      "source": "2010s",
-      "target": "Installation",
-      "weight": 93
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Video",
-      "weight": 46
-    },
-    {
-      "source": "2010s",
-      "target": "Video",
-      "weight": 216
-    },
-    {
-      "source": "American",
-      "target": "Installation",
-      "weight": 10
-    },
-    {
-      "source": "1980s",
-      "target": "American",
-      "weight": 223
-    },
-    {
-      "source": "Poster",
-      "target": "Visual Art",
-      "weight": 25
-    },
-    {
-      "source": "American",
-      "target": "Poster",
-      "weight": 5
-    },
-    {
-      "source": "Visual Art",
-      "target": "oil on canvas",
-      "weight": 401
-    },
-    {
-      "source": "Chinese",
-      "target": "oil on canvas",
-      "weight": 350
-    },
-    {
-      "source": "1970s",
-      "target": "oil on canvas",
-      "weight": 26
-    },
-    {
-      "source": "Drawing",
-      "target": "Visual Art",
-      "weight": 397
-    },
-    {
-      "source": "Chinese",
-      "target": "Drawing",
-      "weight": 41
-    },
-    {
-      "source": "1970s",
-      "target": "Drawing",
-      "weight": 100
+      "weight": 188
     },
     {
       "source": "French",
@@ -1473,634 +943,9 @@
       "weight": 185
     },
     {
-      "source": "French",
-      "target": "Photography",
-      "weight": 99
-    },
-    {
-      "source": "French",
-      "target": "gelatin silver print",
-      "weight": 29
-    },
-    {
-      "source": "1990s",
-      "target": "gelatin silver print",
-      "weight": 118
-    },
-    {
-      "source": "1990s",
-      "target": "French",
-      "weight": 11
-    },
-    {
-      "source": "2010s",
-      "target": "Sculpture",
-      "weight": 99
-    },
-    {
-      "source": "2010s",
-      "target": "Painting",
-      "weight": 187
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Design and Architecture",
-      "weight": 1079
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "British",
-      "weight": 24
-    },
-    {
-      "source": "1980s",
-      "target": "Architectural Photography",
-      "weight": 296
-    },
-    {
-      "source": "1980s",
-      "target": "British",
-      "weight": 45
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Visual Art",
-      "weight": 86
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Installation",
-      "weight": 4
-    },
-    {
-      "source": "Ink Art",
-      "target": "Installation",
-      "weight": 4
-    },
-    {
-      "source": "Hong Kong",
-      "target": "inkjet print",
-      "weight": 81
-    },
-    {
-      "source": "American",
-      "target": "Moving Image",
-      "weight": 86
-    },
-    {
-      "source": "1990s",
-      "target": "Moving Image",
-      "weight": 92
-    },
-    {
-      "source": "Video",
-      "target": "single-channel digital video (colour",
-      "weight": 282
-    },
-    {
-      "source": "American",
-      "target": "Video",
-      "weight": 76
-    },
-    {
-      "source": "1990s",
-      "target": "Video",
-      "weight": 58
-    },
-    {
-      "source": "American",
-      "target": "single-channel digital video (colour",
-      "weight": 36
-    },
-    {
-      "source": "1990s",
-      "target": "single-channel digital video (colour",
-      "weight": 27
-    },
-    {
-      "source": "1980s",
-      "target": "Ink Art",
-      "weight": 39
-    },
-    {
-      "source": "1980s",
-      "target": "Work on Paper",
-      "weight": 56
-    },
-    {
-      "source": "2010s",
-      "target": "Ink Art",
-      "weight": 61
-    },
-    {
-      "source": "2010s",
-      "target": "Work on Paper",
-      "weight": 45
-    },
-    {
-      "source": "American",
-      "target": "Painting",
-      "weight": 68
-    },
-    {
-      "source": "Visual Art",
-      "target": "print on paper",
-      "weight": 77
-    },
-    {
-      "source": "Drawing",
-      "target": "Hong Kong",
-      "weight": 285
-    },
-    {
-      "source": "2010s",
-      "target": "Drawing",
-      "weight": 75
-    },
-    {
-      "source": "2010s",
-      "target": "print on paper",
-      "weight": 25
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Visual Art",
-      "weight": 141
-    },
-    {
-      "source": "American",
-      "target": "Archival Documentation",
-      "weight": 56
-    },
-    {
-      "source": "1980s",
-      "target": "Archival Documentation",
-      "weight": 38
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Photography",
-      "weight": 363
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "chromogenic print",
-      "weight": 268
-    },
-    {
-      "source": "2000s",
-      "target": "chromogenic print",
-      "weight": 244
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Moving Image",
-      "weight": 9
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "single-channel digital video (colour",
-      "weight": 11
-    },
-    {
-      "source": "Hong Kong",
-      "target": "single-channel digital video (colour",
-      "weight": 21
-    },
-    {
-      "source": "2000s",
-      "target": "single-channel digital video (colour",
-      "weight": 105
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Print",
-      "weight": 63
-    },
-    {
-      "source": "Hong Kong",
-      "target": "offset lithograph",
-      "weight": 154
-    },
-    {
-      "source": "2000s",
-      "target": "offset lithograph",
-      "weight": 58
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Design and Architecture",
-      "weight": 1687
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Print",
-      "weight": 4
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Hong Kong",
-      "weight": 570
-    },
-    {
-      "source": "2000s",
-      "target": "Architectural Drawing",
-      "weight": 187
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Video",
-      "weight": 28
-    },
-    {
-      "source": "Print",
-      "target": "print on paper",
-      "weight": 7
-    },
-    {
-      "source": "2000s",
-      "target": "print on paper",
-      "weight": 73
-    },
-    {
-      "source": "British",
-      "target": "Installation",
-      "weight": 3
-    },
-    {
-      "source": "Japanese",
-      "target": "Visual Art",
-      "weight": 399
-    },
-    {
-      "source": "Installation",
-      "target": "Japanese",
-      "weight": 9
-    },
-    {
-      "source": "1950s",
-      "target": "Japanese",
-      "weight": 101
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "South Korean",
-      "weight": 26
-    },
-    {
-      "source": "2000s",
-      "target": "South Korean",
-      "weight": 264
-    },
-    {
-      "source": "Installation",
-      "target": "Photography",
-      "weight": 22
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Visual Art",
-      "weight": 3
-    },
-    {
-      "source": "Design Object",
-      "target": "Design and Architecture",
-      "weight": 488
-    },
-    {
-      "source": "Chinese",
-      "target": "Design Object",
-      "weight": 27
-    },
-    {
-      "source": "2010s",
-      "target": "Design Object",
-      "weight": 40
-    },
-    {
-      "source": "Chinese",
-      "target": "Product Design",
-      "weight": 25
-    },
-    {
-      "source": "Moving Image",
-      "target": "South Korean",
-      "weight": 525
-    },
-    {
-      "source": "South Korean",
-      "target": "Visual Art",
-      "weight": 600
-    },
-    {
-      "source": "1990s",
-      "target": "British",
-      "weight": 16
-    },
-    {
-      "source": "British",
-      "target": "Design Object",
-      "weight": 10
-    },
-    {
-      "source": "1990s",
-      "target": "Design Object",
-      "weight": 196
-    },
-    {
-      "source": "2000s",
-      "target": "Design Object",
-      "weight": 17
-    },
-    {
-      "source": "2000s",
-      "target": "Product Design",
-      "weight": 15
-    },
-    {
-      "source": "Moving Image",
-      "target": "single-channel digital video (black and white",
-      "weight": 227
-    },
-    {
-      "source": "Visual Art",
-      "target": "single-channel digital video (black and white",
-      "weight": 203
-    },
-    {
-      "source": "Video",
-      "target": "single-channel digital video (black and white",
-      "weight": 226
-    },
-    {
-      "source": "Hong Kong",
-      "target": "single-channel digital video (black and white",
-      "weight": 5
-    },
-    {
-      "source": "2010s",
-      "target": "single-channel digital video (black and white",
-      "weight": 88
-    },
-    {
-      "source": "Animation",
-      "target": "Moving Image",
-      "weight": 297
-    },
-    {
-      "source": "Animation",
-      "target": "Visual Art",
-      "weight": 288
-    },
-    {
-      "source": "Animation",
-      "target": "Video",
-      "weight": 154
-    },
-    {
-      "source": "Animation",
-      "target": "Hong Kong",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "Animation",
-      "weight": 54
-    },
-    {
-      "source": "British",
-      "target": "Visual Art",
-      "weight": 138
-    },
-    {
-      "source": "Installation",
-      "target": "Sculpture",
-      "weight": 37
-    },
-    {
-      "source": "British",
-      "target": "Sculpture",
-      "weight": 12
-    },
-    {
-      "source": "1950s",
-      "target": "Design and Architecture",
-      "weight": 531
-    },
-    {
-      "source": "Research Needed",
-      "target": "Visual Art",
-      "weight": 5
-    },
-    {
-      "source": "Photography",
-      "target": "Research Needed",
-      "weight": 15
-    },
-    {
-      "source": "Research Needed",
-      "target": "inkjet print",
-      "weight": 3
-    },
-    {
-      "source": "1950s",
-      "target": "Research Needed",
-      "weight": 23
-    },
-    {
       "source": "Design Object",
       "target": "Hong Kong",
       "weight": 185
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "inkjet print",
-      "weight": 33
-    },
-    {
-      "source": "American",
-      "target": "Design and Architecture",
-      "weight": 634
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "offset lithograph",
-      "weight": 34
-    },
-    {
-      "source": "American",
-      "target": "Book/Periodical",
-      "weight": 155
-    },
-    {
-      "source": "1960s",
-      "target": "Book/Periodical",
-      "weight": 184
-    },
-    {
-      "source": "American",
-      "target": "offset lithograph",
-      "weight": 14
-    },
-    {
-      "source": "1960s",
-      "target": "offset lithograph",
-      "weight": 63
-    },
-    {
-      "source": "1960s",
-      "target": "American",
-      "weight": 189
-    },
-    {
-      "source": "American",
-      "target": "Photography",
-      "weight": 144
-    },
-    {
-      "source": "American",
-      "target": "gelatin silver print",
-      "weight": 82
-    },
-    {
-      "source": "1950s",
-      "target": "American",
-      "weight": 49
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "ink on paper",
-      "weight": 110
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "German",
-      "weight": 5
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "ink on paper",
-      "weight": 27
-    },
-    {
-      "source": "1980s",
-      "target": "Architectural Drawing",
-      "weight": 672
-    },
-    {
-      "source": "American",
-      "target": "Architectural Drawing",
-      "weight": 314
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Italian",
-      "weight": 115
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Italian",
-      "weight": 51
-    },
-    {
-      "source": "1970s",
-      "target": "Architectural Drawing",
-      "weight": 182
-    },
-    {
-      "source": "1970s",
-      "target": "Italian",
-      "weight": 20
-    },
-    {
-      "source": "1980s",
-      "target": "Architectural Model",
-      "weight": 42
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Japanese",
-      "weight": 43
-    },
-    {
-      "source": "2010s",
-      "target": "Japanese",
-      "weight": 75
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Painting",
-      "weight": 11
-    },
-    {
-      "source": "British",
-      "target": "Painting",
-      "weight": 24
-    },
-    {
-      "source": "1950s",
-      "target": "Painting",
-      "weight": 17
-    },
-    {
-      "source": "1950s",
-      "target": "British",
-      "weight": 12
-    },
-    {
-      "source": "British",
-      "target": "oil on canvas",
-      "weight": 4
-    },
-    {
-      "source": "1970s",
-      "target": "British",
-      "weight": 45
-    },
-    {
-      "source": "Chinese",
-      "target": "single-channel digital video (black and white",
-      "weight": 9
-    },
-    {
-      "source": "2000s",
-      "target": "single-channel digital video (black and white",
-      "weight": 90
-    },
-    {
-      "source": "2000s",
-      "target": "oil on canvas",
-      "weight": 199
-    },
-    {
-      "source": "1990s",
-      "target": "oil on canvas",
-      "weight": 109
-    },
-    {
-      "source": "1980s",
-      "target": "gelatin silver print",
-      "weight": 153
-    },
-    {
-      "source": "1970s",
-      "target": "gelatin silver print",
-      "weight": 238
-    },
-    {
-      "source": "1970s",
-      "target": "Installation",
-      "weight": 6
-    },
-    {
-      "source": "Visual Art",
-      "target": "ink on paper",
-      "weight": 259
-    },
-    {
-      "source": "Painting",
-      "target": "ink on paper",
-      "weight": 125
     },
     {
       "source": "Ink Art",
@@ -2108,624 +953,9 @@
       "weight": 171
     },
     {
-      "source": "Hong Kong",
-      "target": "ink on paper",
-      "weight": 132
-    },
-    {
-      "source": "2010s",
-      "target": "ink on paper",
-      "weight": 40
-    },
-    {
-      "source": "Drawing",
-      "target": "Ink Art",
-      "weight": 17
-    },
-    {
-      "source": "Drawing",
-      "target": "Work on Paper",
-      "weight": 42
-    },
-    {
-      "source": "American",
-      "target": "Drawing",
-      "weight": 23
-    },
-    {
-      "source": "1960s",
-      "target": "Drawing",
-      "weight": 21
-    },
-    {
-      "source": "American",
-      "target": "Ink Art",
-      "weight": 27
-    },
-    {
-      "source": "American",
-      "target": "Work on Paper",
-      "weight": 10
-    },
-    {
-      "source": "Work on Paper",
-      "target": "ink on paper",
-      "weight": 34
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Product Design",
-      "weight": 144
-    },
-    {
-      "source": "1970s",
-      "target": "Product Design",
-      "weight": 44
-    },
-    {
-      "source": "American",
-      "target": "Architectural Model",
-      "weight": 12
-    },
-    {
-      "source": "Visual Art",
-      "target": "pigment print",
-      "weight": 85
-    },
-    {
-      "source": "Photography",
-      "target": "pigment print",
-      "weight": 86
-    },
-    {
-      "source": "Hong Kong",
-      "target": "pigment print",
-      "weight": 14
-    },
-    {
-      "source": "1950s",
-      "target": "pigment print",
-      "weight": 8
-    },
-    {
-      "source": "1960s",
-      "target": "pigment print",
-      "weight": 20
-    },
-    {
-      "source": "Installation",
-      "target": "Painting",
-      "weight": 13
-    },
-    {
-      "source": "Painting",
-      "target": "Video",
-      "weight": 3
-    },
-    {
-      "source": "Hong Kong",
-      "target": "oil on canvas",
-      "weight": 13
-    },
-    {
-      "source": "2010s",
-      "target": "American",
-      "weight": 43
-    },
-    {
-      "source": "German",
-      "target": "Painting",
-      "weight": 10
-    },
-    {
-      "source": "German",
-      "target": "oil on canvas",
-      "weight": 9
-    },
-    {
-      "source": "2000s",
-      "target": "German",
-      "weight": 58
-    },
-    {
-      "source": "German",
-      "target": "Installation",
-      "weight": 15
-    },
-    {
-      "source": "Moving Image",
+      "source": "Chinese",
       "target": "Sculpture",
-      "weight": 6
-    },
-    {
-      "source": "1980s",
-      "target": "oil on canvas",
-      "weight": 22
-    },
-    {
-      "source": "2000s",
-      "target": "Drawing",
-      "weight": 36
-    },
-    {
-      "source": "Print",
-      "target": "Work on Paper",
-      "weight": 17
-    },
-    {
-      "source": "2010s",
-      "target": "Print",
-      "weight": 41
-    },
-    {
-      "source": "Chinese",
-      "target": "Work on Paper",
-      "weight": 41
-    },
-    {
-      "source": "Chinese",
-      "target": "ink on paper",
-      "weight": 121
-    },
-    {
-      "source": "2000s",
-      "target": "ink on paper",
-      "weight": 62
-    },
-    {
-      "source": "1960s",
-      "target": "Architectural Model",
-      "weight": 36
-    },
-    {
-      "source": "Painting",
-      "target": "Print",
-      "weight": 14
-    },
-    {
-      "source": "American",
-      "target": "Print",
-      "weight": 36
-    },
-    {
-      "source": "1970s",
-      "target": "Sculpture",
-      "weight": 20
-    },
-    {
-      "source": "Drawing",
-      "target": "Installation",
-      "weight": 3
-    },
-    {
-      "source": "Drawing",
-      "target": "Print",
-      "weight": 3
-    },
-    {
-      "source": "1990s",
-      "target": "Drawing",
-      "weight": 23
-    },
-    {
-      "source": "Visual Art",
-      "target": "printing ink on paper",
-      "weight": 34
-    },
-    {
-      "source": "Chinese",
-      "target": "printing ink on paper",
-      "weight": 3
-    },
-    {
-      "source": "1990s",
-      "target": "printing ink on paper",
-      "weight": 25
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Visual Art",
-      "weight": 12
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "chromogenic print",
-      "weight": 112
-    },
-    {
-      "source": "1990s",
-      "target": "Architectural Photography",
-      "weight": 92
-    },
-    {
-      "source": "1990s",
-      "target": "German",
-      "weight": 5
-    },
-    {
-      "source": "1970s",
-      "target": "Architectural Model",
-      "weight": 19
-    },
-    {
-      "source": "1970s",
-      "target": "American",
-      "weight": 184
-    },
-    {
-      "source": "Photography",
-      "target": "Print",
-      "weight": 3
-    },
-    {
-      "source": "French",
-      "target": "Painting",
-      "weight": 6
-    },
-    {
-      "source": "French",
-      "target": "Ink Art",
-      "weight": 3
-    },
-    {
-      "source": "French",
-      "target": "ink on paper",
-      "weight": 4
-    },
-    {
-      "source": "1960s",
-      "target": "ink on paper",
-      "weight": 55
-    },
-    {
-      "source": "1960s",
-      "target": "French",
-      "weight": 32
-    },
-    {
-      "source": "1980s",
-      "target": "Product Design",
-      "weight": 110
-    },
-    {
-      "source": "Japanese",
-      "target": "Moving Image",
-      "weight": 25
-    },
-    {
-      "source": "2000s",
-      "target": "Architectural Photography",
-      "weight": 153
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Research Needed",
-      "weight": 82
-    },
-    {
-      "source": "1990s",
-      "target": "Research Needed",
-      "weight": 5
-    },
-    {
-      "source": "British",
-      "target": "ink on paper",
-      "weight": 3
-    },
-    {
-      "source": "1960s",
-      "target": "British",
-      "weight": 113
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "British",
-      "weight": 55
-    },
-    {
-      "source": "1990s",
-      "target": "Architectural Drawing",
-      "weight": 351
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Design and Architecture",
-      "weight": 489
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Japanese",
-      "weight": 141
-    },
-    {
-      "source": "1980s",
-      "target": "Design Drawing",
-      "weight": 103
-    },
-    {
-      "source": "1990s",
-      "target": "Design Drawing",
-      "weight": 66
-    },
-    {
-      "source": "Japanese",
-      "target": "Photography",
-      "weight": 271
-    },
-    {
-      "source": "Design Drawing",
-      "target": "ink on paper",
-      "weight": 51
-    },
-    {
-      "source": "Japanese",
-      "target": "ink on paper",
-      "weight": 31
-    },
-    {
-      "source": "1990s",
-      "target": "ink on paper",
-      "weight": 91
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "printing ink on paper",
-      "weight": 300
-    },
-    {
-      "source": "Design Drawing",
-      "target": "printing ink on paper",
-      "weight": 6
-    },
-    {
-      "source": "Japanese",
-      "target": "printing ink on paper",
-      "weight": 16
-    },
-    {
-      "source": "1950s",
-      "target": "Architectural Drawing",
-      "weight": 54
-    },
-    {
-      "source": "1960s",
-      "target": "Architectural Drawing",
-      "weight": 189
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "gelatin silver print",
-      "weight": 198
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "gelatin silver print",
-      "weight": 153
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Hong Kong",
-      "weight": 292
-    },
-    {
-      "source": "1960s",
-      "target": "Architectural Photography",
       "weight": 168
-    },
-    {
-      "source": "1970s",
-      "target": "Architectural Photography",
-      "weight": 197
-    },
-    {
-      "source": "1970s",
-      "target": "chromogenic print",
-      "weight": 115
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Digital",
-      "weight": 667
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Digital",
-      "weight": 168
-    },
-    {
-      "source": "Digital",
-      "target": "Hong Kong",
-      "weight": 484
-    },
-    {
-      "source": "1970s",
-      "target": "Digital",
-      "weight": 68
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "printing ink on paper",
-      "weight": 191
-    },
-    {
-      "source": "Hong Kong",
-      "target": "printing ink on paper",
-      "weight": 77
-    },
-    {
-      "source": "1960s",
-      "target": "printing ink on paper",
-      "weight": 105
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "photocopy on paper",
-      "weight": 160
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Architectural Photography",
-      "weight": 165
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "photocopy on paper",
-      "weight": 70
-    },
-    {
-      "source": "Hong Kong",
-      "target": "photocopy on paper",
-      "weight": 49
-    },
-    {
-      "source": "1960s",
-      "target": "photocopy on paper",
-      "weight": 40
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Design and Architecture",
-      "weight": 240
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Book/Periodical",
-      "weight": 18
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "printing ink on paper",
-      "weight": 42
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Hong Kong",
-      "weight": 141
-    },
-    {
-      "source": "1960s",
-      "target": "Archival Documentation",
-      "weight": 106
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "gelatin silver print",
-      "weight": 25
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "TIF file",
-      "weight": 405
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "TIF file",
-      "weight": 140
-    },
-    {
-      "source": "Digital",
-      "target": "TIF file",
-      "weight": 399
-    },
-    {
-      "source": "Hong Kong",
-      "target": "TIF file",
-      "weight": 399
-    },
-    {
-      "source": "1970s",
-      "target": "TIF file",
-      "weight": 39
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "photocopy on paper",
-      "weight": 51
-    },
-    {
-      "source": "1970s",
-      "target": "photocopy on paper",
-      "weight": 48
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "chromogenic print",
-      "weight": 15
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Architectural Photography",
-      "weight": 101
-    },
-    {
-      "source": "Architectural Model",
-      "target": "chromogenic print",
-      "weight": 12
-    },
-    {
-      "source": "1980s",
-      "target": "Digital",
-      "weight": 275
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Archival Documentation",
-      "weight": 16
-    },
-    {
-      "source": "1970s",
-      "target": "Archival Documentation",
-      "weight": 101
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Singaporean",
-      "weight": 232
-    },
-    {
-      "source": "Design Object",
-      "target": "Singaporean",
-      "weight": 7
-    },
-    {
-      "source": "2010s",
-      "target": "Singaporean",
-      "weight": 51
-    },
-    {
-      "source": "1980s",
-      "target": "printing ink on paper",
-      "weight": 51
-    },
-    {
-      "source": "Moving Image",
-      "target": "Singaporean",
-      "weight": 9
-    },
-    {
-      "source": "Singaporean",
-      "target": "Visual Art",
-      "weight": 41
-    },
-    {
-      "source": "Taiwanese",
-      "target": "Visual Art",
-      "weight": 64
-    },
-    {
-      "source": "Installation",
-      "target": "Taiwanese",
-      "weight": 6
-    },
-    {
-      "source": "1990s",
-      "target": "Taiwanese",
-      "weight": 101
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Hong Kong",
-      "weight": 262
     },
     {
       "source": "1960s",
@@ -2733,9 +963,44 @@
       "weight": 166
     },
     {
-      "source": "Architectural Model",
-      "target": "gelatin silver print",
-      "weight": 21
+      "source": "Design and Architecture",
+      "target": "PICT image",
+      "weight": 163
+    },
+    {
+      "source": "Design Object",
+      "target": "PICT image",
+      "weight": 163
+    },
+    {
+      "source": "Digital",
+      "target": "PICT image",
+      "weight": 163
+    },
+    {
+      "source": "Visual Art",
+      "target": "marker ink on paper",
+      "weight": 162
+    },
+    {
+      "source": "Drawing",
+      "target": "marker ink on paper",
+      "weight": 162
+    },
+    {
+      "source": "Hong Kong",
+      "target": "marker ink on paper",
+      "weight": 162
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "photocopy on paper",
+      "weight": 160
+    },
+    {
+      "source": "Japanese",
+      "target": "Product Design",
+      "weight": 159
     },
     {
       "source": "Design and Architecture",
@@ -2749,193 +1014,78 @@
     },
     {
       "source": "Hong Kong",
-      "target": "colour slide",
-      "weight": 12
+      "target": "Product Design",
+      "weight": 144
     },
     {
-      "source": "1970s",
-      "target": "colour slide",
-      "weight": 34
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "photocopy on paper",
-      "weight": 39
+      "source": "Hong Kong",
+      "target": "Work on Paper",
+      "weight": 141
     },
     {
       "source": "Archival Documentation",
-      "target": "Research Needed",
-      "weight": 3
+      "target": "Visual Art",
+      "weight": 141
     },
     {
-      "source": "1950s",
-      "target": "Archival Documentation",
-      "weight": 30
+      "source": "Archival Documentation",
+      "target": "Hong Kong",
+      "weight": 141
     },
     {
-      "source": "Book/Periodical",
-      "target": "Research Needed",
-      "weight": 21
-    },
-    {
-      "source": "1950s",
-      "target": "Book/Periodical",
-      "weight": 198
-    },
-    {
-      "source": "Research Needed",
-      "target": "photocopy on paper",
-      "weight": 8
-    },
-    {
-      "source": "1950s",
-      "target": "photocopy on paper",
-      "weight": 6
-    },
-    {
-      "source": "1950s",
-      "target": "Architectural Photography",
-      "weight": 113
+      "source": "British",
+      "target": "Visual Art",
+      "weight": 138
     },
     {
       "source": "Architectural Photography",
-      "target": "Archival Documentation",
-      "weight": 9
+      "target": "JPG file",
+      "weight": 137
     },
     {
-      "source": "Archival Documentation",
+      "source": "Chinese",
+      "target": "JPG file",
+      "weight": 137
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Print",
+      "weight": 135
+    },
+    {
+      "source": "Hong Kong",
+      "target": "ink on paper",
+      "weight": 132
+    },
+    {
+      "source": "2000s",
+      "target": "Sculpture",
+      "weight": 125
+    },
+    {
+      "source": "Visual Art",
+      "target": "black and white print",
+      "weight": 117
+    },
+    {
+      "source": "Photography",
+      "target": "black and white print",
+      "weight": 117
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Italian",
+      "weight": 115
+    },
+    {
+      "source": "1960s",
       "target": "British",
-      "weight": 7
+      "weight": 113
     },
     {
-      "source": "Architectural Drawing",
-      "target": "colour slide",
-      "weight": 12
-    },
-    {
-      "source": "1980s",
-      "target": "colour slide",
-      "weight": 63
-    },
-    {
-      "source": "1990s",
-      "target": "colour slide",
-      "weight": 17
-    },
-    {
-      "source": "Architectural Model",
-      "target": "colour slide",
-      "weight": 15
-    },
-    {
-      "source": "1980s",
-      "target": "Book/Periodical",
-      "weight": 95
-    },
-    {
-      "source": "1980s",
-      "target": "photocopy on paper",
-      "weight": 24
-    },
-    {
-      "source": "American",
-      "target": "Product Design",
-      "weight": 3
-    },
-    {
-      "source": "1960s",
-      "target": "Product Design",
-      "weight": 106
-    },
-    {
-      "source": "2000s",
-      "target": "Singaporean",
-      "weight": 44
-    },
-    {
-      "source": "Poster",
-      "target": "Singaporean",
-      "weight": 3
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Singaporean",
-      "weight": 21
-    },
-    {
-      "source": "2000s",
-      "target": "Archival Documentation",
-      "weight": 25
-    },
-    {
-      "source": "Singaporean",
-      "target": "printing ink on paper",
-      "weight": 13
-    },
-    {
-      "source": "2000s",
-      "target": "printing ink on paper",
-      "weight": 13
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Singaporean",
-      "weight": 55
-    },
-    {
-      "source": "2000s",
-      "target": "Book/Periodical",
-      "weight": 70
-    },
-    {
-      "source": "2010s",
-      "target": "printing ink on paper",
-      "weight": 5
-    },
-    {
-      "source": "Poster",
-      "target": "printing ink on paper",
-      "weight": 34
-    },
-    {
-      "source": "2010s",
-      "target": "Poster",
-      "weight": 13
-    },
-    {
-      "source": "Poster",
-      "target": "Research Needed",
-      "weight": 12
-    },
-    {
-      "source": "Research Needed",
-      "target": "offset lithograph",
-      "weight": 5
-    },
-    {
-      "source": "1960s",
-      "target": "Research Needed",
-      "weight": 31
-    },
-    {
-      "source": "1930s",
-      "target": "Poster",
-      "weight": 5
-    },
-    {
-      "source": "1930s",
-      "target": "Research Needed",
-      "weight": 6
-    },
-    {
-      "source": "1940s",
-      "target": "Design and Architecture",
-      "weight": 57
-    },
-    {
-      "source": "1940s",
-      "target": "Poster",
-      "weight": 6
+      "source": "Design and Architecture",
+      "target": "offset print on paper",
+      "weight": 112
     },
     {
       "source": "Design and Architecture",
@@ -2943,2279 +1093,54 @@
       "weight": 110
     },
     {
-      "source": "French",
-      "target": "Poster",
-      "weight": 3
-    },
-    {
-      "source": "1930s",
-      "target": "French",
-      "weight": 14
-    },
-    {
-      "source": "1900s",
-      "target": "Design and Architecture",
-      "weight": 3
-    },
-    {
-      "source": "1920s",
-      "target": "Design and Architecture",
-      "weight": 33
-    },
-    {
-      "source": "Chinese",
-      "target": "Poster",
-      "weight": 20
-    },
-    {
-      "source": "Chinese",
-      "target": "offset lithograph",
-      "weight": 12
-    },
-    {
-      "source": "1950s",
-      "target": "Poster",
-      "weight": 42
-    },
-    {
-      "source": "1950s",
-      "target": "offset lithograph",
-      "weight": 15
-    },
-    {
-      "source": "1930s",
-      "target": "Book/Periodical",
-      "weight": 18
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Moving Image",
-      "weight": 7
-    },
-    {
-      "source": "Moving Image",
-      "target": "offset print on paper",
-      "weight": 3
-    },
-    {
-      "source": "1950s",
-      "target": "Moving Image",
-      "weight": 11
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "offset print on paper",
-      "weight": 15
-    },
-    {
-      "source": "1950s",
-      "target": "offset print on paper",
-      "weight": 17
-    },
-    {
-      "source": "1950s",
-      "target": "print on paper",
-      "weight": 159
-    },
-    {
-      "source": "1980s",
-      "target": "Moving Image",
-      "weight": 125
-    },
-    {
-      "source": "1980s",
-      "target": "offset print on paper",
-      "weight": 38
-    },
-    {
-      "source": "1990s",
-      "target": "Book/Periodical",
-      "weight": 45
-    },
-    {
-      "source": "1990s",
-      "target": "offset print on paper",
-      "weight": 11
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Thai",
-      "weight": 706
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Thai",
-      "weight": 27
-    },
-    {
-      "source": "1990s",
-      "target": "Thai",
-      "weight": 185
-    },
-    {
-      "source": "1980s",
-      "target": "Thai",
-      "weight": 239
-    },
-    {
-      "source": "Painting",
-      "target": "South Korean",
-      "weight": 24
-    },
-    {
-      "source": "2010s",
-      "target": "South Korean",
-      "weight": 218
-    },
-    {
-      "source": "1930s",
-      "target": "Ink Art",
-      "weight": 3
-    },
-    {
-      "source": "American",
-      "target": "ink on paper",
-      "weight": 8
-    },
-    {
-      "source": "1930s",
-      "target": "American",
-      "weight": 4
-    },
-    {
-      "source": "Design Object",
-      "target": "Photography",
-      "weight": 129
-    },
-    {
-      "source": "Design Object",
-      "target": "chromogenic print",
-      "weight": 96
-    },
-    {
-      "source": "1980s",
-      "target": "Design Object",
-      "weight": 27
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Chinese",
-      "weight": 103
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Indian",
-      "weight": 88
-    },
-    {
-      "source": "1960s",
-      "target": "Indian",
-      "weight": 32
-    },
-    {
-      "source": "1970s",
-      "target": "Indian",
-      "weight": 41
-    },
-    {
-      "source": "1980s",
-      "target": "Indian",
-      "weight": 30
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Singaporean",
-      "weight": 20
-    },
-    {
-      "source": "1960s",
-      "target": "Singaporean",
-      "weight": 57
-    },
-    {
-      "source": "1980s",
-      "target": "Italian",
-      "weight": 57
-    },
-    {
-      "source": "2000s",
-      "target": "Digital",
-      "weight": 346
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Digital",
-      "weight": 4
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Digital",
-      "weight": 298
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Poster",
-      "weight": 136
-    },
-    {
-      "source": "British",
-      "target": "Poster",
-      "weight": 4
-    },
-    {
-      "source": "British",
-      "target": "offset lithograph",
-      "weight": 4
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Indian",
-      "weight": 30
-    },
-    {
-      "source": "Indian",
-      "target": "photocopy on paper",
-      "weight": 3
-    },
-    {
-      "source": "1980s",
-      "target": "Video",
-      "weight": 30
-    },
-    {
-      "source": "1980s",
-      "target": "ink on paper",
-      "weight": 47
-    },
-    {
-      "source": "1990s",
-      "target": "Italian",
-      "weight": 28
-    },
-    {
-      "source": "Italian",
-      "target": "photocopy on paper",
-      "weight": 4
-    },
-    {
-      "source": "1990s",
-      "target": "photocopy on paper",
-      "weight": 58
-    },
-    {
-      "source": "Ink Art",
-      "target": "Moving Image",
-      "weight": 6
-    },
-    {
-      "source": "Ink Art",
-      "target": "Video",
-      "weight": 8
-    },
-    {
-      "source": "Animation",
-      "target": "Ink Art",
-      "weight": 3
-    },
-    {
-      "source": "Animation",
-      "target": "single-channel digital video (black and white",
-      "weight": 84
-    },
-    {
-      "source": "Animation",
-      "target": "Chinese",
-      "weight": 8
-    },
-    {
-      "source": "2000s",
-      "target": "Animation",
-      "weight": 232
-    },
-    {
-      "source": "2010s",
-      "target": "Taiwanese",
-      "weight": 38
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "British",
-      "weight": 59
-    },
-    {
-      "source": "British",
-      "target": "printing ink on paper",
-      "weight": 50
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Book/Periodical",
-      "weight": 9
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "printing ink on paper",
-      "weight": 15
-    },
-    {
-      "source": "1970s",
-      "target": "printing ink on paper",
-      "weight": 99
-    },
-    {
-      "source": "1940s",
-      "target": "Thai",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "pigment print",
-      "weight": 66
-    },
-    {
-      "source": "Animation",
-      "target": "single-channel digital video (colour",
-      "weight": 36
-    },
-    {
-      "source": "2010s",
-      "target": "oil on canvas",
-      "weight": 24
-    },
-    {
-      "source": "Installation",
-      "target": "single-channel digital video (colour",
-      "weight": 6
-    },
-    {
-      "source": "Photography",
-      "target": "Video",
-      "weight": 6
-    },
-    {
-      "source": "Photography",
-      "target": "single-channel digital video (colour",
-      "weight": 3
-    },
-    {
-      "source": "1980s",
-      "target": "offset lithograph",
-      "weight": 159
-    },
-    {
-      "source": "Indian",
-      "target": "Visual Art",
-      "weight": 49
-    },
-    {
-      "source": "Indian",
-      "target": "Painting",
-      "weight": 8
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Thai",
-      "weight": 260
-    },
-    {
-      "source": "Thai",
-      "target": "chromogenic print",
-      "weight": 59
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "ink on paper",
-      "weight": 83
-    },
-    {
-      "source": "2010s",
-      "target": "Archival Documentation",
-      "weight": 29
-    },
-    {
-      "source": "1970s",
-      "target": "Thai",
-      "weight": 165
-    },
-    {
-      "source": "Thai",
-      "target": "gelatin silver print",
-      "weight": 46
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Thai",
-      "weight": 39
-    },
-    {
-      "source": "Thai",
-      "target": "printing ink on paper",
-      "weight": 40
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Thai",
-      "weight": 185
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Thai",
-      "weight": 49
-    },
-    {
-      "source": "2000s",
-      "target": "Thai",
-      "weight": 53
-    },
-    {
-      "source": "1960s",
-      "target": "Thai",
-      "weight": 39
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Sculpture",
-      "weight": 29
-    },
-    {
-      "source": "Digital",
-      "target": "Moving Image",
-      "weight": 523
-    },
-    {
-      "source": "Digital",
-      "target": "Visual Art",
-      "weight": 525
-    },
-    {
-      "source": "Digital",
-      "target": "South Korean",
-      "weight": 519
-    },
-    {
-      "source": "1990s",
-      "target": "Digital",
-      "weight": 220
-    },
-    {
-      "source": "1990s",
-      "target": "South Korean",
-      "weight": 27
-    },
-    {
-      "source": "2010s",
-      "target": "Digital",
-      "weight": 201
-    },
-    {
-      "source": "Installation",
-      "target": "South Korean",
-      "weight": 16
-    },
-    {
-      "source": "1970s",
-      "target": "South Korean",
-      "weight": 13
-    },
-    {
-      "source": "Painting",
-      "target": "Sculpture",
-      "weight": 5
-    },
-    {
-      "source": "Sculpture",
-      "target": "South Korean",
-      "weight": 12
-    },
-    {
-      "source": "1980s",
-      "target": "South Korean",
-      "weight": 12
-    },
-    {
       "source": "1950s",
       "target": "French",
       "weight": 108
     },
     {
-      "source": "Italian",
-      "target": "Product Design",
-      "weight": 12
-    },
-    {
-      "source": "Moving Image",
-      "target": "Taiwanese",
-      "weight": 23
-    },
-    {
-      "source": "Taiwanese",
-      "target": "Video",
-      "weight": 15
-    },
-    {
-      "source": "Photography",
-      "target": "Taiwanese",
-      "weight": 36
-    },
-    {
-      "source": "2000s",
-      "target": "Taiwanese",
-      "weight": 32
-    },
-    {
-      "source": "1980s",
-      "target": "Taiwanese",
-      "weight": 240
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "pigment print",
-      "weight": 30
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "pigment print",
-      "weight": 30
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Indian",
-      "weight": 33
-    },
-    {
-      "source": "Indian",
-      "target": "pigment print",
-      "weight": 30
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "inkjet print",
-      "weight": 8
-    },
-    {
-      "source": "Indian",
-      "target": "inkjet print",
-      "weight": 21
-    },
-    {
-      "source": "1970s",
-      "target": "pigment print",
-      "weight": 9
-    },
-    {
-      "source": "1980s",
-      "target": "pigment print",
-      "weight": 5
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Photography",
-      "weight": 28
-    },
-    {
-      "source": "Indian",
-      "target": "Photography",
-      "weight": 20
-    },
-    {
       "source": "German",
-      "target": "Moving Image",
-      "weight": 4
+      "target": "Visual Art",
+      "weight": 105
     },
     {
       "source": "1960s",
-      "target": "Moving Image",
-      "weight": 98
-    },
-    {
-      "source": "German",
-      "target": "Video",
-      "weight": 4
-    },
-    {
-      "source": "1960s",
-      "target": "Video",
-      "weight": 8
-    },
-    {
-      "source": "1960s",
-      "target": "German",
-      "weight": 17
-    },
-    {
-      "source": "1950s",
       "target": "printing ink on paper",
-      "weight": 17
+      "weight": 105
     },
     {
-      "source": "Poster",
-      "target": "print on paper",
-      "weight": 13
-    },
-    {
-      "source": "1980s",
-      "target": "print on paper",
-      "weight": 15
-    },
-    {
-      "source": "Japanese",
-      "target": "Sculpture",
-      "weight": 33
-    },
-    {
-      "source": "1960s",
-      "target": "Sculpture",
-      "weight": 36
-    },
-    {
-      "source": "Architectural Model",
-      "target": "British",
-      "weight": 19
-    },
-    {
-      "source": "Japanese",
-      "target": "photocopy on paper",
-      "weight": 8
-    },
-    {
-      "source": "1970s",
-      "target": "Research Needed",
-      "weight": 21
-    },
-    {
-      "source": "1940s",
-      "target": "Sculpture",
-      "weight": 3
-    },
-    {
-      "source": "1950s",
-      "target": "Design Object",
-      "weight": 14
-    },
-    {
-      "source": "2000s",
-      "target": "Design Drawing",
-      "weight": 8
-    },
-    {
-      "source": "2010s",
-      "target": "Design Drawing",
-      "weight": 41
-    },
-    {
-      "source": "1940s",
-      "target": "American",
-      "weight": 20
-    },
-    {
-      "source": "1920s",
-      "target": "Print",
-      "weight": 14
-    },
-    {
-      "source": "1920s",
-      "target": "American",
-      "weight": 28
-    },
-    {
-      "source": "1950s",
-      "target": "Print",
-      "weight": 8
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Taiwanese",
-      "weight": 712
-    },
-    {
-      "source": "1940s",
-      "target": "Taiwanese",
-      "weight": 22
-    },
-    {
-      "source": "1950s",
-      "target": "Taiwanese",
-      "weight": 112
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "TIF file",
-      "weight": 269
-    },
-    {
-      "source": "1960s",
-      "target": "Digital",
-      "weight": 11
-    },
-    {
-      "source": "1960s",
-      "target": "TIF file",
-      "weight": 9
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Digital",
-      "weight": 26
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "JPG file",
-      "weight": 217
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "JPG file",
-      "weight": 137
-    },
-    {
-      "source": "Digital",
-      "target": "JPG file",
-      "weight": 36
-    },
-    {
-      "source": "Hong Kong",
-      "target": "JPG file",
-      "weight": 51
-    },
-    {
-      "source": "2000s",
-      "target": "JPG file",
-      "weight": 135
-    },
-    {
-      "source": "1980s",
-      "target": "JPG file",
-      "weight": 11
-    },
-    {
-      "source": "1980s",
-      "target": "TIF file",
-      "weight": 245
-    },
-    {
-      "source": "1990s",
-      "target": "TIF file",
-      "weight": 42
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "JPG file",
-      "weight": 107
-    },
-    {
-      "source": "1990s",
-      "target": "JPG file",
-      "weight": 14
-    },
-    {
-      "source": "2000s",
-      "target": "TIF file",
-      "weight": 70
-    },
-    {
-      "source": "1990s",
-      "target": "Archival Documentation",
-      "weight": 44
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Japanese",
-      "weight": 18
-    },
-    {
-      "source": "Digital",
-      "target": "Japanese",
-      "weight": 178
-    },
-    {
-      "source": "French",
-      "target": "Print",
-      "weight": 40
-    },
-    {
-      "source": "1930s",
-      "target": "Print",
-      "weight": 7
-    },
-    {
-      "source": "1920s",
-      "target": "Visual Art",
-      "weight": 8
-    },
-    {
-      "source": "1920s",
-      "target": "French",
-      "weight": 5
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Visual Art",
-      "weight": 216
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "French",
-      "weight": 46
-    },
-    {
-      "source": "1940s",
-      "target": "Book/Periodical",
-      "weight": 26
-    },
-    {
-      "source": "1940s",
-      "target": "French",
-      "weight": 17
-    },
-    {
-      "source": "Print",
-      "target": "Sculpture",
-      "weight": 9
-    },
-    {
-      "source": "French",
-      "target": "Sculpture",
-      "weight": 4
-    },
-    {
-      "source": "1920s",
-      "target": "Book/Periodical",
-      "weight": 7
-    },
-    {
-      "source": "Drawing",
-      "target": "French",
-      "weight": 3
-    },
-    {
-      "source": "1910s",
-      "target": "Visual Art",
-      "weight": 4
-    },
-    {
-      "source": "1910s",
-      "target": "Photography",
-      "weight": 3
-    },
-    {
-      "source": "French",
-      "target": "black and white print",
-      "weight": 3
-    },
-    {
-      "source": "1910s",
-      "target": "black and white print",
-      "weight": 3
-    },
-    {
-      "source": "1910s",
-      "target": "French",
-      "weight": 4
-    },
-    {
-      "source": "Design Object",
-      "target": "Visual Art",
-      "weight": 4
-    },
-    {
-      "source": "1950s",
-      "target": "oil on canvas",
-      "weight": 6
-    },
-    {
-      "source": "1960s",
-      "target": "Taiwanese",
-      "weight": 173
-    },
-    {
-      "source": "1970s",
-      "target": "Taiwanese",
-      "weight": 58
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Taiwanese",
-      "weight": 170
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Taiwanese",
-      "weight": 283
-    },
-    {
-      "source": "Taiwanese",
-      "target": "colour slide",
-      "weight": 49
-    },
-    {
-      "source": "1960s",
-      "target": "colour slide",
-      "weight": 16
-    },
-    {
-      "source": "Taiwanese",
-      "target": "photocopy on paper",
-      "weight": 6
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Taiwanese",
-      "weight": 74
-    },
-    {
-      "source": "1950s",
-      "target": "colour slide",
-      "weight": 16
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Taiwanese",
-      "weight": 59
-    },
-    {
-      "source": "1940s",
-      "target": "Architectural Drawing",
-      "weight": 11
-    },
-    {
-      "source": "1940s",
-      "target": "Architectural Photography",
-      "weight": 6
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Drawing",
-      "weight": 14
-    },
-    {
-      "source": "Drawing",
-      "target": "Taiwanese",
-      "weight": 5
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Taiwanese",
-      "weight": 16
-    },
-    {
-      "source": "American",
-      "target": "Architectural Photography",
-      "weight": 9
-    },
-    {
-      "source": "Taiwanese",
-      "target": "printing ink on paper",
-      "weight": 31
-    },
-    {
-      "source": "Research Needed",
-      "target": "printing ink on paper",
-      "weight": 16
-    },
-    {
-      "source": "American",
-      "target": "photocopy on paper",
-      "weight": 78
-    },
-    {
-      "source": "Animation",
-      "target": "Digital",
-      "weight": 272
-    },
-    {
-      "source": "Digital",
-      "target": "Video",
-      "weight": 343
-    },
-    {
-      "source": "Animation",
-      "target": "South Korean",
-      "weight": 272
-    },
-    {
-      "source": "South Korean",
-      "target": "Video",
-      "weight": 340
-    },
-    {
-      "source": "2010s",
-      "target": "inkjet print",
-      "weight": 35
-    },
-    {
-      "source": "1990s",
-      "target": "Animation",
-      "weight": 4
-    },
-    {
-      "source": "Drawing",
-      "target": "ink on paper",
-      "weight": 32
-    },
-    {
-      "source": "Digital",
-      "target": "single-channel digital video (black and white",
-      "weight": 190
-    },
-    {
-      "source": "South Korean",
-      "target": "single-channel digital video (black and white",
-      "weight": 191
-    },
-    {
-      "source": "Digital",
-      "target": "single-channel digital video (colour",
-      "weight": 112
-    },
-    {
-      "source": "South Korean",
-      "target": "single-channel digital video (colour",
-      "weight": 112
-    },
-    {
-      "source": "Product Design",
-      "target": "Thai",
-      "weight": 3
-    },
-    {
-      "source": "Product Design",
-      "target": "Research Needed",
-      "weight": 6
-    },
-    {
-      "source": "1930s",
-      "target": "Taiwanese",
-      "weight": 10
-    },
-    {
-      "source": "1940s",
-      "target": "printing ink on paper",
-      "weight": 8
-    },
-    {
-      "source": "1940s",
-      "target": "Archival Documentation",
-      "weight": 8
-    },
-    {
-      "source": "Taiwanese",
-      "target": "gelatin silver print",
-      "weight": 51
-    },
-    {
-      "source": "1950s",
-      "target": "Architectural Model",
-      "weight": 8
-    },
-    {
-      "source": "Taiwanese",
-      "target": "chromogenic print",
-      "weight": 6
-    },
-    {
-      "source": "1960s",
-      "target": "chromogenic print",
-      "weight": 41
-    },
-    {
-      "source": "Taiwanese",
-      "target": "ink on paper",
-      "weight": 31
-    },
-    {
-      "source": "1970s",
-      "target": "ink on paper",
-      "weight": 44
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Research Needed",
-      "weight": 13
-    },
-    {
-      "source": "1950s",
-      "target": "ink on paper",
-      "weight": 21
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "German",
-      "weight": 3
-    },
-    {
-      "source": "1980s",
-      "target": "Research Needed",
-      "weight": 4
-    },
-    {
-      "source": "1950s",
-      "target": "Drawing",
-      "weight": 22
-    },
-    {
-      "source": "Ink Art",
-      "target": "Taiwanese",
-      "weight": 19
-    },
-    {
-      "source": "Painting",
-      "target": "Taiwanese",
-      "weight": 19
-    },
-    {
-      "source": "Visual Art",
-      "target": "screen print",
-      "weight": 31
-    },
-    {
-      "source": "1950s",
-      "target": "screen print",
-      "weight": 7
-    },
-    {
-      "source": "American",
-      "target": "print on paper",
-      "weight": 39
-    },
-    {
-      "source": "1920s",
-      "target": "print on paper",
-      "weight": 6
-    },
-    {
-      "source": "French",
-      "target": "print on paper",
-      "weight": 42
-    },
-    {
-      "source": "1930s",
-      "target": "print on paper",
-      "weight": 16
-    },
-    {
-      "source": "1940s",
-      "target": "print on paper",
-      "weight": 15
-    },
-    {
-      "source": "1960s",
-      "target": "print on paper",
-      "weight": 52
-    },
-    {
-      "source": "Italian",
-      "target": "Visual Art",
-      "weight": 7
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Italian",
-      "weight": 20
-    },
-    {
-      "source": "Italian",
-      "target": "print on paper",
-      "weight": 16
-    },
-    {
-      "source": "1960s",
-      "target": "Italian",
-      "weight": 17
-    },
-    {
-      "source": "Indian",
-      "target": "Moving Image",
-      "weight": 14
-    },
-    {
-      "source": "Indian",
-      "target": "Video",
-      "weight": 10
-    },
-    {
-      "source": "1990s",
-      "target": "Indian",
-      "weight": 6
-    },
-    {
-      "source": "2010s",
-      "target": "Indian",
-      "weight": 10
-    },
-    {
-      "source": "Indian",
-      "target": "Print",
-      "weight": 6
-    },
-    {
-      "source": "Animation",
-      "target": "Indian",
-      "weight": 4
-    },
-    {
-      "source": "Indian",
+      "source": "Chinese",
       "target": "Installation",
-      "weight": 3
+      "weight": 104
     },
     {
       "source": "2000s",
-      "target": "Indian",
-      "weight": 15
-    },
-    {
-      "source": "1970s",
-      "target": "Moving Image",
-      "weight": 68
-    },
-    {
-      "source": "1970s",
-      "target": "Video",
-      "weight": 37
-    },
-    {
-      "source": "1940s",
-      "target": "Japanese",
-      "weight": 10
-    },
-    {
-      "source": "1960s",
-      "target": "offset print on paper",
-      "weight": 17
-    },
-    {
-      "source": "Visual Art",
-      "target": "offset lithograph",
-      "weight": 35
-    },
-    {
-      "source": "1980s",
-      "target": "French",
-      "weight": 69
-    },
-    {
-      "source": "Thai",
-      "target": "Visual Art",
-      "weight": 23
-    },
-    {
-      "source": "1990s",
-      "target": "Product Design",
-      "weight": 45
-    },
-    {
-      "source": "Print",
-      "target": "South Korean",
-      "weight": 17
-    },
-    {
-      "source": "2010s",
-      "target": "screen print",
-      "weight": 5
-    },
-    {
-      "source": "Design Object",
-      "target": "Research Needed",
-      "weight": 7
-    },
-    {
-      "source": "1960s",
-      "target": "Design Object",
+      "target": "Installation",
       "weight": 102
     },
     {
-      "source": "Design Drawing",
-      "target": "Research Needed",
-      "weight": 4
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Chinese",
-      "weight": 189
-    },
-    {
-      "source": "Chinese",
-      "target": "print on paper",
-      "weight": 188
-    },
-    {
-      "source": "Indonesian",
-      "target": "Visual Art",
-      "weight": 9
-    },
-    {
-      "source": "Painting",
-      "target": "screen print",
-      "weight": 3
-    },
-    {
-      "source": "Indonesian",
-      "target": "Painting",
-      "weight": 5
-    },
-    {
-      "source": "1970s",
-      "target": "Indonesian",
-      "weight": 3
-    },
-    {
-      "source": "Drawing",
-      "target": "Photography",
-      "weight": 6
-    },
-    {
-      "source": "1980s",
-      "target": "Drawing",
-      "weight": 130
-    },
-    {
-      "source": "1970s",
-      "target": "JPG file",
-      "weight": 18
-    },
-    {
-      "source": "1970s",
-      "target": "Design Drawing",
-      "weight": 49
-    },
-    {
-      "source": "Taiwanese",
-      "target": "single-channel digital video (colour",
-      "weight": 7
-    },
-    {
-      "source": "British",
-      "target": "Print",
-      "weight": 30
-    },
-    {
-      "source": "Product Design",
-      "target": "offset lithograph",
-      "weight": 28
-    },
-    {
-      "source": "Drawing",
-      "target": "Thai",
-      "weight": 4
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "Indonesian",
-      "weight": 71
-    },
-    {
-      "source": "Indonesian",
-      "target": "Poster",
-      "weight": 5
-    },
-    {
-      "source": "Indonesian",
-      "target": "offset lithograph",
-      "weight": 10
-    },
-    {
-      "source": "1980s",
-      "target": "Indonesian",
-      "weight": 9
-    },
-    {
-      "source": "1990s",
-      "target": "Indonesian",
-      "weight": 4
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "French",
-      "weight": 4
-    },
-    {
-      "source": "American",
-      "target": "Design Object",
-      "weight": 9
-    },
-    {
-      "source": "1960s",
-      "target": "oil on canvas",
-      "weight": 13
-    },
-    {
-      "source": "1970s",
-      "target": "French",
-      "weight": 25
-    },
-    {
-      "source": "American",
-      "target": "chromogenic print",
-      "weight": 17
-    },
-    {
-      "source": "Thai",
-      "target": "colour slide",
-      "weight": 72
-    },
-    {
-      "source": "Thai",
-      "target": "photocopy on paper",
-      "weight": 12
-    },
-    {
-      "source": "Poster",
-      "target": "South Korean",
-      "weight": 5
-    },
-    {
-      "source": "2020s",
-      "target": "Moving Image",
-      "weight": 34
-    },
-    {
-      "source": "2020s",
-      "target": "Design and Architecture",
-      "weight": 5
-    },
-    {
-      "source": "2020s",
-      "target": "Video",
-      "weight": 32
-    },
-    {
-      "source": "2020s",
-      "target": "single-channel digital video (colour",
-      "weight": 17
-    },
-    {
-      "source": "1960s",
-      "target": "South Korean",
-      "weight": 9
-    },
-    {
-      "source": "2010s",
-      "target": "Book/Periodical",
-      "weight": 36
-    },
-    {
-      "source": "Ink Art",
-      "target": "South Korean",
-      "weight": 4
-    },
-    {
-      "source": "1960s",
-      "target": "Installation",
-      "weight": 16
-    },
-    {
-      "source": "1950s",
-      "target": "Thai",
-      "weight": 6
-    },
-    {
-      "source": "Visual Art",
-      "target": "marker ink on paper",
-      "weight": 162
-    },
-    {
-      "source": "Drawing",
-      "target": "marker ink on paper",
-      "weight": 162
-    },
-    {
-      "source": "Hong Kong",
-      "target": "marker ink on paper",
-      "weight": 162
-    },
-    {
-      "source": "1970s",
-      "target": "marker ink on paper",
-      "weight": 62
-    },
-    {
-      "source": "1980s",
-      "target": "marker ink on paper",
-      "weight": 94
-    },
-    {
-      "source": "1990s",
-      "target": "marker ink on paper",
-      "weight": 5
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Photography",
-      "weight": 8
-    },
-    {
-      "source": "1950s",
-      "target": "Ink Art",
-      "weight": 14
-    },
-    {
-      "source": "1970s",
-      "target": "Singaporean",
-      "weight": 74
-    },
-    {
-      "source": "Hong Kong",
-      "target": "screen print",
-      "weight": 12
-    },
-    {
-      "source": "2010s",
-      "target": "offset lithograph",
-      "weight": 10
-    },
-    {
-      "source": "Ink Art",
-      "target": "Print",
-      "weight": 14
-    },
-    {
-      "source": "Design Object",
-      "target": "Print",
-      "weight": 9
-    },
-    {
-      "source": "Design Object",
-      "target": "offset lithograph",
-      "weight": 9
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "South Korean",
-      "weight": 16
-    },
-    {
-      "source": "South Korean",
-      "target": "offset print on paper",
-      "weight": 12
-    },
-    {
-      "source": "South Korean",
-      "target": "offset lithograph",
-      "weight": 4
-    },
-    {
-      "source": "1980s",
-      "target": "single-channel digital video (colour",
-      "weight": 16
-    },
-    {
-      "source": "1950s",
-      "target": "Product Design",
-      "weight": 21
-    },
-    {
-      "source": "Poster",
-      "target": "Taiwanese",
-      "weight": 32
-    },
-    {
-      "source": "1940s",
-      "target": "Moving Image",
-      "weight": 4
-    },
-    {
-      "source": "American",
-      "target": "Animation",
-      "weight": 7
-    },
-    {
-      "source": "1970s",
-      "target": "Animation",
-      "weight": 5
-    },
-    {
-      "source": "2010s",
-      "target": "French",
-      "weight": 5
-    },
-    {
-      "source": "Japanese",
-      "target": "single-channel digital video (colour",
-      "weight": 7
-    },
-    {
-      "source": "1950s",
-      "target": "Sculpture",
-      "weight": 4
-    },
-    {
-      "source": "British",
-      "target": "Drawing",
-      "weight": 11
-    },
-    {
-      "source": "British",
-      "target": "screen print",
-      "weight": 5
-    },
-    {
-      "source": "British",
-      "target": "gelatin silver print",
-      "weight": 10
-    },
-    {
-      "source": "1950s",
-      "target": "Singaporean",
-      "weight": 3
-    },
-    {
-      "source": "British",
-      "target": "Design Drawing",
-      "weight": 3
-    },
-    {
-      "source": "Design and Architecture",
-      "target": "PICT image",
-      "weight": 163
-    },
-    {
-      "source": "Design Object",
-      "target": "Digital",
-      "weight": 166
-    },
-    {
-      "source": "Design Object",
-      "target": "PICT image",
-      "weight": 163
-    },
-    {
-      "source": "Design Object",
-      "target": "Japanese",
-      "weight": 182
-    },
-    {
-      "source": "Digital",
-      "target": "PICT image",
-      "weight": 163
-    },
-    {
-      "source": "Japanese",
-      "target": "PICT image",
-      "weight": 163
-    },
-    {
-      "source": "1990s",
-      "target": "PICT image",
-      "weight": 163
-    },
-    {
-      "source": "Drawing",
-      "target": "Japanese",
-      "weight": 27
-    },
-    {
-      "source": "Japanese",
-      "target": "Work on Paper",
-      "weight": 13
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Thai",
-      "weight": 16
-    },
-    {
-      "source": "Thai",
-      "target": "ink on paper",
-      "weight": 9
-    },
-    {
-      "source": "Design Object",
-      "target": "Thai",
-      "weight": 35
-    },
-    {
-      "source": "1970s",
-      "target": "Design Object",
-      "weight": 93
-    },
-    {
-      "source": "Work on Paper",
-      "target": "screen print",
-      "weight": 9
-    },
-    {
-      "source": "American",
-      "target": "single-channel digital video (black and white",
-      "weight": 15
-    },
-    {
-      "source": "1970s",
-      "target": "single-channel digital video (black and white",
-      "weight": 14
-    },
-    {
-      "source": "1970s",
-      "target": "single-channel digital video (colour",
-      "weight": 8
-    },
-    {
-      "source": "Japanese",
-      "target": "Video",
-      "weight": 14
-    },
-    {
-      "source": "Japanese",
-      "target": "single-channel digital video (black and white",
-      "weight": 4
-    },
-    {
-      "source": "Japanese",
-      "target": "gelatin silver print",
-      "weight": 223
-    },
-    {
-      "source": "1910s",
-      "target": "Design and Architecture",
-      "weight": 12
-    },
-    {
-      "source": "1910s",
-      "target": "American",
-      "weight": 12
-    },
-    {
-      "source": "French",
-      "target": "Installation",
-      "weight": 6
-    },
-    {
-      "source": "2000s",
-      "target": "French",
-      "weight": 4
-    },
-    {
-      "source": "Print",
-      "target": "Video",
-      "weight": 3
-    },
-    {
-      "source": "1990s",
-      "target": "print on paper",
-      "weight": 9
-    },
-    {
-      "source": "2000s",
-      "target": "gelatin silver print",
-      "weight": 42
-    },
-    {
-      "source": "Chinese",
-      "target": "screen print",
-      "weight": 5
-    },
-    {
-      "source": "Moving Image",
-      "target": "Print",
-      "weight": 4
-    },
-    {
-      "source": "British",
-      "target": "Photography",
-      "weight": 74
-    },
-    {
-      "source": "British",
-      "target": "chromogenic print",
-      "weight": 6
-    },
-    {
-      "source": "Japanese",
-      "target": "print on paper",
-      "weight": 50
-    },
-    {
-      "source": "Italian",
-      "target": "printing ink on paper",
-      "weight": 5
-    },
-    {
-      "source": "Japanese",
-      "target": "Product Design",
-      "weight": 159
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Japanese",
-      "weight": 11
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "Japanese",
-      "weight": 23
-    },
-    {
-      "source": "Japanese",
-      "target": "chromogenic print",
-      "weight": 24
-    },
-    {
-      "source": "2010s",
-      "target": "Indonesian",
-      "weight": 64
-    },
-    {
-      "source": "French",
-      "target": "Moving Image",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "JPG file",
-      "weight": 137
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Chinese",
-      "weight": 109
-    },
-    {
       "source": "Architectural Model",
-      "target": "JPG file",
-      "weight": 33
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Chinese",
-      "weight": 6
-    },
-    {
-      "source": "Chinese",
-      "target": "TIF file",
-      "weight": 6
-    },
-    {
-      "source": "2010s",
       "target": "Architectural Photography",
-      "weight": 54
+      "weight": 101
     },
     {
-      "source": "2010s",
-      "target": "JPG file",
-      "weight": 39
+      "source": "Japanese",
+      "target": "offset print on paper",
+      "weight": 99
     },
     {
-      "source": "Architectural Photography",
-      "target": "Indonesian",
-      "weight": 35
-    },
-    {
-      "source": "Indonesian",
-      "target": "JPG file",
-      "weight": 27
-    },
-    {
-      "source": "American",
-      "target": "printing ink on paper",
-      "weight": 83
-    },
-    {
-      "source": "Moving Image",
-      "target": "gelatin silver print",
-      "weight": 115
-    },
-    {
-      "source": "2020s",
-      "target": "Visual Art",
-      "weight": 60
-    },
-    {
-      "source": "2020s",
-      "target": "Painting",
-      "weight": 3
-    },
-    {
-      "source": "Print",
-      "target": "Thai",
-      "weight": 7
-    },
-    {
-      "source": "2010s",
-      "target": "Thai",
-      "weight": 18
-    },
-    {
-      "source": "2020s",
-      "target": "Digital",
-      "weight": 32
-    },
-    {
-      "source": "2020s",
-      "target": "South Korean",
-      "weight": 42
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Indonesian",
-      "weight": 17
-    },
-    {
-      "source": "2010s",
-      "target": "Architectural Drawing",
-      "weight": 21
-    },
-    {
-      "source": "Ink Art",
-      "target": "oil on canvas",
-      "weight": 3
-    },
-    {
-      "source": "Ink Art",
-      "target": "Photography",
-      "weight": 10
-    },
-    {
-      "source": "Ink Art",
-      "target": "gelatin silver print",
-      "weight": 8
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Ink Art",
-      "weight": 10
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "Indonesian",
-      "weight": 4
-    },
-    {
-      "source": "Indonesian",
-      "target": "ink on paper",
-      "weight": 3
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "JPG file",
-      "weight": 3
-    },
-    {
-      "source": "Drawing",
-      "target": "Moving Image",
-      "weight": 3
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Product Design",
-      "weight": 11
-    },
-    {
-      "source": "Archival Documentation",
-      "target": "offset lithograph",
-      "weight": 9
-    },
-    {
-      "source": "Thai",
-      "target": "offset lithograph",
-      "weight": 12
-    },
-    {
-      "source": "Photography",
-      "target": "Thai",
-      "weight": 51
-    },
-    {
-      "source": "Thai",
-      "target": "Video",
-      "weight": 6
-    },
-    {
-      "source": "2020s",
-      "target": "Ink Art",
-      "weight": 4
-    },
-    {
-      "source": "2020s",
-      "target": "ink on paper",
-      "weight": 4
-    },
-    {
-      "source": "2020s",
-      "target": "Hong Kong",
-      "weight": 5
-    },
-    {
-      "source": "Visual Art",
-      "target": "photocopy on paper",
-      "weight": 19
-    },
-    {
-      "source": "1920s",
-      "target": "Architectural Drawing",
-      "weight": 10
-    },
-    {
-      "source": "Design Drawing",
-      "target": "photocopy on paper",
-      "weight": 15
-    },
-    {
-      "source": "Photography",
-      "target": "Singaporean",
-      "weight": 34
-    },
-    {
-      "source": "Singaporean",
-      "target": "pigment print",
-      "weight": 12
-    },
-    {
-      "source": "2020s",
-      "target": "Photography",
-      "weight": 6
-    },
-    {
-      "source": "2020s",
-      "target": "pigment print",
-      "weight": 6
-    },
-    {
-      "source": "2020s",
-      "target": "Singaporean",
-      "weight": 6
-    },
-    {
-      "source": "2020s",
-      "target": "Installation",
-      "weight": 11
-    },
-    {
-      "source": "2020s",
-      "target": "Chinese",
-      "weight": 3
-    },
-    {
-      "source": "1920s",
-      "target": "Hong Kong",
-      "weight": 5
-    },
-    {
-      "source": "2020s",
-      "target": "single-channel digital video (black and white",
-      "weight": 14
-    },
-    {
-      "source": "American",
-      "target": "Design Drawing",
-      "weight": 13
-    },
-    {
-      "source": "Photography",
-      "target": "Product Design",
-      "weight": 35
-    },
-    {
-      "source": "Product Design",
-      "target": "chromogenic print",
-      "weight": 16
-    },
-    {
-      "source": "Design Drawing",
-      "target": "chromogenic print",
-      "weight": 8
-    },
-    {
-      "source": "Moving Image",
-      "target": "Research Needed",
-      "weight": 14
+      "source": "Poster",
+      "target": "offset print on paper",
+      "weight": 98
     },
     {
       "source": "Chinese",
-      "target": "Digital",
-      "weight": 3
-    },
-    {
-      "source": "Thai",
-      "target": "screen print",
-      "weight": 3
-    },
-    {
-      "source": "South Korean",
-      "target": "Work on Paper",
-      "weight": 7
-    },
-    {
-      "source": "Italian",
-      "target": "Sculpture",
-      "weight": 9
-    },
-    {
-      "source": "Taiwanese",
-      "target": "print on paper",
-      "weight": 18
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Taiwanese",
-      "weight": 11
-    },
-    {
-      "source": "Moving Image",
-      "target": "Poster",
-      "weight": 9
-    },
-    {
-      "source": "Moving Image",
-      "target": "offset lithograph",
-      "weight": 18
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Photography",
-      "weight": 37
-    },
-    {
-      "source": "Digital",
-      "target": "Taiwanese",
-      "weight": 5
-    },
-    {
-      "source": "Moving Image",
-      "target": "printing ink on paper",
-      "weight": 6
-    },
-    {
-      "source": "Research Needed",
-      "target": "gelatin silver print",
-      "weight": 12
-    },
-    {
-      "source": "Photography",
-      "target": "offset lithograph",
-      "weight": 9
-    },
-    {
-      "source": "Moving Image",
-      "target": "chromogenic print",
-      "weight": 20
-    },
-    {
-      "source": "Design Drawing",
-      "target": "Photography",
-      "weight": 10
-    },
-    {
-      "source": "1950s",
-      "target": "Work on Paper",
-      "weight": 6
-    },
-    {
-      "source": "Indonesian",
-      "target": "Installation",
-      "weight": 4
-    },
-    {
-      "source": "Singaporean",
-      "target": "print on paper",
-      "weight": 45
-    },
-    {
-      "source": "Singaporean",
-      "target": "Video",
-      "weight": 5
-    },
-    {
-      "source": "Singaporean",
-      "target": "single-channel digital video (colour",
-      "weight": 6
-    },
-    {
-      "source": "Print",
-      "target": "Singaporean",
-      "weight": 3
-    },
-    {
-      "source": "Architectural Drawing",
-      "target": "Singaporean",
-      "weight": 25
-    },
-    {
-      "source": "1940s",
-      "target": "British",
-      "weight": 5
-    },
-    {
-      "source": "Singaporean",
-      "target": "gelatin silver print",
-      "weight": 45
-    },
-    {
-      "source": "1990s",
-      "target": "Singaporean",
-      "weight": 17
-    },
-    {
-      "source": "British",
-      "target": "pigment print",
-      "weight": 58
-    },
-    {
-      "source": "British",
       "target": "inkjet print",
-      "weight": 11
-    },
-    {
-      "source": "American",
-      "target": "oil on canvas",
-      "weight": 6
-    },
-    {
-      "source": "Architectural Photography",
-      "target": "French",
-      "weight": 27
-    },
-    {
-      "source": "Moving Image",
-      "target": "Thai",
-      "weight": 8
-    },
-    {
-      "source": "1950s",
-      "target": "Design Drawing",
-      "weight": 58
-    },
-    {
-      "source": "Design Object",
-      "target": "gelatin silver print",
-      "weight": 32
-    },
-    {
-      "source": "Drawing",
-      "target": "South Korean",
-      "weight": 3
+      "weight": 91
     },
     {
       "source": "Ink Art",
-      "target": "Japanese",
-      "weight": 12
-    },
-    {
-      "source": "Architectural Model",
-      "target": "Indian",
-      "weight": 6
-    },
-    {
-      "source": "Indian",
       "target": "Work on Paper",
-      "weight": 5
-    },
-    {
-      "source": "2010s",
-      "target": "Research Needed",
-      "weight": 4
-    },
-    {
-      "source": "1940s",
-      "target": "Product Design",
-      "weight": 8
-    },
-    {
-      "source": "1980s",
-      "target": "Singaporean",
-      "weight": 22
-    },
-    {
-      "source": "1910s",
-      "target": "Architectural Drawing",
-      "weight": 9
+      "weight": 91
     },
     {
       "source": "Architectural Photography",
@@ -5223,33 +1148,198 @@
       "weight": 90
     },
     {
-      "source": "Singaporean",
+      "source": "Design and Architecture",
+      "target": "Indian",
+      "weight": 88
+    },
+    {
+      "source": "Photography",
+      "target": "pigment print",
+      "weight": 86
+    },
+    {
+      "source": "Visual Art",
+      "target": "pigment print",
+      "weight": 85
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Research Needed",
+      "weight": 82
+    },
+    {
+      "source": "Japanese",
+      "target": "Print",
+      "weight": 79
+    },
+    {
+      "source": "American",
+      "target": "photocopy on paper",
+      "weight": 78
+    },
+    {
+      "source": "German",
+      "target": "Photography",
+      "weight": 74
+    },
+    {
+      "source": "German",
+      "target": "chromogenic print",
+      "weight": 74
+    },
+    {
+      "source": "1970s",
+      "target": "Singaporean",
+      "weight": 74
+    },
+    {
+      "source": "2000s",
+      "target": "Architectural Model",
+      "weight": 73
+    },
+    {
+      "source": "Thai",
       "target": "colour slide",
+      "weight": 72
+    },
+    {
+      "source": "Design and Architecture",
+      "target": "Indonesian",
+      "weight": 71
+    },
+    {
+      "source": "Architectural Drawing",
+      "target": "photocopy on paper",
+      "weight": 70
+    },
+    {
+      "source": "2010s",
+      "target": "pigment print",
+      "weight": 66
+    },
+    {
+      "source": "2010s",
+      "target": "Indonesian",
+      "weight": 64
+    },
+    {
+      "source": "2020s",
+      "target": "Visual Art",
+      "weight": 60
+    },
+    {
+      "source": "1940s",
+      "target": "Visual Art",
+      "weight": 59
+    },
+    {
+      "source": "Hong Kong",
+      "target": "black and white print",
+      "weight": 58
+    },
+    {
+      "source": "1940s",
+      "target": "Design and Architecture",
+      "weight": 57
+    },
+    {
+      "source": "1980s",
+      "target": "Italian",
+      "weight": 57
+    },
+    {
+      "source": "Architectural Drawing",
+      "target": "Italian",
+      "weight": 51
+    },
+    {
+      "source": "Indian",
+      "target": "Visual Art",
+      "weight": 49
+    },
+    {
+      "source": "2020s",
+      "target": "South Korean",
+      "weight": 42
+    },
+    {
+      "source": "1970s",
+      "target": "Indian",
+      "weight": 41
+    },
+    {
+      "source": "1930s",
+      "target": "Design and Architecture",
+      "weight": 38
+    },
+    {
+      "source": "Architectural Photography",
+      "target": "Indonesian",
+      "weight": 35
+    },
+    {
+      "source": "2020s",
+      "target": "Moving Image",
+      "weight": 34
+    },
+    {
+      "source": "1920s",
+      "target": "Design and Architecture",
+      "weight": 33
+    },
+    {
+      "source": "1960s",
+      "target": "Research Needed",
+      "weight": 31
+    },
+    {
+      "source": "1940s",
+      "target": "Photography",
+      "weight": 30
+    },
+    {
+      "source": "1920s",
+      "target": "American",
+      "weight": 28
+    },
+    {
+      "source": "1930s",
+      "target": "Visual Art",
+      "weight": 27
+    },
+    {
+      "source": "1950s",
+      "target": "Research Needed",
+      "weight": 23
+    },
+    {
+      "source": "1930s",
+      "target": "Book/Periodical",
+      "weight": 18
+    },
+    {
+      "source": "1920s",
+      "target": "Print",
+      "weight": 14
+    },
+    {
+      "source": "1910s",
+      "target": "Design and Architecture",
       "weight": 12
     },
     {
-      "source": "Singaporean",
-      "target": "chromogenic print",
-      "weight": 24
+      "source": "1910s",
+      "target": "American",
+      "weight": 12
     },
     {
-      "source": "Singaporean",
-      "target": "photocopy on paper",
-      "weight": 5
+      "source": "1910s",
+      "target": "Architectural Drawing",
+      "weight": 9
     },
     {
-      "source": "British",
-      "target": "photocopy on paper",
-      "weight": 6
-    },
-    {
-      "source": "Animation",
-      "target": "Japanese",
-      "weight": 4
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Design Drawing",
+      "source": "1900s",
+      "target": "Design and Architecture",
       "weight": 3
     }
   ],
@@ -67240,7 +63330,7 @@
     "totalObjects": 13411,
     "totalArtists": 1426,
     "totalTags": 71,
-    "totalLinks": 979
+    "totalLinks": 197
   },
   "siggTags": [
     {
@@ -67506,64 +63596,9 @@
   ],
   "siggLinks": [
     {
-      "source": "Sculpture",
-      "target": "Visual Art",
-      "weight": 82
-    },
-    {
-      "source": "Visual Art",
-      "target": "wood",
-      "weight": 6
-    },
-    {
       "source": "Chinese",
       "target": "Visual Art",
       "weight": 711
-    },
-    {
-      "source": "1980s",
-      "target": "Visual Art",
-      "weight": 60
-    },
-    {
-      "source": "Sculpture",
-      "target": "wood",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "Sculpture",
-      "weight": 79
-    },
-    {
-      "source": "1980s",
-      "target": "Sculpture",
-      "weight": 3
-    },
-    {
-      "source": "Chinese",
-      "target": "wood",
-      "weight": 5
-    },
-    {
-      "source": "1980s",
-      "target": "wood",
-      "weight": 2
-    },
-    {
-      "source": "1980s",
-      "target": "Chinese",
-      "weight": 57
-    },
-    {
-      "source": "2000s",
-      "target": "Visual Art",
-      "weight": 361
-    },
-    {
-      "source": "2000s",
-      "target": "Sculpture",
-      "weight": 48
     },
     {
       "source": "2000s",
@@ -67571,44 +63606,9 @@
       "weight": 363
     },
     {
-      "source": "Photography",
+      "source": "2000s",
       "target": "Visual Art",
-      "weight": 239
-    },
-    {
-      "source": "Visual Art",
-      "target": "chromogenic print",
-      "weight": 147
-    },
-    {
-      "source": "Photography",
-      "target": "chromogenic print",
-      "weight": 147
-    },
-    {
-      "source": "Chinese",
-      "target": "Photography",
-      "weight": 236
-    },
-    {
-      "source": "1980s",
-      "target": "Photography",
-      "weight": 22
-    },
-    {
-      "source": "Chinese",
-      "target": "chromogenic print",
-      "weight": 147
-    },
-    {
-      "source": "1980s",
-      "target": "chromogenic print",
-      "weight": 6
-    },
-    {
-      "source": "Installation",
-      "target": "Visual Art",
-      "weight": 64
+      "weight": 361
     },
     {
       "source": "1990s",
@@ -67616,139 +63616,9 @@
       "weight": 272
     },
     {
-      "source": "Chinese",
-      "target": "Installation",
-      "weight": 56
-    },
-    {
-      "source": "1990s",
-      "target": "Installation",
-      "weight": 19
-    },
-    {
       "source": "1990s",
       "target": "Chinese",
       "weight": 270
-    },
-    {
-      "source": "1990s",
-      "target": "Photography",
-      "weight": 120
-    },
-    {
-      "source": "1990s",
-      "target": "chromogenic print",
-      "weight": 69
-    },
-    {
-      "source": "Moving Image",
-      "target": "Visual Art",
-      "weight": 72
-    },
-    {
-      "source": "Moving Image",
-      "target": "Photography",
-      "weight": 2
-    },
-    {
-      "source": "Moving Image",
-      "target": "Video Installation",
-      "weight": 25
-    },
-    {
-      "source": "Chinese",
-      "target": "Moving Image",
-      "weight": 79
-    },
-    {
-      "source": "2000s",
-      "target": "Moving Image",
-      "weight": 48
-    },
-    {
-      "source": "Video Installation",
-      "target": "Visual Art",
-      "weight": 25
-    },
-    {
-      "source": "2000s",
-      "target": "Photography",
-      "weight": 97
-    },
-    {
-      "source": "Chinese",
-      "target": "Video Installation",
-      "weight": 21
-    },
-    {
-      "source": "2000s",
-      "target": "Video Installation",
-      "weight": 14
-    },
-    {
-      "source": "Craft Object",
-      "target": "Visual Art",
-      "weight": 2
-    },
-    {
-      "source": "Visual Art",
-      "target": "glazed porcelain",
-      "weight": 3
-    },
-    {
-      "source": "2000s",
-      "target": "Installation",
-      "weight": 34
-    },
-    {
-      "source": "Chinese",
-      "target": "Craft Object",
-      "weight": 2
-    },
-    {
-      "source": "Chinese",
-      "target": "glazed porcelain",
-      "weight": 3
-    },
-    {
-      "source": "2000s",
-      "target": "glazed porcelain",
-      "weight": 3
-    },
-    {
-      "source": "Video",
-      "target": "Visual Art",
-      "weight": 45
-    },
-    {
-      "source": "Installation",
-      "target": "Moving Image",
-      "weight": 8
-    },
-    {
-      "source": "Moving Image",
-      "target": "Video",
-      "weight": 58
-    },
-    {
-      "source": "Installation",
-      "target": "Video",
-      "weight": 7
-    },
-    {
-      "source": "Chinese",
-      "target": "Video",
-      "weight": 57
-    },
-    {
-      "source": "2000s",
-      "target": "Video",
-      "weight": 32
-    },
-    {
-      "source": "Ink Art",
-      "target": "Visual Art",
-      "weight": 19
     },
     {
       "source": "Painting",
@@ -67756,24 +63626,79 @@
       "weight": 258
     },
     {
-      "source": "Ink Art",
-      "target": "Painting",
-      "weight": 14
-    },
-    {
-      "source": "Chinese",
-      "target": "Ink Art",
-      "weight": 19
-    },
-    {
-      "source": "1990s",
-      "target": "Ink Art",
-      "weight": 3
-    },
-    {
       "source": "Chinese",
       "target": "Painting",
       "weight": 258
+    },
+    {
+      "source": "Photography",
+      "target": "Visual Art",
+      "weight": 239
+    },
+    {
+      "source": "Chinese",
+      "target": "Photography",
+      "weight": 236
+    },
+    {
+      "source": "Visual Art",
+      "target": "chromogenic print",
+      "weight": 147
+    },
+    {
+      "source": "Photography",
+      "target": "chromogenic print",
+      "weight": 147
+    },
+    {
+      "source": "Chinese",
+      "target": "chromogenic print",
+      "weight": 147
+    },
+    {
+      "source": "2000s",
+      "target": "Painting",
+      "weight": 143
+    },
+    {
+      "source": "Visual Art",
+      "target": "oil on canvas",
+      "weight": 125
+    },
+    {
+      "source": "Chinese",
+      "target": "oil on canvas",
+      "weight": 125
+    },
+    {
+      "source": "Painting",
+      "target": "oil on canvas",
+      "weight": 124
+    },
+    {
+      "source": "1990s",
+      "target": "Photography",
+      "weight": 120
+    },
+    {
+      "source": "2000s",
+      "target": "Photography",
+      "weight": 97
+    },
+    {
+      "source": "Sculpture",
+      "target": "Visual Art",
+      "weight": 82
+    },
+    {
+      "source": "Chinese",
+      "target": "Sculpture",
+      "weight": 79
+    },
+    {
+      "source": "Chinese",
+      "target": "Moving Image",
+      "weight": 79
     },
     {
       "source": "1990s",
@@ -67781,29 +63706,19 @@
       "weight": 77
     },
     {
-      "source": "Film",
-      "target": "Moving Image",
-      "weight": 7
-    },
-    {
-      "source": "Film",
+      "source": "Moving Image",
       "target": "Visual Art",
-      "weight": 5
-    },
-    {
-      "source": "Film",
-      "target": "Video Installation",
-      "weight": 3
-    },
-    {
-      "source": "Chinese",
-      "target": "Film",
-      "weight": 3
+      "weight": 72
     },
     {
       "source": "2000s",
-      "target": "Film",
-      "weight": 5
+      "target": "chromogenic print",
+      "weight": 71
+    },
+    {
+      "source": "1990s",
+      "target": "chromogenic print",
+      "weight": 69
     },
     {
       "source": "Visual Art",
@@ -67811,29 +63726,529 @@
       "weight": 68
     },
     {
-      "source": "French",
-      "target": "Visual Art",
-      "weight": 13
-    },
-    {
       "source": "Photography",
       "target": "gelatin silver print",
       "weight": 68
     },
     {
-      "source": "French",
+      "source": "2000s",
+      "target": "oil on canvas",
+      "weight": 67
+    },
+    {
+      "source": "Performance",
+      "target": "Visual Art",
+      "weight": 67
+    },
+    {
+      "source": "Chinese",
+      "target": "Performance",
+      "weight": 67
+    },
+    {
+      "source": "Chinese",
+      "target": "gelatin silver print",
+      "weight": 67
+    },
+    {
+      "source": "Installation",
+      "target": "Visual Art",
+      "weight": 64
+    },
+    {
+      "source": "1980s",
+      "target": "Visual Art",
+      "weight": 60
+    },
+    {
+      "source": "Moving Image",
+      "target": "Video",
+      "weight": 58
+    },
+    {
+      "source": "1980s",
+      "target": "Chinese",
+      "weight": 57
+    },
+    {
+      "source": "Chinese",
+      "target": "Video",
+      "weight": 57
+    },
+    {
+      "source": "Performance",
       "target": "Photography",
-      "weight": 3
+      "weight": 57
+    },
+    {
+      "source": "Chinese",
+      "target": "Installation",
+      "weight": 56
+    },
+    {
+      "source": "2000s",
+      "target": "Sculpture",
+      "weight": 48
+    },
+    {
+      "source": "Video",
+      "target": "Visual Art",
+      "weight": 45
+    },
+    {
+      "source": "Moving Image",
+      "target": "single-channel digital video (colour",
+      "weight": 39
+    },
+    {
+      "source": "2010s",
+      "target": "Visual Art",
+      "weight": 38
+    },
+    {
+      "source": "Video",
+      "target": "single-channel digital video (colour",
+      "weight": 37
+    },
+    {
+      "source": "Chinese",
+      "target": "single-channel digital video (colour",
+      "weight": 37
+    },
+    {
+      "source": "2000s",
+      "target": "Installation",
+      "weight": 34
+    },
+    {
+      "source": "Visual Art",
+      "target": "acrylic on canvas",
+      "weight": 33
+    },
+    {
+      "source": "Painting",
+      "target": "acrylic on canvas",
+      "weight": 33
+    },
+    {
+      "source": "Chinese",
+      "target": "acrylic on canvas",
+      "weight": 33
+    },
+    {
+      "source": "Visual Art",
+      "target": "Work on Paper",
+      "weight": 32
+    },
+    {
+      "source": "2010s",
+      "target": "Chinese",
+      "weight": 32
+    },
+    {
+      "source": "Chinese",
+      "target": "Work on Paper",
+      "weight": 30
+    },
+    {
+      "source": "1980s",
+      "target": "Painting",
+      "weight": 27
+    },
+    {
+      "source": "Moving Image",
+      "target": "Video Installation",
+      "weight": 25
+    },
+    {
+      "source": "Video Installation",
+      "target": "Visual Art",
+      "weight": 25
+    },
+    {
+      "source": "Chinese",
+      "target": "Video Installation",
+      "weight": 21
+    },
+    {
+      "source": "Visual Art",
+      "target": "watercolour on paper",
+      "weight": 20
+    },
+    {
+      "source": "Painting",
+      "target": "watercolour on paper",
+      "weight": 20
+    },
+    {
+      "source": "Chinese",
+      "target": "watercolour on paper",
+      "weight": 20
+    },
+    {
+      "source": "Ink Art",
+      "target": "Visual Art",
+      "weight": 19
+    },
+    {
+      "source": "Chinese",
+      "target": "Ink Art",
+      "weight": 19
+    },
+    {
+      "source": "Print",
+      "target": "Visual Art",
+      "weight": 19
+    },
+    {
+      "source": "Chinese",
+      "target": "Print",
+      "weight": 19
+    },
+    {
+      "source": "Painting",
+      "target": "Work on Paper",
+      "weight": 17
+    },
+    {
+      "source": "Visual Art",
+      "target": "airbrush on canvas",
+      "weight": 16
+    },
+    {
+      "source": "Painting",
+      "target": "airbrush on canvas",
+      "weight": 16
+    },
+    {
+      "source": "Chinese",
+      "target": "airbrush on canvas",
+      "weight": 16
+    },
+    {
+      "source": "2010s",
+      "target": "Moving Image",
+      "weight": 15
+    },
+    {
+      "source": "Ink Art",
+      "target": "Painting",
+      "weight": 14
+    },
+    {
+      "source": "French",
+      "target": "Visual Art",
+      "weight": 13
+    },
+    {
+      "source": "Visual Art",
+      "target": "ink on paper",
+      "weight": 11
+    },
+    {
+      "source": "Chinese",
+      "target": "ink on paper",
+      "weight": 11
     },
     {
       "source": "1990s",
-      "target": "gelatin silver print",
-      "weight": 40
+      "target": "Print",
+      "weight": 11
+    },
+    {
+      "source": "2000s",
+      "target": "ink on paper",
+      "weight": 9
+    },
+    {
+      "source": "2010s",
+      "target": "Hong Kong",
+      "weight": 8
+    },
+    {
+      "source": "Film",
+      "target": "Moving Image",
+      "weight": 7
     },
     {
       "source": "1990s",
       "target": "French",
       "weight": 7
+    },
+    {
+      "source": "Visual Art",
+      "target": "steel",
+      "weight": 7
+    },
+    {
+      "source": "Chinese",
+      "target": "steel",
+      "weight": 7
+    },
+    {
+      "source": "Visual Art",
+      "target": "wood",
+      "weight": 6
+    },
+    {
+      "source": "Sound",
+      "target": "Visual Art",
+      "weight": 6
+    },
+    {
+      "source": "Moving Image",
+      "target": "single-channel digital video (black and white",
+      "weight": 6
+    },
+    {
+      "source": "Video",
+      "target": "single-channel digital video (black and white",
+      "weight": 6
+    },
+    {
+      "source": "Chinese",
+      "target": "single-channel digital video (black and white",
+      "weight": 6
+    },
+    {
+      "source": "Drawing",
+      "target": "Visual Art",
+      "weight": 6
+    },
+    {
+      "source": "Hong Kong",
+      "target": "Visual Art",
+      "weight": 6
+    },
+    {
+      "source": "Moving Image",
+      "target": "Taiwanese",
+      "weight": 6
+    },
+    {
+      "source": "Visual Art",
+      "target": "acrylic",
+      "weight": 6
+    },
+    {
+      "source": "Chinese",
+      "target": "acrylic",
+      "weight": 6
+    },
+    {
+      "source": "Visual Art",
+      "target": "mixed media",
+      "weight": 6
+    },
+    {
+      "source": "Chinese",
+      "target": "mixed media",
+      "weight": 6
+    },
+    {
+      "source": "Chinese",
+      "target": "wood",
+      "weight": 5
+    },
+    {
+      "source": "Film",
+      "target": "Visual Art",
+      "weight": 5
+    },
+    {
+      "source": "2000s",
+      "target": "Film",
+      "weight": 5
+    },
+    {
+      "source": "2000s",
+      "target": "steel",
+      "weight": 5
+    },
+    {
+      "source": "Visual Art",
+      "target": "inkjet print",
+      "weight": 5
+    },
+    {
+      "source": "Chinese",
+      "target": "inkjet print",
+      "weight": 5
+    },
+    {
+      "source": "French",
+      "target": "Installation",
+      "weight": 5
+    },
+    {
+      "source": "Visual Art",
+      "target": "screen print",
+      "weight": 5
+    },
+    {
+      "source": "Chinese",
+      "target": "screen print",
+      "weight": 5
+    },
+    {
+      "source": "Sculpture",
+      "target": "wood",
+      "weight": 4
+    },
+    {
+      "source": "Installation",
+      "target": "Sound",
+      "weight": 4
+    },
+    {
+      "source": "2000s",
+      "target": "inkjet print",
+      "weight": 4
+    },
+    {
+      "source": "Chinese",
+      "target": "Drawing",
+      "weight": 4
+    },
+    {
+      "source": "Hong Kong",
+      "target": "Video Installation",
+      "weight": 4
+    },
+    {
+      "source": "Hong Kong",
+      "target": "Sound",
+      "weight": 4
+    },
+    {
+      "source": "2000s",
+      "target": "Taiwanese",
+      "weight": 4
+    },
+    {
+      "source": "Sculpture",
+      "target": "acrylic",
+      "weight": 4
+    },
+    {
+      "source": "Visual Art",
+      "target": "oil on synthetic fibre",
+      "weight": 4
+    },
+    {
+      "source": "Painting",
+      "target": "oil on synthetic fibre",
+      "weight": 4
+    },
+    {
+      "source": "Chinese",
+      "target": "oil on synthetic fibre",
+      "weight": 4
+    },
+    {
+      "source": "Print",
+      "target": "screen print",
+      "weight": 4
+    },
+    {
+      "source": "Visual Art",
+      "target": "oil on paper",
+      "weight": 4
+    },
+    {
+      "source": "Painting",
+      "target": "oil on paper",
+      "weight": 4
+    },
+    {
+      "source": "Chinese",
+      "target": "oil on paper",
+      "weight": 4
+    },
+    {
+      "source": "Visual Art",
+      "target": "porcelain",
+      "weight": 4
+    },
+    {
+      "source": "Chinese",
+      "target": "porcelain",
+      "weight": 4
+    },
+    {
+      "source": "Installation",
+      "target": "mixed media",
+      "weight": 4
+    },
+    {
+      "source": "Visual Art",
+      "target": "bronze",
+      "weight": 4
+    },
+    {
+      "source": "Sculpture",
+      "target": "bronze",
+      "weight": 4
+    },
+    {
+      "source": "Chinese",
+      "target": "bronze",
+      "weight": 4
+    },
+    {
+      "source": "Film",
+      "target": "Taiwanese",
+      "weight": 4
+    },
+    {
+      "source": "Visual Art",
+      "target": "glazed porcelain",
+      "weight": 3
+    },
+    {
+      "source": "Chinese",
+      "target": "glazed porcelain",
+      "weight": 3
+    },
+    {
+      "source": "2000s",
+      "target": "glazed porcelain",
+      "weight": 3
+    },
+    {
+      "source": "Book/Periodical",
+      "target": "Visual Art",
+      "weight": 3
+    },
+    {
+      "source": "Multiple",
+      "target": "Visual Art",
+      "weight": 3
+    },
+    {
+      "source": "Multiple",
+      "target": "Sculpture",
+      "weight": 3
+    },
+    {
+      "source": "Chinese",
+      "target": "Multiple",
+      "weight": 3
+    },
+    {
+      "source": "Sculpture",
+      "target": "porcelain",
+      "weight": 3
+    },
+    {
+      "source": "Craft Object",
+      "target": "Visual Art",
+      "weight": 2
+    },
+    {
+      "source": "Chinese",
+      "target": "Craft Object",
+      "weight": 2
     },
     {
       "source": "Collage",
@@ -67848,31 +64263,6 @@
     {
       "source": "1990s",
       "target": "Collage",
-      "weight": 2
-    },
-    {
-      "source": "Sound",
-      "target": "Visual Art",
-      "weight": 6
-    },
-    {
-      "source": "Installation",
-      "target": "Photography",
-      "weight": 5
-    },
-    {
-      "source": "Installation",
-      "target": "Sound",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "Sound",
-      "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "Sound",
       "weight": 2
     },
     {
@@ -67896,11 +64286,6 @@
       "weight": 2
     },
     {
-      "source": "Visual Art",
-      "target": "steel",
-      "weight": 7
-    },
-    {
       "source": "Architectural Model",
       "target": "steel",
       "weight": 2
@@ -67911,306 +64296,11 @@
       "weight": 2
     },
     {
-      "source": "Chinese",
-      "target": "steel",
-      "weight": 7
-    },
-    {
-      "source": "2000s",
-      "target": "steel",
-      "weight": 5
-    },
-    {
-      "source": "2000s",
-      "target": "chromogenic print",
-      "weight": 71
-    },
-    {
-      "source": "Moving Image",
-      "target": "single-channel digital video (black and white",
-      "weight": 6
-    },
-    {
-      "source": "Visual Art",
-      "target": "single-channel digital video (black and white",
-      "weight": 4
-    },
-    {
-      "source": "Video",
-      "target": "single-channel digital video (black and white",
-      "weight": 6
-    },
-    {
-      "source": "Chinese",
-      "target": "single-channel digital video (black and white",
-      "weight": 6
-    },
-    {
-      "source": "2000s",
-      "target": "single-channel digital video (black and white",
-      "weight": 5
-    },
-    {
-      "source": "Visual Art",
-      "target": "oil on canvas",
-      "weight": 125
-    },
-    {
-      "source": "Painting",
-      "target": "oil on canvas",
-      "weight": 124
-    },
-    {
-      "source": "2000s",
-      "target": "Painting",
-      "weight": 143
-    },
-    {
-      "source": "Chinese",
-      "target": "oil on canvas",
-      "weight": 125
-    },
-    {
-      "source": "2000s",
-      "target": "oil on canvas",
-      "weight": 67
-    },
-    {
-      "source": "Moving Image",
-      "target": "Performance",
-      "weight": 8
-    },
-    {
-      "source": "Moving Image",
-      "target": "single-channel digital video (colour",
-      "weight": 39
-    },
-    {
-      "source": "1990s",
-      "target": "Moving Image",
-      "weight": 26
-    },
-    {
-      "source": "Performance",
-      "target": "Visual Art",
-      "weight": 67
-    },
-    {
-      "source": "Visual Art",
-      "target": "single-channel digital video (colour",
-      "weight": 30
-    },
-    {
-      "source": "Performance",
-      "target": "Video",
-      "weight": 6
-    },
-    {
-      "source": "Video",
-      "target": "single-channel digital video (colour",
-      "weight": 37
-    },
-    {
-      "source": "1990s",
-      "target": "Video",
-      "weight": 20
-    },
-    {
-      "source": "Performance",
-      "target": "single-channel digital video (colour",
-      "weight": 5
-    },
-    {
-      "source": "Chinese",
-      "target": "Performance",
-      "weight": 67
-    },
-    {
-      "source": "1990s",
-      "target": "Performance",
-      "weight": 42
-    },
-    {
-      "source": "Chinese",
-      "target": "single-channel digital video (colour",
-      "weight": 37
-    },
-    {
-      "source": "1990s",
-      "target": "single-channel digital video (colour",
-      "weight": 12
-    },
-    {
-      "source": "1990s",
-      "target": "oil on canvas",
-      "weight": 45
-    },
-    {
-      "source": "Performance",
-      "target": "Photography",
-      "weight": 57
-    },
-    {
-      "source": "Performance",
-      "target": "Video Installation",
-      "weight": 2
-    },
-    {
-      "source": "1990s",
-      "target": "Video Installation",
-      "weight": 5
-    },
-    {
-      "source": "Visual Art",
-      "target": "inkjet print",
-      "weight": 5
-    },
-    {
-      "source": "Chinese",
-      "target": "inkjet print",
-      "weight": 5
-    },
-    {
-      "source": "2000s",
-      "target": "inkjet print",
-      "weight": 4
-    },
-    {
-      "source": "1980s",
-      "target": "Painting",
-      "weight": 27
-    },
-    {
-      "source": "1980s",
-      "target": "oil on canvas",
-      "weight": 11
-    },
-    {
-      "source": "2000s",
-      "target": "single-channel digital video (colour",
-      "weight": 19
-    },
-    {
-      "source": "Print",
-      "target": "Visual Art",
-      "weight": 19
-    },
-    {
-      "source": "Visual Art",
-      "target": "Work on Paper",
-      "weight": 32
-    },
-    {
-      "source": "2010s",
-      "target": "Visual Art",
-      "weight": 38
-    },
-    {
-      "source": "Chinese",
-      "target": "Print",
-      "weight": 19
-    },
-    {
-      "source": "2010s",
-      "target": "Print",
-      "weight": 3
-    },
-    {
-      "source": "Chinese",
-      "target": "Work on Paper",
-      "weight": 30
-    },
-    {
-      "source": "2010s",
-      "target": "Work on Paper",
-      "weight": 2
-    },
-    {
-      "source": "2010s",
-      "target": "Chinese",
-      "weight": 32
-    },
-    {
-      "source": "Visual Art",
-      "target": "ink on paper",
-      "weight": 11
-    },
-    {
-      "source": "Installation",
-      "target": "ink on paper",
-      "weight": 2
-    },
-    {
-      "source": "Chinese",
-      "target": "ink on paper",
-      "weight": 11
-    },
-    {
-      "source": "2000s",
-      "target": "ink on paper",
-      "weight": 9
-    },
-    {
-      "source": "1990s",
-      "target": "Work on Paper",
-      "weight": 10
-    },
-    {
-      "source": "2000s",
-      "target": "Work on Paper",
-      "weight": 6
-    },
-    {
-      "source": "2000s",
-      "target": "Performance",
-      "weight": 7
-    },
-    {
-      "source": "1990s",
-      "target": "Sculpture",
-      "weight": 22
-    },
-    {
-      "source": "Drawing",
-      "target": "Visual Art",
-      "weight": 6
-    },
-    {
-      "source": "Installation",
-      "target": "Print",
-      "weight": 3
-    },
-    {
-      "source": "1990s",
-      "target": "Print",
-      "weight": 11
-    },
-    {
-      "source": "Chinese",
-      "target": "Drawing",
-      "weight": 4
-    },
-    {
       "source": "1990s",
       "target": "Drawing",
       "weight": 2
     },
     {
-      "source": "Work on Paper",
-      "target": "ink on paper",
-      "weight": 2
-    },
-    {
-      "source": "1980s",
-      "target": "Installation",
-      "weight": 5
-    },
-    {
-      "source": "Ink Art",
-      "target": "Moving Image",
-      "weight": 3
-    },
-    {
       "source": "Animation",
       "target": "Moving Image",
       "weight": 2
@@ -68221,444 +64311,9 @@
       "weight": 2
     },
     {
-      "source": "Ink Art",
-      "target": "Video",
-      "weight": 4
-    },
-    {
       "source": "Animation",
       "target": "Video",
       "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "Ink Art",
-      "weight": 12
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Visual Art",
-      "weight": 6
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Installation",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "Installation",
-      "weight": 7
-    },
-    {
-      "source": "Sound",
-      "target": "Video Installation",
-      "weight": 2
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Video Installation",
-      "weight": 4
-    },
-    {
-      "source": "2010s",
-      "target": "Video Installation",
-      "weight": 8
-    },
-    {
-      "source": "Animation",
-      "target": "Hong Kong",
-      "weight": 2
-    },
-    {
-      "source": "2010s",
-      "target": "Animation",
-      "weight": 2
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Sound",
-      "weight": 4
-    },
-    {
-      "source": "2010s",
-      "target": "Sound",
-      "weight": 4
-    },
-    {
-      "source": "2010s",
-      "target": "Hong Kong",
-      "weight": 8
-    },
-    {
-      "source": "Hong Kong",
-      "target": "Moving Image",
-      "weight": 4
-    },
-    {
-      "source": "2010s",
-      "target": "Moving Image",
-      "weight": 15
-    },
-    {
-      "source": "Video Installation",
-      "target": "single-channel digital video (colour",
-      "weight": 2
-    },
-    {
-      "source": "Hong Kong",
-      "target": "single-channel digital video (colour",
-      "weight": 2
-    },
-    {
-      "source": "2010s",
-      "target": "single-channel digital video (colour",
-      "weight": 8
-    },
-    {
-      "source": "Installation",
-      "target": "wood",
-      "weight": 2
-    },
-    {
-      "source": "1990s",
-      "target": "wood",
-      "weight": 3
-    },
-    {
-      "source": "Moving Image",
-      "target": "Taiwanese",
-      "weight": 6
-    },
-    {
-      "source": "Taiwanese",
-      "target": "Video",
-      "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "Taiwanese",
-      "weight": 4
-    },
-    {
-      "source": "2010s",
-      "target": "Video",
-      "weight": 7
-    },
-    {
-      "source": "2010s",
-      "target": "Sculpture",
-      "weight": 7
-    },
-    {
-      "source": "Installation",
-      "target": "Painting",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "Painting",
-      "weight": 10
-    },
-    {
-      "source": "French",
-      "target": "Installation",
-      "weight": 5
-    },
-    {
-      "source": "Print",
-      "target": "Video",
-      "weight": 2
-    },
-    {
-      "source": "Book/Periodical",
-      "target": "Visual Art",
-      "weight": 3
-    },
-    {
-      "source": "1980s",
-      "target": "French",
-      "weight": 3
-    },
-    {
-      "source": "Visual Art",
-      "target": "airbrush on canvas",
-      "weight": 16
-    },
-    {
-      "source": "Painting",
-      "target": "airbrush on canvas",
-      "weight": 16
-    },
-    {
-      "source": "Chinese",
-      "target": "airbrush on canvas",
-      "weight": 16
-    },
-    {
-      "source": "2000s",
-      "target": "airbrush on canvas",
-      "weight": 16
-    },
-    {
-      "source": "Installation",
-      "target": "Sculpture",
-      "weight": 9
-    },
-    {
-      "source": "Visual Art",
-      "target": "acrylic",
-      "weight": 6
-    },
-    {
-      "source": "Sculpture",
-      "target": "acrylic",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "acrylic",
-      "weight": 6
-    },
-    {
-      "source": "1990s",
-      "target": "acrylic",
-      "weight": 4
-    },
-    {
-      "source": "Sculpture",
-      "target": "glazed porcelain",
-      "weight": 2
-    },
-    {
-      "source": "Visual Art",
-      "target": "acrylic on canvas",
-      "weight": 33
-    },
-    {
-      "source": "Painting",
-      "target": "acrylic on canvas",
-      "weight": 33
-    },
-    {
-      "source": "Chinese",
-      "target": "acrylic on canvas",
-      "weight": 33
-    },
-    {
-      "source": "1990s",
-      "target": "acrylic on canvas",
-      "weight": 5
-    },
-    {
-      "source": "Chinese",
-      "target": "gelatin silver print",
-      "weight": 67
-    },
-    {
-      "source": "2000s",
-      "target": "Drawing",
-      "weight": 2
-    },
-    {
-      "source": "Performance",
-      "target": "chromogenic print",
-      "weight": 16
-    },
-    {
-      "source": "Multiple",
-      "target": "Visual Art",
-      "weight": 3
-    },
-    {
-      "source": "Multiple",
-      "target": "Sculpture",
-      "weight": 3
-    },
-    {
-      "source": "Chinese",
-      "target": "Multiple",
-      "weight": 3
-    },
-    {
-      "source": "Visual Art",
-      "target": "oil on synthetic fibre",
-      "weight": 4
-    },
-    {
-      "source": "Painting",
-      "target": "oil on synthetic fibre",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "oil on synthetic fibre",
-      "weight": 4
-    },
-    {
-      "source": "1990s",
-      "target": "oil on synthetic fibre",
-      "weight": 4
-    },
-    {
-      "source": "2000s",
-      "target": "acrylic on canvas",
-      "weight": 28
-    },
-    {
-      "source": "Performance",
-      "target": "gelatin silver print",
-      "weight": 35
-    },
-    {
-      "source": "Installation",
-      "target": "acrylic",
-      "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "acrylic",
-      "weight": 2
-    },
-    {
-      "source": "Visual Art",
-      "target": "watercolour on paper",
-      "weight": 20
-    },
-    {
-      "source": "Painting",
-      "target": "watercolour on paper",
-      "weight": 20
-    },
-    {
-      "source": "Chinese",
-      "target": "watercolour on paper",
-      "weight": 20
-    },
-    {
-      "source": "1990s",
-      "target": "watercolour on paper",
-      "weight": 6
-    },
-    {
-      "source": "Visual Art",
-      "target": "mixed media",
-      "weight": 6
-    },
-    {
-      "source": "Chinese",
-      "target": "mixed media",
-      "weight": 6
-    },
-    {
-      "source": "1990s",
-      "target": "mixed media",
-      "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "gelatin silver print",
-      "weight": 14
-    },
-    {
-      "source": "Ink Art",
-      "target": "ink on paper",
-      "weight": 5
-    },
-    {
-      "source": "Painting",
-      "target": "ink on paper",
-      "weight": 6
-    },
-    {
-      "source": "Visual Art",
-      "target": "screen print",
-      "weight": 5
-    },
-    {
-      "source": "Print",
-      "target": "screen print",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "screen print",
-      "weight": 5
-    },
-    {
-      "source": "1990s",
-      "target": "screen print",
-      "weight": 4
-    },
-    {
-      "source": "Sculpture",
-      "target": "steel",
-      "weight": 5
-    },
-    {
-      "source": "Visual Art",
-      "target": "oil on paper",
-      "weight": 4
-    },
-    {
-      "source": "Painting",
-      "target": "oil on paper",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "oil on paper",
-      "weight": 4
-    },
-    {
-      "source": "1990s",
-      "target": "oil on paper",
-      "weight": 2
-    },
-    {
-      "source": "Photography",
-      "target": "inkjet print",
-      "weight": 4
-    },
-    {
-      "source": "Visual Art",
-      "target": "porcelain",
-      "weight": 4
-    },
-    {
-      "source": "Sculpture",
-      "target": "porcelain",
-      "weight": 3
-    },
-    {
-      "source": "Chinese",
-      "target": "porcelain",
-      "weight": 4
-    },
-    {
-      "source": "2000s",
-      "target": "porcelain",
-      "weight": 3
-    },
-    {
-      "source": "2000s",
-      "target": "Print",
-      "weight": 4
-    },
-    {
-      "source": "Sculpture",
-      "target": "mixed media",
-      "weight": 3
-    },
-    {
-      "source": "Installation",
-      "target": "mixed media",
-      "weight": 4
-    },
-    {
-      "source": "2000s",
-      "target": "mixed media",
-      "weight": 4
     },
     {
       "source": "1970s",
@@ -68668,16 +64323,6 @@
     {
       "source": "1970s",
       "target": "Chinese",
-      "weight": 2
-    },
-    {
-      "source": "Installation",
-      "target": "single-channel digital video (colour",
-      "weight": 2
-    },
-    {
-      "source": "Moving Image",
-      "target": "Print",
       "weight": 2
     },
     {
@@ -68688,111 +64333,6 @@
     {
       "source": "2000s",
       "target": "Book/Periodical",
-      "weight": 2
-    },
-    {
-      "source": "Visual Art",
-      "target": "bronze",
-      "weight": 4
-    },
-    {
-      "source": "Sculpture",
-      "target": "bronze",
-      "weight": 4
-    },
-    {
-      "source": "Chinese",
-      "target": "bronze",
-      "weight": 4
-    },
-    {
-      "source": "2000s",
-      "target": "bronze",
-      "weight": 4
-    },
-    {
-      "source": "Painting",
-      "target": "Work on Paper",
-      "weight": 17
-    },
-    {
-      "source": "Taiwanese",
-      "target": "Video Installation",
-      "weight": 2
-    },
-    {
-      "source": "Film",
-      "target": "Taiwanese",
-      "weight": 4
-    },
-    {
-      "source": "1980s",
-      "target": "Performance",
-      "weight": 15
-    },
-    {
-      "source": "1980s",
-      "target": "gelatin silver print",
-      "weight": 14
-    },
-    {
-      "source": "2000s",
-      "target": "oil on paper",
-      "weight": 2
-    },
-    {
-      "source": "2000s",
-      "target": "Multiple",
-      "weight": 2
-    },
-    {
-      "source": "Work on Paper",
-      "target": "watercolour on paper",
-      "weight": 15
-    },
-    {
-      "source": "1980s",
-      "target": "Work on Paper",
-      "weight": 14
-    },
-    {
-      "source": "1980s",
-      "target": "watercolour on paper",
-      "weight": 14
-    },
-    {
-      "source": "Taiwanese",
-      "target": "Visual Art",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "Drawing",
-      "weight": 2
-    },
-    {
-      "source": "2010s",
-      "target": "Performance",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "oil on canvas",
-      "weight": 2
-    },
-    {
-      "source": "French",
-      "target": "Sculpture",
-      "weight": 2
-    },
-    {
-      "source": "2010s",
-      "target": "Ink Art",
-      "weight": 3
-    },
-    {
-      "source": "2010s",
-      "target": "French",
       "weight": 2
     }
   ],
@@ -88918,6 +84458,6 @@
     "totalObjects": 752,
     "totalArtists": 109,
     "totalTags": 52,
-    "totalLinks": 258
+    "totalLinks": 148
   }
 }

@@ -431,18 +431,38 @@ filteredSiggTags.forEach((data, tag) => {
   });
 });
 
-// Filter Sigg links - only keep links between filtered Sigg tags with weight >= 2
+// Filter Sigg links - keep top N per node to avoid density
 const minSiggLinkWeight = 2;
-const siggLinks = [];
+const maxSiggLinksPerNode = 3;
+const allSiggLinks = [];
 siggLinkPairs.forEach((weight, pair) => {
   if (weight < minSiggLinkWeight) return;
   const [tag1, tag2] = pair.split('|');
   if (filteredSiggTags.has(tag1) && filteredSiggTags.has(tag2)) {
-    siggLinks.push({ source: tag1, target: tag2, weight });
+    allSiggLinks.push({ source: tag1, target: tag2, weight });
   }
 });
 
-console.log(`Filtered Sigg links: ${siggLinks.length}`);
+allSiggLinks.sort((a, b) => b.weight - a.weight);
+const siggNodeLinkCount = new Map();
+const siggLinks = [];
+for (const link of allSiggLinks) {
+  if (link.weight >= 50) {
+    siggLinks.push(link);
+    siggNodeLinkCount.set(link.source, (siggNodeLinkCount.get(link.source) || 0) + 1);
+    siggNodeLinkCount.set(link.target, (siggNodeLinkCount.get(link.target) || 0) + 1);
+  } else {
+    const sCount = siggNodeLinkCount.get(link.source) || 0;
+    const tCount = siggNodeLinkCount.get(link.target) || 0;
+    if (sCount < maxSiggLinksPerNode || tCount < maxSiggLinksPerNode) {
+      siggLinks.push(link);
+      siggNodeLinkCount.set(link.source, sCount + 1);
+      siggNodeLinkCount.set(link.target, tCount + 1);
+    }
+  }
+}
+
+console.log(`Filtered Sigg links: ${siggLinks.length} (from ${allSiggLinks.length} candidates)`);
 
 // Build Sigg objectsByTag for filtered tags only
 const siggObjectsByTagFiltered = {};
@@ -450,18 +470,41 @@ filteredSiggTags.forEach((data, tag) => {
   siggObjectsByTagFiltered[tag] = siggObjectsByTag.get(tag) || [];
 });
 
-// Filter links - only keep links between filtered tags with weight >= 3
-const minLinkWeight = 3;
-const links = [];
+// Filter links - keep top N strongest links per node to avoid density
+const minLinkWeight = 500;
+const maxLinksPerNode = 3;
+const allLinks = [];
 linkPairs.forEach((weight, pair) => {
-  if (weight < minLinkWeight) return;
+  if (weight < 3) return;
   const [tag1, tag2] = pair.split('|');
   if (filteredTags.has(tag1) && filteredTags.has(tag2)) {
-    links.push({ source: tag1, target: tag2, weight });
+    allLinks.push({ source: tag1, target: tag2, weight });
   }
 });
 
-console.log(`Filtered links: ${links.length}`);
+// Sort by weight descending, then keep top N per node
+allLinks.sort((a, b) => b.weight - a.weight);
+const nodeLinkCount = new Map();
+const links = [];
+for (const link of allLinks) {
+  if (link.weight >= minLinkWeight) {
+    // Strong links always included
+    links.push(link);
+    nodeLinkCount.set(link.source, (nodeLinkCount.get(link.source) || 0) + 1);
+    nodeLinkCount.set(link.target, (nodeLinkCount.get(link.target) || 0) + 1);
+  } else {
+    // Weaker links only if node hasn't reached its limit
+    const sCount = nodeLinkCount.get(link.source) || 0;
+    const tCount = nodeLinkCount.get(link.target) || 0;
+    if (sCount < maxLinksPerNode || tCount < maxLinksPerNode) {
+      links.push(link);
+      nodeLinkCount.set(link.source, sCount + 1);
+      nodeLinkCount.set(link.target, tCount + 1);
+    }
+  }
+}
+
+console.log(`Filtered links: ${links.length} (from ${allLinks.length} candidates)`);
 
 // Build artist data - top 200 artists
 const artists = [];
