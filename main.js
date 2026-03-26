@@ -271,10 +271,14 @@ function showArtistPanel(artistId) {
   const summaryText = `Artist · ${artist.nationality || 'Unknown'} · ${artist.objectCount.toLocaleString()} artworks`;
   document.getElementById('panelSummary').textContent = summaryText;
 
-  // Set details button URL
+  // Set details button URL using slug
   const detailsBtn = document.getElementById('viewDetailsBtn');
-  detailsBtn.href = `https://www.mplus.org.hk/en/collection/artists/${artistId}/`;
-  detailsBtn.style.display = 'block';
+  if (artist.slug) {
+    detailsBtn.href = `https://www.mplus.org.hk/en/collection/makers/${artist.slug}/`;
+    detailsBtn.style.display = 'block';
+  } else {
+    detailsBtn.style.display = 'none';
+  }
 
   // Render object cards
   const grid = document.getElementById('objectGrid');
@@ -363,9 +367,11 @@ function showArtworkPanel(artworkId) {
   if (artwork.medium) summaryParts.push(artwork.medium);
   document.getElementById('panelSummary').textContent = summaryParts.join(' · ') || 'No details available';
 
-  // Set details button URL
+  // Set details button URL - use M+ collection search since we don't have object slugs
   const detailsBtn = document.getElementById('viewDetailsBtn');
-  detailsBtn.href = `https://www.mplus.org.hk/en/collection/objects/${artworkId}/`;
+  const searchTitle = encodeURIComponent(artwork.title || '');
+  detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${searchTitle}`;
+  detailsBtn.style.display = 'block';
   detailsBtn.style.display = 'block';
 
   // Render artwork details
