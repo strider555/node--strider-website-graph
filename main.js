@@ -274,7 +274,7 @@ function showArtistPanel(artistId) {
   // Set details button URL using slug
   const detailsBtn = document.getElementById('viewDetailsBtn');
   if (artist.slug) {
-    detailsBtn.href = `https://www.mplus.org.hk/en/collection/makers/${artist.slug}/`;
+    detailsBtn.href = `https://www.mplus.org.hk/tc/collection/makers/${artist.slug}/`;
     detailsBtn.style.display = 'block';
   } else {
     detailsBtn.style.display = 'none';
@@ -370,7 +370,7 @@ function showArtworkPanel(artworkId) {
   // Set details button URL - use M+ collection search since we don't have object slugs
   const detailsBtn = document.getElementById('viewDetailsBtn');
   const searchTitle = encodeURIComponent(artwork.title || '');
-  detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${searchTitle}`;
+  detailsBtn.href = `https://www.mplus.org.hk/tc/collection/?q=${searchTitle}`;
   detailsBtn.style.display = 'block';
   detailsBtn.style.display = 'block';
 
