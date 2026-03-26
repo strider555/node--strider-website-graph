@@ -115,7 +115,8 @@ const siggArtistNames = [
   "Zhou Tiehai", "Zhu Fadong", "Zhu Jia", "Zhu Jinshi", "Zhuang Hui", "Heidi Lau", "Wong Ping", "Samson Young"
 ];
 
-// Find Sigg artist IDs by matching names
+// Find Sigg artist IDs by matching names (initial set from known Sigg Prize artists)
+// This will be expanded during object processing with creditLine-based detection
 const siggArtistIds = new Set();
 constituentsData.forEach(c => {
   const name = c.name || '';
@@ -124,7 +125,7 @@ constituentsData.forEach(c => {
   }
 });
 
-console.log(`Found ${siggArtistIds.size} Sigg artists in collection`);
+console.log(`Found ${siggArtistIds.size} Sigg Prize artists in collection (will expand with creditLine matches)`);
 
 // Process objects and collect tag statistics
 const tagCounts = new Map();
@@ -170,8 +171,9 @@ objectsData.forEach((obj, idx) => {
     }
   }
 
-  // Check if this is a Sigg Collection object
-  const isSiggObject = artistId && siggArtistIds.has(artistId);
+  // Check if this is a Sigg Collection object (by creditLine, not just artist name)
+  const creditLine = obj.creditLine || '';
+  const isSiggObject = creditLine.includes('Sigg');
 
   // Compact object representation
   const objCompact = {
@@ -317,9 +319,12 @@ objectsData.forEach((obj, idx) => {
     }
   }
 
-  // Track Sigg object
+  // Track Sigg object and collect Sigg artist IDs from creditLine
   if (isSiggObject) {
     siggObjects.push(objCompact);
+    if (artistId) {
+      siggArtistIds.add(artistId);
+    }
   }
 });
 
@@ -522,11 +527,15 @@ constituentMap.forEach((artist, id) => {
   }
 });
 
-// Sort artists by object count and take top 200
+// Sort artists by object count
 artists.sort((a, b) => b.objectCount - a.objectCount);
-const topArtists = artists.slice(0, 200);
 
-console.log(`Artists with works: ${artists.length}, including top ${topArtists.length} in output`);
+// Include top 200 + ALL Sigg artists (even if not in top 200)
+const top200 = new Set(artists.slice(0, 200).map(a => a.id));
+const topArtists = artists.filter(a => top200.has(a.id) || siggArtistIds.has(a.id));
+
+const siggOnly = topArtists.filter(a => !top200.has(a.id)).length;
+console.log(`Artists with works: ${artists.length}, output: ${topArtists.length} (top 200 + ${siggOnly} additional Sigg artists)`);
 
 // Build objectsByTag for filtered tags only
 const objectsByTagFiltered = {};
@@ -591,9 +600,9 @@ siggObjectsByTag.forEach((objects, tag) => {
   });
 });
 
-// Add Sigg artists
-const siggArtists = topArtists.filter(a => siggArtistIds.has(a.id));
-siggArtists.forEach(artist => {
+// Add Sigg artists (ALL, not just top 200)
+const allSiggArtists = artists.filter(a => siggArtistIds.has(a.id));
+allSiggArtists.forEach(artist => {
   siggSearchIndex.push({
     type: 'artist',
     id: artist.id,
@@ -646,7 +655,7 @@ console.log(`\nSummary:`);
 console.log(`  - Total objects in collection: ${objectsData.length}`);
 console.log(`  - Tags: ${tagNodes.length}`);
 console.log(`  - Links: ${links.length}`);
-console.log(`  - Artists (top): ${topArtists.length}`);
+console.log(`  - Artists: ${topArtists.length} (top 200 + Sigg)`);
 console.log(`  - Objects stored per tag (max 50 each)`);
 console.log(`\nSigg Collection:`);
 console.log(`  - Sigg objects: ${siggObjects.length}`);
