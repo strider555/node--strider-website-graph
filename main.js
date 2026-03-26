@@ -203,6 +203,7 @@ function showSidePanel(tagId) {
         artistRow.querySelector('.artist-link').addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
+          if (window._setPanelNavigating) window._setPanelNavigating();
           showArtistPanel(matchedArtist.id);
         });
       } else {
@@ -439,6 +440,7 @@ function showArtworkPanel(artworkId) {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      if (window._setPanelNavigating) window._setPanelNavigating();
       showArtistPanel(link.dataset.artistId);
     });
   });
@@ -1125,7 +1127,10 @@ async function init() {
     });
 
     // Close panel when clicking outside
+    let panelNavigating = false;
+    window._setPanelNavigating = () => { panelNavigating = true; setTimeout(() => { panelNavigating = false; }, 100); };
     document.addEventListener('click', (e) => {
+      if (panelNavigating) return;
       const panel = document.getElementById('sidePanel');
       if (panel.classList.contains('open') &&
           !panel.contains(e.target) &&
