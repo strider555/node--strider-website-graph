@@ -1140,3 +1140,17 @@ html, body {
     font-size: 0.7rem;
   }
 }
+
+/* Artist clickable links in panels */
+.artist-link {
+  color: #e6a817;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(230, 168, 23, 0.4);
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+.artist-link:hover {
+  color: #f0c040;
+  border-bottom-color: #f0c040;
+}

@@ -197,7 +197,16 @@ function showSidePanel(tagId) {
       const artistDisplay = obj.artistNameTC
         ? `${obj.artistName} (${obj.artistNameTC})`
         : obj.artistName;
-      artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><span>${artistDisplay}</span>`;
+      const matchedArtist = museumData.artists.find(a => a.name === obj.artistName);
+      if (matchedArtist) {
+        artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><a class="artist-link" data-artist-id="${matchedArtist.id}">${artistDisplay}</a>`;
+        artistRow.querySelector('.artist-link').addEventListener('click', (e) => {
+          e.preventDefault();
+          showArtistPanel(matchedArtist.id);
+        });
+      } else {
+        artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><span>${artistDisplay}</span>`;
+      }
       meta.appendChild(artistRow);
     }
 
@@ -389,7 +398,12 @@ function showArtworkPanel(artworkId) {
     const artistDisplay = artwork.artistNameTC
       ? `${artwork.artistName} (${artwork.artistNameTC})`
       : artwork.artistName;
-    detailsList.push(`<div class="detail-row"><span class="detail-label">Artist:</span><span class="detail-value">${artistDisplay}</span></div>`);
+    const matchedArtist = museumData.artists.find(a => a.name === artwork.artistName);
+    if (matchedArtist) {
+      detailsList.push(`<div class="detail-row"><span class="detail-label">Artist:</span><a class="artist-link detail-value" data-artist-id="${matchedArtist.id}">${artistDisplay}</a></div>`);
+    } else {
+      detailsList.push(`<div class="detail-row"><span class="detail-label">Artist:</span><span class="detail-value">${artistDisplay}</span></div>`);
+    }
   }
 
   if (artwork.nationality) {
@@ -416,6 +430,13 @@ function showArtworkPanel(artworkId) {
   }
 
   detailsCard.innerHTML = detailsList.join('');
+  // Bind artist link clicks
+  detailsCard.querySelectorAll('.artist-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      showArtistPanel(link.dataset.artistId);
+    });
+  });
   grid.appendChild(detailsCard);
 
   // Show panel
