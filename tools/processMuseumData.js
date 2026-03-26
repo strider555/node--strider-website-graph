@@ -534,12 +534,86 @@ filteredTags.forEach((data, tag) => {
   objectsByTagFiltered[tag] = objectsByTag.get(tag) || [];
 });
 
+// Build search index for titles and artists
+console.log('\nBuilding search index...');
+const searchIndex = [];
+
+// Add all unique artworks (deduplicated by id)
+const seenObjects = new Set();
+objectsByTag.forEach((objects, tag) => {
+  objects.forEach(obj => {
+    if (!seenObjects.has(obj.id)) {
+      seenObjects.add(obj.id);
+      searchIndex.push({
+        type: 'artwork',
+        id: obj.id,
+        title: obj.title,
+        titleTC: obj.titleTC || '',
+        artistName: obj.artistName || '',
+        date: obj.date || '',
+        medium: (obj.medium || '').substring(0, 40),
+      });
+    }
+  });
+});
+
+// Add all artists from topArtists
+topArtists.forEach(artist => {
+  searchIndex.push({
+    type: 'artist',
+    id: artist.id,
+    name: artist.name,
+    nameTC: artist.nameTC || '',
+    nationality: artist.nationality || '',
+    objectCount: artist.objectCount
+  });
+});
+
+console.log(`Search index built: ${searchIndex.length} items (${searchIndex.filter(i => i.type === 'artwork').length} artworks, ${searchIndex.filter(i => i.type === 'artist').length} artists)`);
+
+// Build Sigg search index
+const siggSearchIndex = [];
+const seenSiggObjects = new Set();
+siggObjectsByTag.forEach((objects, tag) => {
+  objects.forEach(obj => {
+    if (!seenSiggObjects.has(obj.id)) {
+      seenSiggObjects.add(obj.id);
+      siggSearchIndex.push({
+        type: 'artwork',
+        id: obj.id,
+        title: obj.title,
+        titleTC: obj.titleTC || '',
+        artistName: obj.artistName || '',
+        date: obj.date || '',
+        medium: (obj.medium || '').substring(0, 40),
+      });
+    }
+  });
+});
+
+// Add Sigg artists
+const siggArtists = topArtists.filter(a => siggArtistIds.has(a.id));
+siggArtists.forEach(artist => {
+  siggSearchIndex.push({
+    type: 'artist',
+    id: artist.id,
+    name: artist.name,
+    nameTC: artist.nameTC || '',
+    nationality: artist.nationality || '',
+    bio: artist.bio || '',
+    objectCount: artist.objectCount
+  });
+});
+
+console.log(`Sigg search index built: ${siggSearchIndex.length} items (${siggSearchIndex.filter(i => i.type === 'artwork').length} artworks, ${siggSearchIndex.filter(i => i.type === 'artist').length} artists)`);
+
 // Build final output (compact format)
 const output = {
   tags: tagNodes,
   links: links,
   objectsByTag: objectsByTagFiltered,
   artists: topArtists,
+  searchIndex: searchIndex,
   stats: {
     totalObjects: objectsData.length,
     totalArtists: artists.length,
@@ -551,6 +625,7 @@ const output = {
   siggLinks: siggLinks,
   siggObjectsByTag: siggObjectsByTagFiltered,
   siggArtistIds: Array.from(siggArtistIds),
+  siggSearchIndex: siggSearchIndex,
   siggStats: {
     totalObjects: siggObjects.length,
     totalArtists: siggArtistIds.size,
@@ -562,7 +637,7 @@ const output = {
 // Write to file
 const outputPath = path.join(__dirname, '../data/museum-index.json');
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
+fs.writeFileSync(outputPath, JSON.stringify(output));
 
 const sizeMB = (fs.statSync(outputPath).size / 1024 / 1024).toFixed(2);
 console.log(`\nOutput written to: ${outputPath}`);

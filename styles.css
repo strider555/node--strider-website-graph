@@ -131,7 +131,6 @@ html, body {
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
 }
 
@@ -142,6 +141,13 @@ html, body {
 .search-item:hover,
 .search-item.selected {
   background: rgba(230, 168, 23, 0.1);
+}
+
+.search-item-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
 }
 
 .search-item-info {
@@ -164,6 +170,7 @@ html, body {
   align-items: center;
   gap: 8px;
   font-size: 11px;
+  flex-wrap: wrap;
 }
 
 .search-type-badge {
@@ -176,6 +183,10 @@ html, body {
 
 .search-item-count {
   color: var(--text-muted);
+}
+
+.search-item-detail {
+  color: var(--text-secondary);
 }
 
 .filter-buttons {
@@ -591,6 +602,54 @@ html, body {
   font-weight: 500;
   color: var(--text-secondary);
   min-width: 60px;
+}
+
+/* Artist bio card */
+.artist-bio {
+  background: rgba(192, 132, 252, 0.08);
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.artist-bio-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Artwork details */
+.artwork-details {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.detail-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 100px;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 /* Graph styles */

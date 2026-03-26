@@ -23,14 +23,16 @@ function getCurrentData() {
     return {
       tags: museumData.siggTags,
       links: museumData.siggLinks,
-      objectsByTag: museumData.siggObjectsByTag
+      objectsByTag: museumData.siggObjectsByTag,
+      searchIndex: museumData.siggSearchIndex || []
     };
   }
 
   return {
     tags: museumData.tags,
     links: museumData.links,
-    objectsByTag: museumData.objectsByTag
+    objectsByTag: museumData.objectsByTag,
+    searchIndex: museumData.searchIndex || []
   };
 }
 
@@ -225,6 +227,191 @@ function showSidePanel(tagId) {
 // Close side panel
 function closeSidePanel() {
   document.getElementById('sidePanel').classList.remove('open');
+}
+
+// Find all objects by artist name
+function findObjectsByArtist(artistName) {
+  const currentData = getCurrentData();
+  const results = [];
+  const seen = new Set();
+
+  for (const [tag, objects] of Object.entries(currentData.objectsByTag)) {
+    for (const obj of objects) {
+      if (obj.artistName === artistName && !seen.has(obj.id)) {
+        seen.add(obj.id);
+        results.push(obj);
+      }
+    }
+  }
+
+  return results;
+}
+
+// Show artist panel
+function showArtistPanel(artistId) {
+  const panel = document.getElementById('sidePanel');
+  const artist = museumData.artists.find(a => a.id === artistId);
+
+  if (!artist) {
+    console.warn('Artist not found:', artistId);
+    return;
+  }
+
+  const objects = findObjectsByArtist(artist.name);
+
+  // Update color indicator (purple for artist)
+  document.getElementById('panelColorIndicator').style.background = '#c084fc';
+
+  // Update title
+  const titleText = artist.nameTC ? `${artist.name} (${artist.nameTC})` : artist.name;
+  document.getElementById('panelTitle').textContent = titleText;
+  document.getElementById('panelTypeLabel').textContent = 'Artist';
+
+  // Update summary
+  const summaryText = `Artist · ${artist.nationality || 'Unknown'} · ${artist.objectCount.toLocaleString()} artworks`;
+  document.getElementById('panelSummary').textContent = summaryText;
+
+  // Set details button URL
+  const detailsBtn = document.getElementById('viewDetailsBtn');
+  detailsBtn.href = `https://www.mplus.org.hk/en/collection/artists/${artistId}/`;
+  detailsBtn.style.display = 'block';
+
+  // Render object cards
+  const grid = document.getElementById('objectGrid');
+  grid.innerHTML = '';
+
+  // Add bio if available
+  if (artist.bio) {
+    const bioCard = document.createElement('div');
+    bioCard.className = 'artist-bio';
+    bioCard.innerHTML = `<div class="artist-bio-text">${artist.bio}</div>`;
+    grid.appendChild(bioCard);
+  }
+
+  objects.forEach(obj => {
+    const card = document.createElement('div');
+    card.className = 'object-card';
+    card.addEventListener('click', () => showArtworkPanel(obj.id));
+
+    const title = document.createElement('div');
+    title.className = 'object-title';
+    title.textContent = obj.title || 'Untitled';
+
+    const titleTC = document.createElement('div');
+    titleTC.className = 'object-title-tc';
+    titleTC.textContent = obj.titleTC || '';
+
+    const meta = document.createElement('div');
+    meta.className = 'object-meta';
+
+    if (obj.date) {
+      const dateRow = document.createElement('div');
+      dateRow.className = 'object-meta-row';
+      dateRow.innerHTML = `<span class="object-meta-label">Date:</span><span>${obj.date}</span>`;
+      meta.appendChild(dateRow);
+    }
+
+    if (obj.medium) {
+      const mediumRow = document.createElement('div');
+      mediumRow.className = 'object-meta-row';
+      mediumRow.innerHTML = `<span class="object-meta-label">Medium:</span><span>${obj.medium}</span>`;
+      meta.appendChild(mediumRow);
+    }
+
+    card.appendChild(title);
+    if (titleTC.textContent) card.appendChild(titleTC);
+    card.appendChild(meta);
+
+    grid.appendChild(card);
+  });
+
+  // Show panel
+  panel.classList.add('open');
+}
+
+// Show artwork panel
+function showArtworkPanel(artworkId) {
+  const panel = document.getElementById('sidePanel');
+  const currentData = getCurrentData();
+
+  // Find the artwork in objectsByTag
+  let artwork = null;
+  for (const [tag, objects] of Object.entries(currentData.objectsByTag)) {
+    const found = objects.find(obj => obj.id === artworkId);
+    if (found) {
+      artwork = found;
+      break;
+    }
+  }
+
+  if (!artwork) {
+    console.warn('Artwork not found:', artworkId);
+    return;
+  }
+
+  // Update color indicator (coral for artwork)
+  document.getElementById('panelColorIndicator').style.background = '#ff6b6b';
+
+  // Update title
+  const titleText = artwork.titleTC ? `${artwork.title} (${artwork.titleTC})` : artwork.title;
+  document.getElementById('panelTitle').textContent = titleText;
+  document.getElementById('panelTypeLabel').textContent = artwork.artistName || 'Unknown Artist';
+
+  // Update summary
+  const summaryParts = [];
+  if (artwork.date) summaryParts.push(artwork.date);
+  if (artwork.medium) summaryParts.push(artwork.medium);
+  document.getElementById('panelSummary').textContent = summaryParts.join(' · ') || 'No details available';
+
+  // Set details button URL
+  const detailsBtn = document.getElementById('viewDetailsBtn');
+  detailsBtn.href = `https://www.mplus.org.hk/en/collection/objects/${artworkId}/`;
+  detailsBtn.style.display = 'block';
+
+  // Render artwork details
+  const grid = document.getElementById('objectGrid');
+  grid.innerHTML = '';
+
+  const detailsCard = document.createElement('div');
+  detailsCard.className = 'artwork-details';
+
+  const detailsList = [];
+
+  if (artwork.artistName) {
+    const artistDisplay = artwork.artistNameTC
+      ? `${artwork.artistName} (${artwork.artistNameTC})`
+      : artwork.artistName;
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Artist:</span><span class="detail-value">${artistDisplay}</span></div>`);
+  }
+
+  if (artwork.nationality) {
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Nationality:</span><span class="detail-value">${artwork.nationality}</span></div>`);
+  }
+
+  if (artwork.date) {
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Date:</span><span class="detail-value">${artwork.date}</span></div>`);
+  }
+
+  if (artwork.medium) {
+    const mediumDisplay = artwork.mediumTC
+      ? `${artwork.medium} (${artwork.mediumTC})`
+      : artwork.medium;
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Medium:</span><span class="detail-value">${mediumDisplay}</span></div>`);
+  }
+
+  if (artwork.areas && artwork.areas.length > 0) {
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Areas:</span><span class="detail-value">${artwork.areas.join(', ')}</span></div>`);
+  }
+
+  if (artwork.categories && artwork.categories.length > 0) {
+    detailsList.push(`<div class="detail-row"><span class="detail-label">Categories:</span><span class="detail-value">${artwork.categories.join(', ')}</span></div>`);
+  }
+
+  detailsCard.innerHTML = detailsList.join('');
+  grid.appendChild(detailsCard);
+
+  // Show panel
+  panel.classList.add('open');
 }
 
 // Toggle Sigg Collection mode
@@ -511,45 +698,120 @@ function setupSearch() {
       return;
     }
 
-    // Find matching tags
     const currentData = getCurrentData();
-    const matches = currentData.tags
+
+    // Search across tags
+    const tagMatches = currentData.tags
       .filter(tag => tag.id.toLowerCase().includes(query))
       .sort((a, b) => b.count - a.count)
-      .slice(0, 8);
+      .slice(0, 4)
+      .map(tag => ({ ...tag, searchType: 'tag' }));
 
-    currentResults = matches;
+    // Search across artists
+    const artistMatches = currentData.searchIndex
+      .filter(item => item.type === 'artist' && (
+        item.name.toLowerCase().includes(query) ||
+        (item.nameTC && item.nameTC.toLowerCase().includes(query))
+      ))
+      .sort((a, b) => b.objectCount - a.objectCount)
+      .slice(0, 4)
+      .map(item => ({ ...item, searchType: 'artist' }));
+
+    // Search across artworks
+    const artworkMatches = currentData.searchIndex
+      .filter(item => item.type === 'artwork' && (
+        item.title.toLowerCase().includes(query) ||
+        (item.titleTC && item.titleTC.toLowerCase().includes(query)) ||
+        (item.artistName && item.artistName.toLowerCase().includes(query))
+      ))
+      .slice(0, 4)
+      .map(item => ({ ...item, searchType: 'artwork' }));
+
+    // Combine and limit to 12 results
+    const allMatches = [...tagMatches, ...artistMatches, ...artworkMatches].slice(0, 12);
+    currentResults = allMatches;
     selectedIndex = -1;
 
-    if (matches.length === 0) {
+    if (allMatches.length === 0) {
       searchDropdown.innerHTML = '<div style="padding: 12px 16px; color: var(--text-muted); text-align: center;">No matches found</div>';
       searchDropdown.classList.add('show');
       return;
     }
 
-    // Render dropdown items
-    searchDropdown.innerHTML = matches.map((tag, index) => {
-      const typeColor = tagColors[tag.type] || '#888';
-      return `
-        <div class="search-item" data-index="${index}" data-tag="${tag.id}">
-          <div class="search-item-info">
-            <div class="search-item-name">${tag.id}</div>
-            <div class="search-item-meta">
-              <span class="search-type-badge" style="background: ${typeColor}; color: #0d1117;">${tag.type}</span>
-              <span class="search-item-count">${tag.count.toLocaleString()} artworks</span>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
+    // Render dropdown items grouped by type
+    let html = '';
+    const groups = [
+      { type: 'tag', label: 'Tags', items: tagMatches },
+      { type: 'artist', label: 'Artists', items: artistMatches },
+      { type: 'artwork', label: 'Artworks', items: artworkMatches }
+    ];
 
+    let globalIndex = 0;
+    groups.forEach(group => {
+      if (group.items.length === 0) return;
+
+      group.items.forEach(item => {
+        if (item.searchType === 'tag') {
+          const typeColor = tagColors[item.type] || '#888';
+          html += `
+            <div class="search-item" data-index="${globalIndex}" data-type="tag" data-id="${item.id}">
+              <div class="search-item-info">
+                <div class="search-item-name">${item.id}</div>
+                <div class="search-item-meta">
+                  <span class="search-type-badge" style="background: ${typeColor}; color: #0d1117;">${item.type}</span>
+                  <span class="search-item-count">${item.count.toLocaleString()} artworks</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (item.searchType === 'artist') {
+          html += `
+            <div class="search-item" data-index="${globalIndex}" data-type="artist" data-id="${item.id}">
+              <div class="search-item-icon">🎨</div>
+              <div class="search-item-info">
+                <div class="search-item-name">${item.name}${item.nameTC ? ` (${item.nameTC})` : ''}</div>
+                <div class="search-item-meta">
+                  <span class="search-item-detail">${item.nationality || 'Unknown'}</span>
+                  <span class="search-item-count">${item.objectCount.toLocaleString()} artworks</span>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (item.searchType === 'artwork') {
+          html += `
+            <div class="search-item" data-index="${globalIndex}" data-type="artwork" data-id="${item.id}">
+              <div class="search-item-icon">🖼️</div>
+              <div class="search-item-info">
+                <div class="search-item-name">${item.title}</div>
+                <div class="search-item-meta">
+                  <span class="search-item-detail">${item.artistName || 'Unknown Artist'}</span>
+                  ${item.date ? `<span class="search-item-detail">${item.date}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        globalIndex++;
+      });
+    });
+
+    searchDropdown.innerHTML = html;
     searchDropdown.classList.add('show');
 
     // Add click handlers
     searchDropdown.querySelectorAll('.search-item').forEach(item => {
       item.addEventListener('click', () => {
-        const tagId = item.dataset.tag;
-        showSidePanel(tagId);
+        const type = item.dataset.type;
+        const id = item.dataset.id;
+
+        if (type === 'tag') {
+          showSidePanel(id);
+        } else if (type === 'artist') {
+          showArtistPanel(id);
+        } else if (type === 'artwork') {
+          showArtworkPanel(id);
+        }
+
         searchInput.value = '';
         searchDropdown.classList.remove('show');
         // Reset graph opacity
@@ -558,12 +820,14 @@ function setupSearch() {
       });
     });
 
-    // Highlight matching nodes
-    const matchingIds = new Set(matches.map(t => t.id));
-    d3.select('#graph').selectAll('g.node')
-      .style('opacity', d => matchingIds.has(d.id) ? 1 : 0.2);
-    d3.select('#graph').selectAll('path.link')
-      .style('opacity', 0.1);
+    // Highlight matching tag nodes
+    const matchingTagIds = new Set(tagMatches.map(t => t.id));
+    if (matchingTagIds.size > 0) {
+      d3.select('#graph').selectAll('g.node')
+        .style('opacity', d => matchingTagIds.has(d.id) ? 1 : 0.2);
+      d3.select('#graph').selectAll('path.link')
+        .style('opacity', 0.1);
+    }
   }
 
   searchInput.addEventListener('input', (e) => {
@@ -584,9 +848,15 @@ function setupSearch() {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (currentResults.length > 0) {
-        const tag = currentResults[selectedIndex >= 0 ? selectedIndex : 0];
-        if (tag) {
-          showSidePanel(tag.id);
+        const result = currentResults[selectedIndex >= 0 ? selectedIndex : 0];
+        if (result) {
+          if (result.searchType === 'tag') {
+            showSidePanel(result.id);
+          } else if (result.searchType === 'artist') {
+            showArtistPanel(result.id);
+          } else if (result.searchType === 'artwork') {
+            showArtworkPanel(result.id);
+          }
           searchInput.value = '';
           searchDropdown.classList.remove('show');
           d3.select('#graph').selectAll('g.node').style('opacity', 1);
