@@ -804,28 +804,6 @@ function setupSearch() {
     searchDropdown.innerHTML = html;
     searchDropdown.classList.add('show');
 
-    // Add click handlers
-    searchDropdown.querySelectorAll('.search-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const type = item.dataset.type;
-        const id = item.dataset.id;
-
-        if (type === 'tag') {
-          showSidePanel(id);
-        } else if (type === 'artist') {
-          showArtistPanel(id);
-        } else if (type === 'artwork') {
-          showArtworkPanel(id);
-        }
-
-        searchInput.value = '';
-        searchDropdown.classList.remove('show');
-        // Reset graph opacity
-        d3.select('#graph').selectAll('g.node').style('opacity', 1);
-        d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
-      });
-    });
-
     // Highlight matching tag nodes
     const matchingTagIds = new Set(tagMatches.map(t => t.id));
     if (matchingTagIds.size > 0) {
@@ -886,6 +864,28 @@ function setupSearch() {
       item.classList.toggle('selected', index === selectedIndex);
     });
   }
+
+  // Event delegation for dropdown clicks (works for dynamically added items)
+  searchDropdown.addEventListener('click', (e) => {
+    const item = e.target.closest('.search-item');
+    if (!item) return;
+
+    const type = item.dataset.type;
+    const id = item.dataset.id;
+
+    if (type === 'tag') {
+      showSidePanel(id);
+    } else if (type === 'artist') {
+      showArtistPanel(id);
+    } else if (type === 'artwork') {
+      showArtworkPanel(id);
+    }
+
+    searchInput.value = '';
+    searchDropdown.classList.remove('show');
+    d3.select('#graph').selectAll('g.node').style('opacity', 1);
+    d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
+  });
 
   // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
