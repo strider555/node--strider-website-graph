@@ -132,6 +132,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(230, 168, 23, 0.2);
 }
 
 .search-item:last-child {
@@ -1096,6 +1098,8 @@ html, body {
   justify-content: space-between;
   align-items: center;
   transition: background 0.15s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(230, 168, 23, 0.2);
 }
 
 .browse-artist:hover,

@@ -867,9 +867,9 @@ function setupSearch() {
     });
   }
 
-  // Event delegation for dropdown clicks (mousedown to prevent blur race condition)
-  searchDropdown.addEventListener('mousedown', (e) => {
-    e.preventDefault(); // Prevent input blur which would hide dropdown
+  // Event delegation for dropdown clicks (mousedown + touchstart for mobile)
+  function handleDropdownSelect(e) {
+    e.preventDefault();
     const item = e.target.closest('.search-item');
     if (!item) return;
 
@@ -888,7 +888,9 @@ function setupSearch() {
     searchDropdown.classList.remove('show');
     d3.select('#graph').selectAll('g.node').style('opacity', 1);
     d3.select('#graph').selectAll('path.link').style('opacity', 0.4);
-  });
+  }
+  searchDropdown.addEventListener('mousedown', handleDropdownSelect);
+  searchDropdown.addEventListener('touchend', handleDropdownSelect);
 
   // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
@@ -1014,12 +1016,20 @@ function setupBrowseModal() {
     browseList.innerHTML = html;
 
     // Click handler
-    browseList.querySelectorAll('.browse-artist').forEach(el => {
-      el.addEventListener('click', () => {
-        const id = el.dataset.id;
-        showArtistPanel(id);
-        modal.classList.remove('show');
-      });
+    browseList.addEventListener('click', (e) => {
+      const el = e.target.closest('.browse-artist');
+      if (!el) return;
+      const id = el.dataset.id;
+      showArtistPanel(id);
+      modal.classList.remove('show');
+    });
+    browseList.addEventListener('touchend', (e) => {
+      const el = e.target.closest('.browse-artist');
+      if (!el) return;
+      e.preventDefault();
+      const id = el.dataset.id;
+      showArtistPanel(id);
+      modal.classList.remove('show');
     });
   }
 }
