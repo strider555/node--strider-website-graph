@@ -896,6 +896,132 @@ function setupSearch() {
   });
 }
 
+// ---- Browse Modal ----
+function setupBrowseModal() {
+  const modal = document.getElementById('browseModal');
+  const browseBtn = document.getElementById('browseBtn');
+  const closeBtn = document.getElementById('closeBrowse');
+  const browseSearch = document.getElementById('browseSearch');
+  const browseList = document.getElementById('browseList');
+  const browseAlphabet = document.getElementById('browseAlphabet');
+  const browseTabs = document.getElementById('browseTabs');
+
+  let currentTab = 'all';
+
+  browseBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+    renderBrowseList('');
+    browseSearch.value = '';
+    browseSearch.focus();
+  });
+
+  closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+
+  // Tab switching
+  browseTabs.addEventListener('click', (e) => {
+    const tab = e.target.closest('.browse-tab');
+    if (!tab) return;
+    browseTabs.querySelectorAll('.browse-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentTab = tab.dataset.tab;
+    renderBrowseList(browseSearch.value.toLowerCase().trim());
+  });
+
+  // Filter
+  let filterTimeout;
+  browseSearch.addEventListener('input', () => {
+    clearTimeout(filterTimeout);
+    filterTimeout = setTimeout(() => {
+      renderBrowseList(browseSearch.value.toLowerCase().trim());
+    }, 150);
+  });
+
+  function renderBrowseList(filter) {
+    const data = getCurrentData();
+    let artists = data.artists || [];
+
+    // Filter by tab
+    if (currentTab === 'sigg') {
+      const siggIds = new Set((museumData.siggArtistIds || []).map(String));
+      artists = artists.filter(a => siggIds.has(String(a.id)));
+    }
+
+    // Filter by search
+    if (filter) {
+      artists = artists.filter(a =>
+        (a.name || '').toLowerCase().includes(filter) ||
+        (a.nameTC || '').toLowerCase().includes(filter)
+      );
+    }
+
+    // Sort A-Z
+    artists.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+    // Update tab counts
+    const allCount = (getCurrentData().artists || []).length;
+    const siggCount = (museumData.siggArtistIds || []).length;
+    browseTabs.querySelector('[data-tab="all"]').textContent = `All (${allCount})`;
+    browseTabs.querySelector('[data-tab="sigg"]').textContent = `Sigg (${siggCount})`;
+
+    // Group by letter
+    const groups = {};
+    artists.forEach(a => {
+      const letter = (a.name || '?')[0].toUpperCase();
+      if (!groups[letter]) groups[letter] = [];
+      groups[letter].push(a);
+    });
+
+    // Render alphabet bar
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    browseAlphabet.innerHTML = letters.map(l =>
+      `<a class="${groups[l] ? '' : 'disabled'}" data-letter="${l}">${l}</a>`
+    ).join('');
+
+    browseAlphabet.querySelectorAll('a:not(.disabled)').forEach(a => {
+      a.addEventListener('click', () => {
+        const el = browseList.querySelector(`[data-group="${a.dataset.letter}"]`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Render list
+    let html = '';
+    Object.keys(groups).sort().forEach(letter => {
+      html += `<div class="browse-letter-group" data-group="${letter}">`;
+      html += `<div class="browse-letter">${letter}</div>`;
+      groups[letter].forEach(a => {
+        html += `
+          <div class="browse-artist" data-id="${a.id}">
+            <div>
+              <div class="browse-artist-name">${a.name}</div>
+              ${a.nameTC ? `<div class="browse-artist-name-tc">${a.nameTC}</div>` : ''}
+            </div>
+            <div class="browse-artist-count">${a.objectCount} works</div>
+          </div>`;
+      });
+      html += '</div>';
+    });
+
+    if (!html) {
+      html = '<div style="padding: 40px 20px; text-align: center; color: var(--text-muted);">No artists found</div>';
+    }
+
+    browseList.innerHTML = html;
+
+    // Click handler
+    browseList.querySelectorAll('.browse-artist').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.id;
+        showArtistPanel(id);
+        modal.classList.remove('show');
+      });
+    });
+  }
+}
+
 // Zoom controls
 function setupZoomControls() {
   const svg = d3.select('#graph');
@@ -935,6 +1061,7 @@ async function init() {
     // Setup interactions
     setupSearch();
     setupZoomControls();
+    setupBrowseModal();
 
     // Setup filter buttons (area)
     document.querySelectorAll('.filter-btn[data-area]').forEach(btn => {

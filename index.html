@@ -33,8 +33,26 @@
         <button class="filter-btn" data-area="Moving Image">Moving Image</button>
       </div>
       <button class="filter-btn sigg-toggle" id="siggToggle">Sigg Collection</button>
+      <button class="filter-btn browse-btn" id="browseBtn">📋 Browse</button>
     </div>
   </header>
+
+  <!-- Browse Modal -->
+  <div class="browse-modal" id="browseModal">
+    <div class="browse-content">
+      <div class="browse-header">
+        <h2>Browse Artists</h2>
+        <div class="browse-tabs" id="browseTabs">
+          <button class="browse-tab active" data-tab="all">All (489)</button>
+          <button class="browse-tab" data-tab="sigg">Sigg Collection</button>
+        </div>
+        <input type="text" class="browse-search" id="browseSearch" placeholder="Filter artists..." autocomplete="off">
+        <button class="close-btn browse-close" id="closeBrowse">×</button>
+      </div>
+      <div class="browse-alphabet" id="browseAlphabet"></div>
+      <div class="browse-list" id="browseList"></div>
+    </div>
+  </div>
 
   <main class="app-main">
     <div id="loading" class="loading">
