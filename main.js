@@ -865,8 +865,9 @@ function setupSearch() {
     });
   }
 
-  // Event delegation for dropdown clicks (works for dynamically added items)
-  searchDropdown.addEventListener('click', (e) => {
+  // Event delegation for dropdown clicks (mousedown to prevent blur race condition)
+  searchDropdown.addEventListener('mousedown', (e) => {
+    e.preventDefault(); // Prevent input blur which would hide dropdown
     const item = e.target.closest('.search-item');
     if (!item) return;
 
