@@ -202,6 +202,7 @@ function showSidePanel(tagId) {
         artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><a class="artist-link" data-artist-id="${matchedArtist.id}">${artistDisplay}</a>`;
         artistRow.querySelector('.artist-link').addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           showArtistPanel(matchedArtist.id);
         });
       } else {
@@ -437,6 +438,7 @@ function showArtworkPanel(artworkId) {
   detailsCard.querySelectorAll('.artist-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       showArtistPanel(link.dataset.artistId);
     });
   });
