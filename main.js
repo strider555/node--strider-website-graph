@@ -282,9 +282,12 @@ function showArtistPanel(artistId) {
   const summaryText = `Artist · ${artist.nationality || 'Unknown'} · ${artist.objectCount.toLocaleString()} artworks`;
   document.getElementById('panelSummary').textContent = summaryText;
 
-  // Set details button URL using slug
+  // Set details button URL (prefer mplusUrl from Excel, fallback to slug)
   const detailsBtn = document.getElementById('viewDetailsBtn');
-  if (artist.slug) {
+  if (artist.mplusUrl) {
+    detailsBtn.href = artist.mplusUrl;
+    detailsBtn.style.display = 'block';
+  } else if (artist.slug) {
     detailsBtn.href = `https://www.mplus.org.hk/en/collection/makers/${artist.slug}/`;
     detailsBtn.style.display = 'block';
   } else {
