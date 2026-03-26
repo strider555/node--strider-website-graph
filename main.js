@@ -24,7 +24,8 @@ function getCurrentData() {
       tags: museumData.siggTags,
       links: museumData.siggLinks,
       objectsByTag: museumData.siggObjectsByTag,
-      searchIndex: museumData.siggSearchIndex || []
+      searchIndex: museumData.siggSearchIndex || [],
+      artists: museumData.artists || []
     };
   }
 
@@ -32,7 +33,8 @@ function getCurrentData() {
     tags: museumData.tags,
     links: museumData.links,
     objectsByTag: museumData.objectsByTag,
-    searchIndex: museumData.searchIndex || []
+    searchIndex: museumData.searchIndex || [],
+    artists: museumData.artists || []
   };
 }
 
