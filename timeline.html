@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M+ Collection Timeline River</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8ed;
+      --text-dim: #8b8b97;
+      --accent: #e6a817;
+      --visual-art: #c084fc;
+      --design: #60a5fa;
+      --moving-image: #f472b6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10, 10, 15, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .header .subtitle {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .back-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 12px;
+      border: 1px solid rgba(230,168,23,0.3);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .back-link:hover {
+      background: rgba(230,168,23,0.1);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .filter-btn:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+    }
+
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(230,168,23,0.1);
+    }
+
+    .filter-btn[data-area="Visual Art"].active {
+      border-color: var(--visual-art);
+      color: var(--visual-art);
+      background: rgba(192,132,252,0.1);
+    }
+
+    .filter-btn[data-area="Design and Architecture"].active {
+      border-color: var(--design);
+      color: var(--design);
+      background: rgba(96,165,250,0.1);
+    }
+
+    .filter-btn[data-area="Moving Image"].active {
+      border-color: var(--moving-image);
+      color: var(--moving-image);
+      background: rgba(244,114,182,0.1);
+    }
+
+    #timeline {
+      width: 100%;
+      height: 100vh;
+      padding-top: 64px;
+    }
+
+    .tooltip {
+      position: fixed;
+      padding: 12px 16px;
+      background: rgba(19, 19, 26, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      max-width: 300px;
+      z-index: 200;
+      backdrop-filter: blur(8px);
+    }
+
+    .tooltip-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+
+    .tooltip-meta {
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .year-label {
+      font-size: 13px;
+      fill: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .year-label-major {
+      font-size: 15px;
+      fill: var(--text);
+      font-weight: 600;
+    }
+
+    .density-area {
+      opacity: 0.15;
+    }
+
+    .axis-line {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+
+    .decade-band:nth-child(even) {
+      fill: rgba(255,255,255,0.02);
+    }
+
+    .zoom-hint {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--text-dim);
+      background: rgba(19,19,26,0.8);
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      z-index: 100;
+      transition: opacity 0.5s;
+    }
+
+    .stats-bar {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 11px;
+      color: var(--text-dim);
+      background: rgba(19,19,26,0.8);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 16px;
+      }
+      .controls {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      #timeline { padding-top: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div>
+      <h1>M+ Collection Timeline</h1>
+      <div class="subtitle">2,277 artworks · 1895–2022</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="filter-btn active" data-area="all">All</button>
+    <button class="filter-btn" data-area="Visual Art">Visual Art</button>
+    <button class="filter-btn" data-area="Design and Architecture">Design</button>
+    <button class="filter-btn" data-area="Moving Image">Moving Image</button>
+    <a href="./index.html" class="back-link">← Graph View</a>
+  </div>
+</div>
+
+<div id="timeline"></div>
+<div class="tooltip" id="tooltip"></div>
+<div class="zoom-hint" id="zoomHint">Scroll to zoom · Drag to pan</div>
+<div class="stats-bar" id="statsBar"></div>
+
+<script>
+const areaColors = {
+  'Visual Art': '#c084fc',
+  'Design and Architecture': '#60a5fa',
+  'Moving Image': '#f472b6',
+  'Unknown': '#666'
+};
+
+const categoryColors = {
+  'Photography': '#93c5fd',
+  'Painting': '#c084fc',
+  'Ink Art': '#6ee7b7',
+  'Print': '#fbbf24',
+  'Poster': '#f59e0b',
+  'Video': '#f472b6',
+  'Animation': '#fb7185',
+  'Drawing': '#a78bfa',
+  'Installation': '#34d399',
+  'Digital': '#22d3ee',
+  'Architectural Drawing': '#60a5fa',
+  'Architectural Photography': '#38bdf8',
+  'Design Object': '#818cf8',
+  'Book/Periodical': '#d4a373',
+  'Sculpture': '#10b981',
+  'Work on Paper': '#e2e8f0'
+};
+
+let allData = [];
+let activeArea = 'all';
+
+async function init() {
+  const resp = await fetch('./data/timeline.json');
+  allData = await resp.json();
+  
+  // Add jitter for y position within category bands
+  allData.forEach((d, i) => {
+    d.jitter = Math.random();
+  });
+  
+  render();
+  setupFilters();
+  
+  // Hide zoom hint after 5s
+  setTimeout(() => {
+    document.getElementById('zoomHint').style.opacity = '0';
+  }, 5000);
+}
+
+function getFilteredData() {
+  if (activeArea === 'all') return allData;
+  return allData.filter(d => d.area === activeArea);
+}
+
+function render() {
+  const container = document.getElementById('timeline');
+  container.innerHTML = '';
+  
+  const data = getFilteredData();
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  const margin = { top: 20, right: 40, bottom: 50, left: 40 };
+  
+  const svg = d3.select(container)
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+  
+  // Scales
+  const xScale = d3.scaleLinear()
+    .domain([1895, 2025])
+    .range([margin.left, width - margin.right]);
+  
+  // Get unique categories for y-axis
+  const categories = [...new Set(data.map(d => d.category))].sort();
+  const yScale = d3.scaleBand()
+    .domain(categories)
+    .range([margin.top, height - margin.bottom])
+    .padding(0.1);
+  
+  // Zoomable group
+  const g = svg.append('g');
+  
+  // Decade bands
+  for (let decade = 1890; decade <= 2020; decade += 10) {
+    if ((decade / 10) % 2 === 0) {
+      g.append('rect')
+        .attr('class', 'decade-band')
+        .attr('x', xScale(decade))
+        .attr('y', margin.top)
+        .attr('width', xScale(decade + 10) - xScale(decade))
+        .attr('height', height - margin.top - margin.bottom)
+        .attr('fill', 'rgba(255,255,255,0.015)');
+    }
+  }
+  
+  // Year grid lines
+  for (let year = 1900; year <= 2020; year += 10) {
+    g.append('line')
+      .attr('class', 'axis-line')
+      .attr('x1', xScale(year))
+      .attr('x2', xScale(year))
+      .attr('y1', margin.top)
+      .attr('y2', height - margin.bottom)
+      .attr('stroke-opacity', year % 50 === 0 ? 0.15 : 0.06);
+  }
+  
+  // Density "river" areas per category group
+  const topCategories = d3.rollups(data, v => v.length, d => d.area)
+    .sort((a, b) => b[1] - a[1])
+    .map(d => d[0]);
+  
+  // Draw dots with physics-inspired positioning
+  const dots = g.selectAll('circle.dot')
+    .data(data)
+    .enter()
+    .append('circle')
+    .attr('class', 'dot')
+    .attr('cx', d => xScale(d.year) + (Math.random() - 0.5) * Math.min(20, (xScale(1901) - xScale(1900)) * 0.8))
+    .attr('cy', d => {
+      const bandY = yScale(d.category) || height / 2;
+      const bandH = yScale.bandwidth();
+      return bandY + d.jitter * bandH;
+    })
+    .attr('r', 3)
+    .attr('fill', d => areaColors[d.area] || '#666')
+    .attr('opacity', 0.7)
+    .attr('stroke', 'none')
+    .style('cursor', 'pointer');
+  
+  // Tooltip
+  const tooltip = d3.select('#tooltip');
+  
+  dots.on('mouseenter', (event, d) => {
+    d3.select(event.target)
+      .attr('r', 6)
+      .attr('opacity', 1)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 1.5);
+    
+    const catColor = categoryColors[d.category] || areaColors[d.area] || '#888';
+    tooltip.style('opacity', 1)
+      .html(`
+        <div class="tooltip-title">${d.title}</div>
+        ${d.titleTC ? `<div style="color:#aaa;margin-bottom:4px">${d.titleTC}</div>` : ''}
+        <div class="tooltip-meta">
+          ${d.artistName ? `<div>🎨 ${d.artistName}${d.artistNameTC ? ` (${d.artistNameTC})` : ''}</div>` : ''}
+          <div>📅 ${d.date}</div>
+          <div style="color:${catColor}">◉ ${d.category}</div>
+          <div style="color:${areaColors[d.area]}">◉ ${d.area}</div>
+          ${d.medium ? `<div>🖌️ ${d.medium}</div>` : ''}
+          ${d.nationality ? `<div>🌍 ${d.nationality}</div>` : ''}
+        </div>
+      `);
+  })
+  .on('mousemove', (event) => {
+    const x = event.clientX + 15;
+    const y = event.clientY - 10;
+    tooltip.style('left', Math.min(x, window.innerWidth - 320) + 'px')
+      .style('top', Math.min(y, window.innerHeight - 200) + 'px');
+  })
+  .on('mouseleave', (event) => {
+    d3.select(event.target)
+      .attr('r', 3)
+      .attr('opacity', 0.7)
+      .attr('stroke', 'none');
+    tooltip.style('opacity', 0);
+  });
+  
+  // Year labels at bottom
+  const yearLabelG = svg.append('g');
+  for (let year = 1900; year <= 2020; year += 10) {
+    yearLabelG.append('text')
+      .attr('class', year % 50 === 0 ? 'year-label-major' : 'year-label')
+      .attr('x', xScale(year))
+      .attr('y', height - margin.bottom + 20)
+      .attr('text-anchor', 'middle')
+      .text(year + 's');
+  }
+  
+  // Category labels on left (abbreviated)
+  const catLabelG = svg.append('g');
+  categories.forEach(cat => {
+    const y = yScale(cat);
+    if (y === undefined) return;
+    catLabelG.append('text')
+      .attr('x', margin.left + 4)
+      .attr('y', y + yScale.bandwidth() / 2)
+      .attr('dy', '0.35em')
+      .attr('font-size', Math.min(10, yScale.bandwidth() - 2))
+      .attr('fill', categoryColors[cat] || 'rgba(255,255,255,0.3)')
+      .attr('font-family', 'Inter, sans-serif')
+      .attr('opacity', 0.6)
+      .text(cat);
+  });
+  
+  // Zoom behavior
+  const zoom = d3.zoom()
+    .scaleExtent([0.5, 20])
+    .on('zoom', (event) => {
+      const transform = event.transform;
+      g.attr('transform', transform);
+      
+      // Update year labels position
+      yearLabelG.selectAll('text').each(function() {
+        const origX = parseFloat(d3.select(this).attr('x'));
+        // Don't transform labels, recalculate
+      });
+      
+      // Scale dot size inversely with zoom
+      const dotSize = Math.max(1.5, 3 / Math.sqrt(transform.k));
+      dots.attr('r', dotSize);
+      
+      // Update stats
+      updateStats(data, transform);
+    });
+  
+  svg.call(zoom);
+  
+  // Touch support
+  svg.on('touchstart', function(e) { e.preventDefault(); }, { passive: false });
+  
+  updateStats(data, d3.zoomIdentity);
+}
+
+function updateStats(data, transform) {
+  const bar = document.getElementById('statsBar');
+  const zoomLevel = transform.k.toFixed(1);
+  bar.textContent = `${data.length} works · Zoom: ${zoomLevel}x`;
+}
+
+function setupFilters() {
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeArea = btn.dataset.area;
+      render();
+    });
+  });
+}
+
+init();
+
+// Handle resize
+window.addEventListener('resize', () => {
+  render();
+});
+</script>
+
+</body>
+</html>
