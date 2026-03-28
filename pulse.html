@@ -199,7 +199,7 @@ class Particle {
     this.ty = this.y;
     this.vx = (Math.random() - 0.5) * 0.3;
     this.vy = (Math.random() - 0.5) * 0.3;
-    this.r = 2.5;
+    this.r = 1.5;
     this.phase = Math.random() * Math.PI * 2;
     this.speed = 0.002 + Math.random() * 0.003;
     this.drift = 15 + Math.random() * 25;
@@ -245,7 +245,7 @@ class Particle {
     const col = getColor(this);
     const isHovered = this === hoveredParticle;
     const alpha = isHovered ? 1 : 0.75;
-    const r = isHovered ? 5 : this.r;
+    const r = isHovered ? 4 : this.r;
     
     ctx.beginPath();
     ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
