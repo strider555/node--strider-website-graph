@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M+ Collection Pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8ed;
+      --text-dim: #8b8b97;
+      --accent: #e6a817;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      user-select: none;
+    }
+    canvas { display: block; }
+    
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 14px 24px;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header h1 { font-size: 18px; font-weight: 600; }
+    .header .sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+    .controls { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    
+    .pill {
+      padding: 5px 14px; border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--text-dim);
+      font-size: 11px; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .pill.active { border-color: var(--accent); color: var(--accent); background: rgba(230,168,23,0.1); }
+    
+    .pill-group { display: flex; gap: 4px; }
+    .pill-group .label { font-size: 10px; color: var(--text-dim); padding: 5px 4px; }
+    
+    .back-link {
+      color: var(--accent); text-decoration: none; font-size: 12px;
+      padding: 5px 12px; border: 1px solid rgba(230,168,23,0.3);
+      border-radius: 6px; transition: all 0.2s;
+    }
+    .back-link:hover { background: rgba(230,168,23,0.1); }
+    
+    .tooltip {
+      position: fixed; padding: 10px 14px;
+      background: rgba(19,19,26,0.95);
+      border: 1px solid var(--border);
+      border-radius: 8px; font-size: 11px;
+      pointer-events: none; opacity: 0;
+      transition: opacity 0.12s;
+      max-width: 280px; z-index: 200;
+      backdrop-filter: blur(8px);
+    }
+    .tooltip .tt { font-weight: 600; color: var(--accent); margin-bottom: 3px; }
+    .tooltip .tm { color: var(--text-dim); line-height: 1.5; }
+    
+    .cluster-label {
+      position: fixed; pointer-events: none;
+      font-size: 12px; font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      text-align: center; z-index: 50;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+      transition: opacity 0.3s;
+    }
+    .cluster-count {
+      font-size: 10px; font-weight: 400;
+      color: var(--text-dim); display: block;
+    }
+    
+    .mode-info {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; color: var(--text-dim);
+      background: rgba(19,19,26,0.8);
+      padding: 6px 16px; border-radius: 20px;
+      border: 1px solid var(--border); z-index: 100;
+    }
+    
+    @media (max-width: 768px) {
+      .header { flex-direction: column; gap: 8px; padding: 10px 14px; }
+      .controls { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>M+ Collection Pulse</h1>
+    <div class="sub">2,287 artworks as living particles</div>
+  </div>
+  <div class="controls">
+    <div class="pill-group">
+      <span class="label">Group by:</span>
+      <button class="pill active" data-group="none">Free</button>
+      <button class="pill" data-group="area">Area</button>
+      <button class="pill" data-group="category">Category</button>
+      <button class="pill" data-group="decade">Decade</button>
+    </div>
+    <a href="./index.html" class="back-link">← Graph</a>
+  </div>
+</div>
+
+<canvas id="canvas"></canvas>
+<div class="tooltip" id="tooltip"></div>
+<div class="mode-info" id="modeInfo">Click a grouping to see particles form clusters</div>
+
+<script>
+const AREA_COLORS = {
+  'Visual Art': [192, 132, 252],
+  'Design and Architecture': [96, 165, 250],
+  'Moving Image': [244, 114, 182],
+  'Unknown': [120, 120, 120]
+};
+
+const CATEGORY_COLORS = {
+  'Photography': [147, 197, 253],
+  'Painting': [192, 132, 252],
+  'Ink Art': [110, 231, 183],
+  'Print': [251, 191, 36],
+  'Poster': [245, 158, 11],
+  'Video': [244, 114, 182],
+  'Drawing': [167, 139, 250],
+  'Installation': [52, 211, 153],
+  'Digital': [34, 211, 238],
+  'Architectural Drawing': [96, 165, 250],
+  'Architectural Photography': [56, 189, 248],
+  'Design Object': [129, 140, 248],
+  'Book/Periodical': [212, 163, 115],
+  'Sculpture': [16, 185, 129],
+  'Architectural Model': [74, 222, 128],
+  'Design Drawing': [100, 200, 255],
+  'Product Design': [200, 180, 255],
+  'Archival Documentation': [180, 180, 200],
+  'Video Installation': [255, 100, 150]
+};
+
+const DECADE_COLORS = {
+  '1890s': [100, 100, 140], '1900s': [110, 110, 150], '1910s': [120, 120, 160],
+  '1920s': [130, 140, 170], '1930s': [140, 160, 180], '1940s': [150, 170, 190],
+  '1950s': [160, 190, 200], '1960s': [96, 165, 250], '1970s': [110, 231, 183],
+  '1980s': [251, 191, 36], '1990s': [244, 114, 182], '2000s': [192, 132, 252],
+  '2010s': [52, 211, 153], '2020s': [34, 211, 238]
+};
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const tooltip = document.getElementById('tooltip');
+const modeInfo = document.getElementById('modeInfo');
+
+let W, H;
+let particles = [];
+let groupMode = 'none';
+let clusterTargets = {};
+let mouseX = -999, mouseY = -999;
+let hoveredParticle = null;
+let animating = false;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function getColor(p) {
+  if (groupMode === 'category') return CATEGORY_COLORS[p.data.category] || [120,120,120];
+  if (groupMode === 'decade') return DECADE_COLORS[p.data.decade] || [120,120,120];
+  return AREA_COLORS[p.data.area] || [120,120,120];
+}
+
+class Particle {
+  constructor(data, i) {
+    this.data = data;
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.tx = this.x;
+    this.ty = this.y;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.r = 2.5;
+    this.phase = Math.random() * Math.PI * 2;
+    this.speed = 0.002 + Math.random() * 0.003;
+    this.drift = 15 + Math.random() * 25;
+    this.baseX = this.x;
+    this.baseY = this.y;
+  }
+  
+  update(t) {
+    if (groupMode === 'none') {
+      // Free floating with gentle drift
+      this.x += Math.sin(t * this.speed + this.phase) * 0.15;
+      this.y += Math.cos(t * this.speed * 0.7 + this.phase) * 0.12;
+      
+      // Keep in bounds with soft bounce
+      if (this.x < 20) this.vx += 0.05;
+      if (this.x > W - 20) this.vx -= 0.05;
+      if (this.y < 80) this.vy += 0.05;
+      if (this.y > H - 20) this.vy -= 0.05;
+      
+      this.vx *= 0.99;
+      this.vy *= 0.99;
+      this.x += this.vx;
+      this.y += this.vy;
+    } else {
+      // Move toward target with spring physics
+      const dx = this.tx - this.x;
+      const dy = this.ty - this.y;
+      this.vx = this.vx * 0.85 + dx * 0.06;
+      this.vy = this.vy * 0.85 + dy * 0.06;
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      // Add subtle orbit when near target
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 5) {
+        this.x += Math.sin(t * this.speed * 2 + this.phase) * 0.3;
+        this.y += Math.cos(t * this.speed * 2 + this.phase) * 0.3;
+      }
+    }
+  }
+  
+  draw(t) {
+    const col = getColor(this);
+    const isHovered = this === hoveredParticle;
+    const alpha = isHovered ? 1 : 0.75;
+    const r = isHovered ? 5 : this.r;
+    
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
+    ctx.fill();
+    
+    if (isHovered) {
+      ctx.strokeStyle = `rgba(255,255,255,0.8)`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+  }
+}
+
+function computeClusterTargets() {
+  if (groupMode === 'none') return;
+  
+  // Group particles by the active grouping
+  const groups = {};
+  particles.forEach(p => {
+    const key = groupMode === 'area' ? p.data.area
+              : groupMode === 'category' ? p.data.category
+              : p.data.decade || 'Unknown';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  });
+  
+  // Sort groups by size descending
+  const sorted = Object.entries(groups).sort((a, b) => b[1].length - a[1].length);
+  
+  // Layout circles using circle packing
+  const centerX = W / 2;
+  const centerY = H / 2 + 20;
+  const maxR = Math.min(W, H) * 0.38;
+  
+  // Calculate radius for each cluster based on count
+  const totalCount = particles.length;
+  const clusterInfo = sorted.map(([key, items]) => {
+    const r = Math.sqrt(items.length / totalCount) * maxR;
+    return { key, items, r: Math.max(r, 25) };
+  });
+  
+  // Place clusters in a circular / spiral layout
+  if (clusterInfo.length <= 5) {
+    // Simple circle layout
+    const angleStep = (Math.PI * 2) / clusterInfo.length;
+    const orbitR = maxR * 0.55;
+    clusterInfo.forEach((c, i) => {
+      const angle = -Math.PI / 2 + i * angleStep;
+      c.cx = centerX + Math.cos(angle) * orbitR;
+      c.cy = centerY + Math.sin(angle) * orbitR;
+    });
+  } else {
+    // Force-directed placement
+    clusterInfo.forEach((c, i) => {
+      const angle = (i / clusterInfo.length) * Math.PI * 2 - Math.PI / 2;
+      const dist = maxR * (0.3 + 0.4 * (i / clusterInfo.length));
+      c.cx = centerX + Math.cos(angle) * dist;
+      c.cy = centerY + Math.sin(angle) * dist;
+    });
+    
+    // Simple force repulsion
+    for (let iter = 0; iter < 80; iter++) {
+      for (let i = 0; i < clusterInfo.length; i++) {
+        for (let j = i + 1; j < clusterInfo.length; j++) {
+          const a = clusterInfo[i], b = clusterInfo[j];
+          let dx = b.cx - a.cx, dy = b.cy - a.cy;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          const minDist = a.r + b.r + 20;
+          if (dist < minDist && dist > 0) {
+            const force = (minDist - dist) / dist * 0.3;
+            a.cx -= dx * force; a.cy -= dy * force;
+            b.cx += dx * force; b.cy += dy * force;
+          }
+        }
+        // Pull toward center
+        const a = clusterInfo[i];
+        a.cx += (centerX - a.cx) * 0.01;
+        a.cy += (centerY - a.cy) * 0.01;
+      }
+    }
+  }
+  
+  // Assign target positions within each cluster (spiral pattern for sphere look)
+  clusterTargets = {};
+  clusterInfo.forEach(c => {
+    clusterTargets[c.key] = { cx: c.cx, cy: c.cy, r: c.r, count: c.items.length };
+    
+    c.items.forEach((p, i) => {
+      // Sunflower / Fibonacci spiral for even distribution
+      const golden = Math.PI * (3 - Math.sqrt(5));
+      const r = c.r * Math.sqrt(i / c.items.length);
+      const theta = i * golden;
+      p.tx = c.cx + r * Math.cos(theta);
+      p.ty = c.cy + r * Math.sin(theta);
+    });
+  });
+}
+
+function drawClusterLabels() {
+  if (groupMode === 'none') return;
+  
+  // Remove old labels
+  document.querySelectorAll('.cluster-label').forEach(el => el.remove());
+  
+  Object.entries(clusterTargets).forEach(([key, info]) => {
+    const label = document.createElement('div');
+    label.className = 'cluster-label';
+    label.style.left = info.cx + 'px';
+    label.style.top = (info.cy + info.r + 14) + 'px';
+    label.style.transform = 'translateX(-50%)';
+    label.innerHTML = `${key}<span class="cluster-count">${info.count}</span>`;
+    document.body.appendChild(label);
+  });
+}
+
+let frame = 0;
+function animate() {
+  frame++;
+  ctx.fillStyle = 'rgba(10, 10, 15, 0.25)';
+  ctx.fillRect(0, 0, W, H);
+  
+  // Full clear every 30 frames to prevent ghosting
+  if (frame % 30 === 0) {
+    ctx.fillStyle = '#0a0a0f';
+    ctx.fillRect(0, 0, W, H);
+  }
+  
+  const t = performance.now();
+  
+  // Find hovered particle
+  hoveredParticle = null;
+  let minDist = 15;
+  particles.forEach(p => {
+    const dx = p.x - mouseX, dy = p.y - mouseY;
+    const d = Math.sqrt(dx * dx + dy * dy);
+    if (d < minDist) { minDist = d; hoveredParticle = p; }
+  });
+  
+  // Update & draw
+  particles.forEach(p => p.update(t));
+  particles.forEach(p => p.draw(t));
+  
+  // Tooltip
+  if (hoveredParticle) {
+    const d = hoveredParticle.data;
+    tooltip.style.opacity = '1';
+    tooltip.innerHTML = `
+      <div class="tt">${d.title}</div>
+      <div class="tm">
+        ${d.artistName ? `🎨 ${d.artistName}<br>` : ''}
+        ${d.year ? `📅 ${d.year}<br>` : ''}
+        ◉ ${d.category} · ${d.area}
+        ${d.medium ? `<br>🖌️ ${d.medium}` : ''}
+      </div>`;
+    const tx = Math.min(mouseX + 15, W - 290);
+    const ty = Math.min(mouseY - 10, H - 150);
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+    canvas.style.cursor = 'pointer';
+  } else {
+    tooltip.style.opacity = '0';
+    canvas.style.cursor = 'default';
+  }
+  
+  requestAnimationFrame(animate);
+}
+
+async function init() {
+  resize();
+  
+  const resp = await fetch('./data/pulse.json');
+  const data = await resp.json();
+  
+  particles = data.map((d, i) => new Particle(d, i));
+  
+  // Setup filter buttons
+  document.querySelectorAll('.pill[data-group]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pill[data-group]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      groupMode = btn.dataset.group;
+      
+      if (groupMode === 'none') {
+        // Scatter back to free
+        particles.forEach(p => {
+          p.tx = p.x;
+          p.ty = p.y;
+          p.vx = (Math.random() - 0.5) * 2;
+          p.vy = (Math.random() - 0.5) * 2;
+        });
+        document.querySelectorAll('.cluster-label').forEach(el => el.remove());
+        modeInfo.textContent = 'Particles floating freely';
+      } else {
+        computeClusterTargets();
+        drawClusterLabels();
+        const groupCount = Object.keys(clusterTargets).length;
+        modeInfo.textContent = `Grouped by ${groupMode} · ${groupCount} clusters`;
+      }
+    });
+  });
+  
+  // Mouse tracking
+  canvas.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+  canvas.addEventListener('mouseleave', () => { mouseX = -999; mouseY = -999; });
+  canvas.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    mouseX = t.clientX; mouseY = t.clientY;
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => { mouseX = -999; mouseY = -999; });
+  
+  animate();
+}
+
+window.addEventListener('resize', () => {
+  resize();
+  if (groupMode !== 'none') {
+    computeClusterTargets();
+    drawClusterLabels();
+  }
+});
+
+init();
+</script>
+</body>
+</html>
