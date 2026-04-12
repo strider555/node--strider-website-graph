@@ -949,6 +949,47 @@ html, body {
   .object-grid {
     gap: 12px;
   }
+
+  /* Legend submenu as bottom sheet overlay on mobile */
+  .legend-group {
+    position: static;
+  }
+
+  .legend-sub {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    padding-left: 0;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border-color);
+    border-radius: 12px 12px 0 0;
+    z-index: 25;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    transition: max-height 0.3s ease-out;
+  }
+
+  .legend-group.open .legend-sub {
+    max-height: 45vh;
+    padding: 8px 12px 12px;
+  }
+
+  .legend-sub-item {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .legend-sub-item .sub-checkbox {
+    font-size: 16px;
+  }
+
+  .legend-sub-item .sub-count {
+    font-size: 12px;
+  }
 }
 
 /* Scrollbar */
