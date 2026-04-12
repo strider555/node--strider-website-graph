@@ -410,10 +410,32 @@ html, body {
   color: var(--text-primary);
 }
 
+.legend-sub-item .sub-checkbox {
+  margin-right: 6px;
+  font-size: 13px;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.legend-sub-item:hover .sub-checkbox {
+  opacity: 0.8;
+}
+
+.legend-sub-item.selected {
+  background: rgba(230, 168, 23, 0.15);
+  color: var(--text-primary);
+}
+
+.legend-sub-item.selected .sub-checkbox {
+  opacity: 1;
+  color: #E6A817;
+}
+
 .legend-sub-item .sub-count {
   font-size: 10px;
   color: var(--text-muted);
-  margin-left: 8px;
+  margin-left: auto;
+  padding-left: 8px;
 }
 
 /* Side panel */

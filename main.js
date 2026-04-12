@@ -3,6 +3,7 @@ let museumData = null;
 let currentGraph = null;
 let currentFilter = 'all';
 let currentTypeFilter = 'all';
+let selectedTags = new Set(); // Multi-select: specific tag IDs
 let siggMode = false;
 
 // Color scheme for tag types
@@ -576,10 +577,10 @@ function setupLegendSubmenus() {
       const item = document.createElement('div');
       item.className = 'legend-sub-item';
       item.dataset.tagId = tag.id;
-      item.innerHTML = `<span>${tag.id}</span><span class="sub-count">${tag.count.toLocaleString()}</span>`;
+      item.innerHTML = `<span class="sub-checkbox">☐</span><span>${tag.id}</span><span class="sub-count">${tag.count.toLocaleString()}</span>`;
       item.addEventListener('click', (e) => {
         e.stopPropagation();
-        focusNode(tag.id);
+        toggleTagSelection(tag.id, item);
       });
       subContainer.appendChild(item);
     });
@@ -601,7 +602,8 @@ function setupLegendSubmenus() {
         group.classList.add('open');
       }
 
-      // Also apply type filter
+      // Clear multi-select and apply type filter
+      clearTagSelection();
       filterByType(wasOpen ? 'all' : headerItem.dataset.type);
     });
   });
@@ -611,6 +613,7 @@ function setupLegendSubmenus() {
   if (allItem) {
     allItem.addEventListener('click', () => {
       document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+      clearTagSelection();
       filterByType('all');
     });
   }
@@ -671,6 +674,103 @@ function focusNode(tagId) {
 
   // Open side panel
   showSidePanel(tagId);
+}
+
+// Toggle a specific tag in multi-select mode
+function toggleTagSelection(tagId, itemEl) {
+  if (selectedTags.has(tagId)) {
+    selectedTags.delete(tagId);
+    itemEl.classList.remove('selected');
+    itemEl.querySelector('.sub-checkbox').textContent = '\u2610';
+  } else {
+    selectedTags.add(tagId);
+    itemEl.classList.add('selected');
+    itemEl.querySelector('.sub-checkbox').textContent = '\u2611';
+  }
+
+  if (selectedTags.size === 0) {
+    filterByType(currentTypeFilter);
+  } else {
+    applyMultiFilter();
+  }
+}
+
+// Clear all multi-select
+function clearTagSelection() {
+  selectedTags.clear();
+  document.querySelectorAll('.legend-sub-item.selected').forEach(el => {
+    el.classList.remove('selected');
+    const cb = el.querySelector('.sub-checkbox');
+    if (cb) cb.textContent = '\u2610';
+  });
+}
+
+// Apply multi-select filter
+function applyMultiFilter() {
+  if (!museumData || selectedTags.size === 0) return;
+
+  d3.select('#graph').selectAll('g.node')
+    .transition().duration(300)
+    .style('opacity', d => selectedTags.has(d.id) ? 1 : 0.08);
+
+  d3.select('#graph').selectAll('path.link')
+    .transition().duration(300)
+    .style('opacity', l => {
+      const sId = typeof l.source === 'object' ? l.source.id : l.source;
+      const tId = typeof l.target === 'object' ? l.target.id : l.target;
+      return (selectedTags.has(sId) && selectedTags.has(tId)) ? 0.6
+           : (selectedTags.has(sId) || selectedTags.has(tId)) ? 0.2
+           : 0.02;
+    });
+
+  if (selectedTags.size >= 2) {
+    showMultiSelectPanel();
+  }
+}
+
+// Show combined info for multi-selected tags
+function showMultiSelectPanel() {
+  const currentData = getCurrentData();
+  const panel = document.getElementById('sidePanel');
+  const title = document.getElementById('panelTitle');
+  const typeLabel = document.getElementById('panelTypeLabel');
+  const summary = document.getElementById('panelSummary');
+  const grid = document.getElementById('objectGrid');
+  const colorIndicator = document.getElementById('panelColorIndicator');
+
+  const tagArrays = [...selectedTags].map(id => {
+    const objs = currentData.objectsByTag[id] || [];
+    return new Set(objs.map(o => o.id || o.objectNumber || JSON.stringify(o)));
+  });
+
+  let commonIds = tagArrays[0] || new Set();
+  for (let i = 1; i < tagArrays.length; i++) {
+    commonIds = new Set([...commonIds].filter(x => tagArrays[i].has(x)));
+  }
+
+  title.textContent = [...selectedTags].join(' + ');
+  typeLabel.textContent = 'Multi-select';
+  colorIndicator.style.background = '#fff';
+  summary.textContent = `${selectedTags.size} tags selected \u00b7 ${commonIds.size} shared artworks`;
+
+  grid.innerHTML = '';
+  if (commonIds.size > 0) {
+    const firstTag = [...selectedTags][0];
+    const allObjs = currentData.objectsByTag[firstTag] || [];
+    const sharedObjs = allObjs.filter(o => commonIds.has(o.id || o.objectNumber || JSON.stringify(o)));
+    sharedObjs.slice(0, 20).forEach(obj => {
+      const card = document.createElement('div');
+      card.className = 'object-card';
+      const titleText = typeof obj.title === 'object' ? (obj.title.en || obj.title['zh-hant'] || '') : (obj.title || 'Untitled');
+      const artist = typeof obj.artist === 'object' ? (obj.artist.en || '') : (obj.artist || '');
+      card.innerHTML = `<div class="object-title">${titleText}</div><div class="object-meta">${artist}</div><div class="object-meta">${obj.date || obj.displayDate || ''}</div>`;
+      grid.appendChild(card);
+    });
+  } else {
+    grid.innerHTML = '<div class="object-card"><div class="object-title">No shared artworks</div><div class="object-meta">These categories do not overlap</div></div>';
+  }
+
+  panel.classList.add('open');
 }
 
 // Filter graph by tag type (area/category/medium/nationality/decade)
