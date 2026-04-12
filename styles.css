@@ -982,10 +982,10 @@ html, body {
     opacity: 1;
   }
 
-  /* Legend submenu: bottom sheet above tab bar */
+  /* Legend submenu: positioned above tab bar */
   .legend-sub {
-    position: fixed;
-    bottom: 52px;
+    position: absolute;
+    bottom: 100%;
     left: 0;
     right: 0;
     max-height: 0;
