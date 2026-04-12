@@ -602,9 +602,11 @@ function setupLegendSubmenus() {
         group.classList.add('open');
       }
 
-      // Clear multi-select and apply type filter
-      clearTagSelection();
-      filterByType(wasOpen ? 'all' : headerItem.dataset.type);
+      // Only apply type filter if no multi-select active
+      // Don't clear selection when just opening a different group
+      if (selectedTags.size === 0) {
+        filterByType(wasOpen ? 'all' : headerItem.dataset.type);
+      }
     });
   });
 
