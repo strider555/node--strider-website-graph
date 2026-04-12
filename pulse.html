@@ -138,39 +138,118 @@
       align-items: center;
       padding: 6px 20px;
       z-index: 40;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      gap: 4px;
+      gap: 8px;
     }
-    .filter-chips {
-      display: flex;
-      gap: 4px;
-      flex-wrap: nowrap;
+    .filter-dropdown-wrap {
+      position: relative;
     }
-    .filter-chip {
-      padding: 4px 10px;
-      border-radius: 14px;
+    .filter-trigger {
+      padding: 5px 14px;
+      border-radius: 20px;
       border: 1px solid var(--border);
-      background: transparent;
+      background: var(--surface);
       color: var(--text-dim);
-      font-size: 11px;
+      font-size: 12px;
       cursor: pointer;
-      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: all 0.2s;
     }
-    .filter-chip:hover {
-      border-color: rgba(255,255,255,0.2);
+    .filter-trigger:hover, .filter-trigger.has-selection {
+      border-color: var(--accent);
       color: var(--text);
     }
-    .filter-chip.active {
+    .filter-trigger .badge {
       background: var(--accent);
-      border-color: var(--accent);
       color: #000;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+    .filter-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 220px;
+      max-height: 50vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 100;
+      padding: 6px 0;
+    }
+    .filter-panel.open { display: block; }
+    .filter-section-title {
+      font-size: 10px;
       font-weight: 600;
+      color: var(--accent);
+      padding: 8px 14px 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .filter-option:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+    .filter-option .check {
+      font-size: 13px;
+      opacity: 0.3;
+      width: 16px;
+    }
+    .filter-option.selected { color: var(--text); }
+    .filter-option.selected .check { opacity: 1; color: var(--accent); }
+    .filter-option .count {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .active-filters {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .active-tag {
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(230,168,23,0.2);
+      color: var(--accent);
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .active-tag .x {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .active-tag .x:hover { opacity: 1; }
+    .filter-clear-btn {
+      font-size: 11px;
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 6px;
     }
     @media (max-width: 768px) {
       .filter-bar { top: 60px; padding: 4px 12px; }
-      .filter-chip { font-size: 10px; padding: 3px 8px; }
+      .filter-panel { min-width: 200px; max-height: 40vh; }
     }
   </style>
 </head>
@@ -194,9 +273,13 @@
 </div>
 
 <div class="filter-bar" id="filterBar">
-  <span class="label" style="font-size:11px;color:var(--text-dim);margin-right:6px;">Filter:</span>
-  <div class="filter-chips" id="filterChips"></div>
-  <button class="filter-clear" id="filterClear" style="display:none;font-size:11px;color:var(--accent);background:none;border:none;cursor:pointer;margin-left:8px;">Clear all</button>
+  <div class="filter-dropdown-wrap">
+    <button class="filter-trigger" id="filterTrigger">
+      🔍 Filter <span class="badge" id="filterBadge" style="display:none">0</span>
+    </button>
+    <div class="filter-panel" id="filterPanel"></div>
+  </div>
+  <div class="active-filters" id="activeFilters"></div>
 </div>
 
 <canvas id="canvas"></canvas>
@@ -451,17 +534,32 @@ function drawClusterLabels() {
 
 let frame = 0;
 function applyFilters() {
-  const clearBtn = document.getElementById('filterClear');
+  const subEl = document.querySelector('.sub');
   if (selectedFilters.size === 0) {
     particles = allParticles;
-    clearBtn.style.display = 'none';
-    document.querySelector('.sub').textContent = `${allParticles.length.toLocaleString()} artworks as living particles`;
+    subEl.textContent = `${allParticles.length.toLocaleString()} artworks as living particles`;
   } else {
-    particles = allParticles.filter(p => selectedFilters.has(p.data.category));
-    clearBtn.style.display = 'inline';
-    document.querySelector('.sub').textContent = `${particles.length.toLocaleString()} / ${allParticles.length.toLocaleString()} artworks`;
+    // Group filters by section
+    const bySection = {};
+    selectedFilters.forEach(key => {
+      const [section, ...rest] = key.split(':');
+      const val = rest.join(':');
+      if (!bySection[section]) bySection[section] = new Set();
+      bySection[section].add(val);
+    });
+    
+    // AND across sections, OR within section
+    particles = allParticles.filter(p => {
+      return Object.entries(bySection).every(([section, vals]) => {
+        if (section === 'area') return vals.has(p.data.area);
+        if (section === 'category') return vals.has(p.data.category);
+        if (section === 'medium') return vals.has(p.data.medium);
+        if (section === 'decade') return vals.has(p.data.decade);
+        return true;
+      });
+    });
+    subEl.textContent = `${particles.length.toLocaleString()} / ${allParticles.length.toLocaleString()} artworks`;
   }
-  // Recompute clusters if grouped
   if (groupMode !== 'none') {
     computeClusterTargets();
     drawClusterLabels();
@@ -542,32 +640,107 @@ async function init() {
   allParticles = particles;
   activeParticles = particles;
   
-  // Build filter chips from categories
-  const categories = [...new Set(data.map(d => d.category).filter(Boolean))].sort();
-  const chipsContainer = document.getElementById('filterChips');
-  categories.forEach(cat => {
-    const chip = document.createElement('button');
-    chip.className = 'filter-chip';
-    chip.textContent = cat;
-    chip.dataset.cat = cat;
-    chip.addEventListener('click', () => {
-      if (selectedFilters.has(cat)) {
-        selectedFilters.delete(cat);
-        chip.classList.remove('active');
-      } else {
-        selectedFilters.add(cat);
-        chip.classList.add('active');
-      }
-      applyFilters();
+  // Build filter dropdown with sections
+  const filterSections = {
+    'Area': [...new Set(data.map(d => d.area).filter(Boolean))].sort(),
+    'Category': [...new Set(data.map(d => d.category).filter(Boolean))].sort(),
+    'Medium': [...new Set(data.map(d => d.medium).filter(Boolean))].sort().slice(0, 20),
+    'Decade': [...new Set(data.map(d => d.decade).filter(Boolean))].sort(),
+  };
+  
+  // Count per value
+  const valueCounts = {};
+  data.forEach(d => {
+    [d.area, d.category, d.medium, d.decade].forEach(v => {
+      if (v) valueCounts[v] = (valueCounts[v] || 0) + 1;
     });
-    chipsContainer.appendChild(chip);
   });
   
-  document.getElementById('filterClear').addEventListener('click', () => {
-    selectedFilters.clear();
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    applyFilters();
+  const panel = document.getElementById('filterPanel');
+  const trigger = document.getElementById('filterTrigger');
+  const badge = document.getElementById('filterBadge');
+  const activeContainer = document.getElementById('activeFilters');
+  
+  Object.entries(filterSections).forEach(([section, values]) => {
+    const title = document.createElement('div');
+    title.className = 'filter-section-title';
+    title.textContent = section;
+    panel.appendChild(title);
+    
+    values.forEach(val => {
+      const opt = document.createElement('div');
+      opt.className = 'filter-option';
+      opt.dataset.value = val;
+      opt.dataset.section = section.toLowerCase();
+      opt.innerHTML = `<span class="check">\u2610</span><span>${val}</span><span class="count">${(valueCounts[val] || 0).toLocaleString()}</span>`;
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleFilter(val, section.toLowerCase(), opt);
+      });
+      panel.appendChild(opt);
+    });
   });
+  
+  // Toggle dropdown
+  trigger.addEventListener('click', e => {
+    e.stopPropagation();
+    panel.classList.toggle('open');
+  });
+  document.addEventListener('click', () => panel.classList.remove('open'));
+  panel.addEventListener('click', e => e.stopPropagation());
+  
+  function toggleFilter(val, section, opt) {
+    const key = section + ':' + val;
+    if (selectedFilters.has(key)) {
+      selectedFilters.delete(key);
+      opt.classList.remove('selected');
+      opt.querySelector('.check').textContent = '\u2610';
+    } else {
+      selectedFilters.add(key);
+      opt.classList.add('selected');
+      opt.querySelector('.check').textContent = '\u2611';
+    }
+    updateFilterUI();
+    applyFilters();
+  }
+  
+  function updateFilterUI() {
+    const count = selectedFilters.size;
+    badge.style.display = count > 0 ? 'inline' : 'none';
+    badge.textContent = count;
+    trigger.classList.toggle('has-selection', count > 0);
+    
+    // Rebuild active tags
+    activeContainer.innerHTML = '';
+    selectedFilters.forEach(key => {
+      const val = key.split(':').slice(1).join(':');
+      const tag = document.createElement('span');
+      tag.className = 'active-tag';
+      tag.innerHTML = `${val} <span class="x" data-key="${key}">\u2715</span>`;
+      tag.querySelector('.x').addEventListener('click', () => {
+        selectedFilters.delete(key);
+        const opt = panel.querySelector(`.filter-option[data-value="${CSS.escape(val)}"]`);
+        if (opt) { opt.classList.remove('selected'); opt.querySelector('.check').textContent = '\u2610'; }
+        updateFilterUI();
+        applyFilters();
+      });
+      activeContainer.appendChild(tag);
+    });
+    if (count > 0) {
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'filter-clear-btn';
+      clearBtn.textContent = 'Clear all';
+      clearBtn.addEventListener('click', () => {
+        selectedFilters.clear();
+        panel.querySelectorAll('.filter-option.selected').forEach(o => {
+          o.classList.remove('selected'); o.querySelector('.check').textContent = '\u2610';
+        });
+        updateFilterUI();
+        applyFilters();
+      });
+      activeContainer.appendChild(clearBtn);
+    }
+  }
   
   // Setup filter buttons
   document.querySelectorAll('.pill[data-group]').forEach(btn => {
