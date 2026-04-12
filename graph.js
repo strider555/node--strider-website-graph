@@ -227,6 +227,12 @@
       resetZoom() {
         svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
       },
+      zoomIn() {
+        svg.transition().duration(200).call(zoom.scaleBy, 1.3);
+      },
+      zoomOut() {
+        svg.transition().duration(200).call(zoom.scaleBy, 0.7);
+      },
       getData() { return dataset; }
     };
   }

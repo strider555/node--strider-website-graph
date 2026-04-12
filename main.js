@@ -1166,15 +1166,12 @@ function setupBrowseModal() {
 
 // Zoom controls
 function setupZoomControls() {
-  const svg = d3.select('#graph');
-  const zoom = d3.zoom().scaleExtent([0.3, 4]);
-
   document.getElementById('zoomIn').addEventListener('click', () => {
-    svg.transition().call(zoom.scaleBy, 1.3);
+    if (currentGraph && currentGraph.zoomIn) currentGraph.zoomIn();
   });
 
   document.getElementById('zoomOut').addEventListener('click', () => {
-    svg.transition().call(zoom.scaleBy, 0.7);
+    if (currentGraph && currentGraph.zoomOut) currentGraph.zoomOut();
   });
 
   document.getElementById('resetZoom').addEventListener('click', () => {
