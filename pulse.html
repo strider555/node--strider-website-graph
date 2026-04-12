@@ -129,6 +129,49 @@
     .zoom-btn:hover {
       background: rgba(255,255,255,0.1);
     }
+    .filter-bar {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      padding: 6px 20px;
+      z-index: 40;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: 4px;
+    }
+    .filter-chips {
+      display: flex;
+      gap: 4px;
+      flex-wrap: nowrap;
+    }
+    .filter-chip {
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-chip:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text);
+    }
+    .filter-chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      .filter-bar { top: 60px; padding: 4px 12px; }
+      .filter-chip { font-size: 10px; padding: 3px 8px; }
+    }
   </style>
 </head>
 <body>
@@ -148,6 +191,12 @@
     </div>
     <a href="./index.html" class="back-link">← Graph</a>
   </div>
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <span class="label" style="font-size:11px;color:var(--text-dim);margin-right:6px;">Filter:</span>
+  <div class="filter-chips" id="filterChips"></div>
+  <button class="filter-clear" id="filterClear" style="display:none;font-size:11px;color:var(--accent);background:none;border:none;cursor:pointer;margin-left:8px;">Clear all</button>
 </div>
 
 <canvas id="canvas"></canvas>
@@ -210,6 +259,9 @@ let mouseX = -999, mouseY = -999;
 let hoveredParticle = null;
 let animating = false;
 let camScale = 1, camX = 0, camY = 0;
+let selectedFilters = new Set();
+let allParticles = []; // unfiltered
+let activeParticles = []; // filtered view
 
 function resize() {
   W = canvas.width = window.innerWidth;
@@ -398,6 +450,29 @@ function drawClusterLabels() {
 }
 
 let frame = 0;
+function applyFilters() {
+  const clearBtn = document.getElementById('filterClear');
+  if (selectedFilters.size === 0) {
+    particles = allParticles;
+    clearBtn.style.display = 'none';
+    document.querySelector('.sub').textContent = `${allParticles.length.toLocaleString()} artworks as living particles`;
+  } else {
+    particles = allParticles.filter(p => selectedFilters.has(p.data.category));
+    clearBtn.style.display = 'inline';
+    document.querySelector('.sub').textContent = `${particles.length.toLocaleString()} / ${allParticles.length.toLocaleString()} artworks`;
+  }
+  // Recompute clusters if grouped
+  if (groupMode !== 'none') {
+    computeClusterTargets();
+    drawClusterLabels();
+    particles.forEach(p => {
+      const key = groupMode === 'area' ? p.data.area : groupMode === 'category' ? p.data.category : p.data.decade;
+      const target = clusterTargets[key];
+      if (target) { p.tx = target.cx + (Math.random() - 0.5) * target.r * 1.5; p.ty = target.cy + (Math.random() - 0.5) * target.r * 1.5; }
+    });
+  }
+}
+
 function animate() {
   frame++;
   ctx.fillStyle = 'rgba(10, 10, 15, 0.25)';
@@ -464,6 +539,35 @@ async function init() {
   const data = await resp.json();
   
   particles = data.map((d, i) => new Particle(d, i));
+  allParticles = particles;
+  activeParticles = particles;
+  
+  // Build filter chips from categories
+  const categories = [...new Set(data.map(d => d.category).filter(Boolean))].sort();
+  const chipsContainer = document.getElementById('filterChips');
+  categories.forEach(cat => {
+    const chip = document.createElement('button');
+    chip.className = 'filter-chip';
+    chip.textContent = cat;
+    chip.dataset.cat = cat;
+    chip.addEventListener('click', () => {
+      if (selectedFilters.has(cat)) {
+        selectedFilters.delete(cat);
+        chip.classList.remove('active');
+      } else {
+        selectedFilters.add(cat);
+        chip.classList.add('active');
+      }
+      applyFilters();
+    });
+    chipsContainer.appendChild(chip);
+  });
+  
+  document.getElementById('filterClear').addEventListener('click', () => {
+    selectedFilters.clear();
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    applyFilters();
+  });
   
   // Setup filter buttons
   document.querySelectorAll('.pill[data-group]').forEach(btn => {
