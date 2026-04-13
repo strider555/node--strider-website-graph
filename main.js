@@ -165,6 +165,8 @@ function showSidePanel(tagId) {
   // Set details button URL
   document.getElementById('viewDetailsBtn').href =
     `./viewByCategory.html?category=${encodeURIComponent(tagId)}`;
+  document.getElementById('viewDetailsBtn').classList.remove('disabled');
+  document.getElementById('viewDetailsBtn').style.display = 'block';
 
   // Render object cards
   const grid = document.getElementById('objectGrid');
@@ -289,12 +291,16 @@ function showArtistPanel(artistId) {
   const detailsBtn = document.getElementById('viewDetailsBtn');
   if (artist.mplusUrl) {
     detailsBtn.href = artist.mplusUrl;
+    detailsBtn.classList.remove('disabled');
     detailsBtn.style.display = 'block';
   } else if (artist.slug) {
     detailsBtn.href = `https://www.mplus.org.hk/en/collection/makers/${artist.slug}/`;
+    detailsBtn.classList.remove('disabled');
     detailsBtn.style.display = 'block';
   } else {
-    detailsBtn.style.display = 'none';
+    detailsBtn.href = '#';
+    detailsBtn.classList.add('disabled');
+    detailsBtn.style.display = 'block';
   }
 
   // Render object cards
@@ -388,7 +394,7 @@ function showArtworkPanel(artworkId) {
   const detailsBtn = document.getElementById('viewDetailsBtn');
   const searchTitle = encodeURIComponent(artwork.title || '');
   detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${searchTitle}`;
-  detailsBtn.style.display = 'block';
+  detailsBtn.classList.remove('disabled');
   detailsBtn.style.display = 'block';
 
   // Render artwork details
@@ -776,6 +782,7 @@ function showMultiSelectPanel() {
   const detailsBtn = document.getElementById('viewDetailsBtn');
   const searchQuery = [...selectedTags].join(' ');
   detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${encodeURIComponent(searchQuery)}`;
+  detailsBtn.classList.remove('disabled');
   detailsBtn.style.display = 'block';
 
   panel.classList.add('open');
