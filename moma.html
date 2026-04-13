@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoMA Collection Explorer</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>MoMA Collection Explorer</h1>
+      <div class="subtitle">Interactive visualization of 160,000+ artworks · Sample: 1,355</div>
+    </div>
+    <div class="controls">
+      <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search tags..." autocomplete="off">
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <div class="filter-buttons" id="filterButtons">
+        <button class="filter-btn active" data-type="all">All</button>
+      </div>
+      <a href="./index.html" class="filter-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px">← M+ Explorer</a>
+    </div>
+  </header>
+
+  <div class="legend" id="legend">
+    <h3>Tag Types</h3>
+    <div class="legend-item" data-type="all">
+      <span class="legend-dot" style="background:#888"></span>
+      <span>All Types</span>
+    </div>
+    <div class="legend-group" data-type="Department">
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#e6a817"></span>
+        <span>Department</span>
+        <span class="legend-arrow">›</span>
+      </div>
+      <div class="legend-submenu"></div>
+    </div>
+    <div class="legend-group" data-type="Classification">
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#4ecdc4"></span>
+        <span>Classification</span>
+        <span class="legend-arrow">›</span>
+      </div>
+      <div class="legend-submenu"></div>
+    </div>
+    <div class="legend-group" data-type="Nationality">
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#45b7d1"></span>
+        <span>Nationality</span>
+        <span class="legend-arrow">›</span>
+      </div>
+      <div class="legend-submenu"></div>
+    </div>
+    <div class="legend-group" data-type="Decade">
+      <div class="legend-item">
+        <span class="legend-dot" style="background:#96ceb4"></span>
+        <span>Decade</span>
+        <span class="legend-arrow">›</span>
+      </div>
+      <div class="legend-submenu"></div>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip">
+    <div id="tooltipTitle" class="tooltip-title"></div>
+    <div id="tooltipDetail" class="tooltip-detail"></div>
+  </div>
+
+  <div class="zoom-controls">
+    <button class="zoom-btn" id="zoomIn">+</button>
+    <button class="zoom-btn" id="zoomOut">−</button>
+    <button class="zoom-btn" id="zoomReset">⟲</button>
+  </div>
+
+  <svg id="graph"></svg>
+
+  <div class="side-panel" id="sidePanel">
+    <button class="panel-close" id="panelClose">×</button>
+    <div class="panel-header">
+      <span id="panelColorIndicator" class="panel-color-indicator"></span>
+      <h2 id="panelTitle"></h2>
+    </div>
+    <div id="panelTypeLabel" class="panel-type-label"></div>
+    <div id="panelSummary" class="panel-summary"></div>
+    <div id="objectGrid" class="object-grid"></div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+// MoMA Explorer - standalone script
+let graphData = null;
+let pulseData = null;
+let artistData = null;
+let simulation = null;
+let svgEl, gEl, zoomBehavior;
+let selectedTag = null;
+
+const tagColors = {
+  Department: '#E6A817',
+  Classification: '#4ecdc4',
+  Nationality: '#45b7d1',
+  Decade: '#96ceb4'
+};
+
+const F = {i:'id',t:'title',a:'artistName',d:'date',m:'medium',dp:'department',cl:'classification',n:'nationality',de:'decade',u:'url'};
+function expand(o) { const r = {}; for (const [k,v] of Object.entries(o)) r[F[k]||k] = v; return r; }
+
+async function loadData() {
+  const resp = await fetch('./data/moma-graph.json');
+  graphData = await resp.json();
+  console.log(`Loaded ${graphData.tags.length} tags, ${graphData.links.length} links, ${graphData.objectCount} objects`);
+
+  // Build department filter buttons
+  const depts = graphData.tags.filter(t => t.type === 'Department').sort((a,b) => b.count - a.count);
+  const btnContainer = document.getElementById('filterButtons');
+  depts.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.type = d.id;
+    const short = d.name.replace('Architecture & Design','Architecture').replace('Media and Performance','Media & Perf.');
+    btn.textContent = short;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectTag(d.id);
+    });
+    btnContainer.appendChild(btn);
+  });
+
+  try {
+    const aResp = await fetch('./data/moma-artists.json');
+    if (aResp.ok) artistData = await aResp.json();
+  } catch(e) {}
+
+  initGraph();
+  setupLegend();
+  setupSearch();
+  setupZoom();
+  document.getElementById('panelClose').addEventListener('click', closeSidePanel);
+}
+
+function initGraph() {
+  const width = window.innerWidth;
+  const height = window.innerHeight - 80;
+
+  svgEl = d3.select('#graph').attr('width', width).attr('height', height);
+  svgEl.selectAll('*').remove();
+  gEl = svgEl.append('g');
+  zoomBehavior = d3.zoom().scaleExtent([0.1, 10]).on('zoom', e => gEl.attr('transform', e.transform));
+  svgEl.call(zoomBehavior);
+
+  const tags = graphData.tags;
+  const tagIds = new Set(tags.map(t => t.id));
+  const links = graphData.links.filter(l => tagIds.has(l.source) && tagIds.has(l.target));
+
+  const ext = d3.extent(tags, d => d.count);
+  const r = d3.scaleSqrt().domain(ext).range([6, 40]);
+
+  const nodes = tags.map(t => ({...t, radius: r(t.count)}));
+  const nodeMap = new Map(nodes.map(n => [n.id, n]));
+  const simLinks = links.map(l => ({source: nodeMap.get(l.source)||l.source, target: nodeMap.get(l.target)||l.target, value: l.value}))
+    .filter(l => l.source && l.target && typeof l.source === 'object');
+
+  simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(simLinks).id(d => d.id).distance(80).strength(l => Math.min((l.value||1)/500, 0.3)))
+    .force('charge', d3.forceManyBody().strength(-120))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide(d => d.radius + 4));
+
+  const link = gEl.append('g').selectAll('line').data(simLinks).join('line')
+    .attr('stroke', 'rgba(255,255,255,0.08)').attr('stroke-width', d => Math.min((d.value||1)/50, 3));
+
+  const tooltip = document.getElementById('tooltip');
+
+  const node = gEl.append('g').selectAll('g').data(nodes).join('g')
+    .call(d3.drag()
+      .on('start', (e,d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end', (e,d) => { if (!e.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+  node.append('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => tagColors[d.type] || '#888')
+    .attr('fill-opacity', 0.85)
+    .attr('stroke', 'rgba(255,255,255,0.2)').attr('stroke-width', 1)
+    .attr('cursor', 'pointer')
+    .on('click', (e,d) => selectTag(d.id))
+    .on('mouseover', function(e,d) {
+      tooltip.style.left = (e.pageX+12)+'px';
+      tooltip.style.top = (e.pageY-10)+'px';
+      tooltip.classList.add('show');
+      document.getElementById('tooltipTitle').textContent = d.name;
+      const col = tagColors[d.type]||'#888';
+      document.getElementById('tooltipDetail').innerHTML =
+        `<span style="display:inline-block;padding:2px 6px;background:${col};color:#0d1117;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;margin-right:6px">${d.type}</span>${d.count.toLocaleString()} artworks`;
+    })
+    .on('mousemove', function(e) { tooltip.style.left=(e.pageX+12)+'px'; tooltip.style.top=(e.pageY-10)+'px'; })
+    .on('mouseout', () => tooltip.classList.remove('show'));
+
+  node.append('text')
+    .text(d => d.radius > 12 ? (d.name.length > 18 ? d.name.slice(0,18)+'…' : d.name) : '')
+    .attr('text-anchor','middle').attr('dy', d => d.radius+14)
+    .attr('fill','#ccc').attr('font-size','11px').attr('pointer-events','none');
+
+  node.append('text')
+    .text(d => d.radius > 12 ? d.count.toLocaleString() : '')
+    .attr('text-anchor','middle').attr('dy',4)
+    .attr('fill','#fff').attr('font-size', d => Math.min(d.radius*0.6,14)+'px')
+    .attr('font-weight','600').attr('pointer-events','none');
+
+  simulation.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+function selectTag(tagId) {
+  selectedTag = tagId;
+  // Highlight
+  gEl.selectAll('circle')
+    .attr('stroke', d => d.id===tagId ? '#fff' : 'rgba(255,255,255,0.2)')
+    .attr('stroke-width', d => d.id===tagId ? 3 : 1)
+    .attr('fill-opacity', d => d.id===tagId ? 1 : 0.3);
+  // Zoom
+  const nd = gEl.selectAll('circle').filter(d => d.id===tagId).datum();
+  if (nd) {
+    const w = +svgEl.attr('width'), h = +svgEl.attr('height'), s = 1.5;
+    svgEl.transition().duration(500).call(zoomBehavior.transform,
+      d3.zoomIdentity.translate(w/2 - nd.x*s, h/2 - nd.y*s).scale(s));
+  }
+  showSidePanel(tagId);
+}
+
+async function showSidePanel(tagId) {
+  const tag = graphData.tags.find(t => t.id === tagId);
+  if (!tag) return;
+  const panel = document.getElementById('sidePanel');
+  document.getElementById('panelTitle').textContent = tag.name;
+  document.getElementById('panelTypeLabel').textContent = tag.type;
+  document.getElementById('panelColorIndicator').style.background = tagColors[tag.type]||'#888';
+
+  if (!pulseData) {
+    document.getElementById('panelSummary').textContent = 'Loading artworks...';
+    panel.classList.add('open');
+    try {
+      const resp = await fetch('./data/moma-pulse.json');
+      pulseData = (await resp.json()).map(expand);
+    } catch(e) { document.getElementById('panelSummary').textContent = 'Failed to load'; return; }
+  }
+
+  const fieldMap = {Department:'department', Classification:'classification', Nationality:'nationality', Decade:'decade'};
+  const field = fieldMap[tag.type];
+  const objs = pulseData.filter(o => o[field] === tag.name);
+  document.getElementById('panelSummary').textContent = `${tag.name} · ${tag.type} · ${objs.length.toLocaleString()} artworks`;
+
+  const grid = document.getElementById('objectGrid');
+  grid.innerHTML = '';
+  let shown = 0;
+  const BATCH = 50;
+
+  function renderBatch() {
+    const batch = objs.slice(shown, shown + BATCH);
+    batch.forEach(obj => {
+      const card = document.createElement('div');
+      card.className = 'object-card';
+      let artistHtml = obj.artistName || '';
+      if (artistHtml && artistData) {
+        const a = (artistData.artists||artistData).find(x => x.name === artistHtml || x.DisplayName === artistHtml);
+        if (a && (a.momaUrl || a.WikiQID)) {
+          const url = a.momaUrl || `https://www.wikidata.org/wiki/${a.WikiQID}`;
+          artistHtml = `<a href="${url}" target="_blank" class="artist-link">${artistHtml}</a>`;
+        }
+      }
+      card.innerHTML =
+        `<div class="object-title">${obj.title||'Untitled'}</div>` +
+        `<div class="object-meta"><div class="object-meta-row">${artistHtml}${obj.date ? ' · '+obj.date : ''}</div></div>` +
+        (obj.medium ? `<div class="object-meta" style="font-size:11px;color:var(--text-muted)">${obj.medium}</div>` : '') +
+        (obj.url ? `<div style="margin-top:4px"><a href="${obj.url}" target="_blank" class="artist-link" style="font-size:11px">View on MoMA →</a></div>` : '');
+      grid.appendChild(card);
+    });
+    shown += batch.length;
+    // Load more button
+    const existing = grid.querySelector('.load-more-btn');
+    if (existing) existing.remove();
+    if (shown < objs.length) {
+      const more = document.createElement('button');
+      more.className = 'load-more-btn';
+      more.textContent = `Load more (${(objs.length-shown).toLocaleString()} remaining)`;
+      more.addEventListener('click', renderBatch);
+      grid.appendChild(more);
+    }
+  }
+  renderBatch();
+  panel.classList.add('open');
+}
+
+function closeSidePanel() {
+  document.getElementById('sidePanel').classList.remove('open');
+  selectedTag = null;
+  gEl.selectAll('circle').attr('stroke','rgba(255,255,255,0.2)').attr('stroke-width',1).attr('fill-opacity',0.85);
+}
+
+function setupLegend() {
+  document.querySelectorAll('.legend-group').forEach(group => {
+    const type = group.dataset.type;
+    const tags = graphData.tags.filter(t => t.type === type).sort((a,b) => b.count - a.count);
+    const submenu = group.querySelector('.legend-submenu');
+    tags.forEach(tag => {
+      const item = document.createElement('div');
+      item.className = 'legend-sub-item';
+      item.innerHTML = `<span>${tag.name}</span><span class="legend-count">${tag.count.toLocaleString()}</span>`;
+      item.addEventListener('click', e => { e.stopPropagation(); selectTag(tag.id); });
+      submenu.appendChild(item);
+    });
+    group.querySelector('.legend-item').addEventListener('click', () => {
+      const isOpen = group.classList.contains('open');
+      document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+      if (!isOpen) group.classList.add('open');
+    });
+  });
+  document.querySelector('[data-type="all"]').addEventListener('click', () => {
+    document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+    closeSidePanel();
+  });
+}
+
+function setupSearch() {
+  const input = document.getElementById('searchInput');
+  const dropdown = document.getElementById('searchDropdown');
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+    if (q.length < 2) { dropdown.classList.remove('open'); return; }
+    const results = graphData.tags.filter(t => t.name.toLowerCase().includes(q)).sort((a,b) => b.count-a.count).slice(0,15);
+    if (!results.length) { dropdown.classList.remove('open'); return; }
+    dropdown.innerHTML = results.map(t =>
+      `<div class="search-item" data-id="${t.id}"><span class="search-dot" style="background:${tagColors[t.type]}"></span><span>${t.name}</span><span class="search-count">${t.count.toLocaleString()}</span></div>`
+    ).join('');
+    dropdown.querySelectorAll('.search-item').forEach(item => {
+      item.addEventListener('click', () => { selectTag(item.dataset.id); input.value=''; dropdown.classList.remove('open'); });
+    });
+    dropdown.classList.add('open');
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.search-container')) dropdown.classList.remove('open'); });
+}
+
+function setupZoom() {
+  document.getElementById('zoomIn').addEventListener('click', () => svgEl.transition().call(zoomBehavior.scaleBy, 1.5));
+  document.getElementById('zoomOut').addEventListener('click', () => svgEl.transition().call(zoomBehavior.scaleBy, 0.67));
+  document.getElementById('zoomReset').addEventListener('click', () => svgEl.transition().call(zoomBehavior.transform, d3.zoomIdentity));
+}
+
+document.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>
