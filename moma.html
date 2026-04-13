@@ -334,7 +334,7 @@ async function showSidePanel(tagId) {
         `<div class="object-title">${obj.title||'Untitled'}</div>` +
         `<div class="object-meta"><div class="object-meta-row">${artistHtml}${obj.date ? ' · '+obj.date : ''}</div></div>` +
         (obj.medium ? `<div class="object-meta" style="font-size:11px;color:var(--text-muted)">${obj.medium}</div>` : '') +
-        (obj.url ? `<div style="margin-top:4px"><a href="${obj.url}" target="_blank" class="artist-link" style="font-size:11px">View on MoMA →</a></div>` : '');
+        (obj.id ? `<div style="margin-top:4px"><a href="https://www.moma.org/collection/works/${obj.id}" target="_blank" class="artist-link" style="font-size:11px">View on MoMA →</a></div>` : '');
       grid.appendChild(card);
     });
     shown += batch.length;
