@@ -400,7 +400,11 @@ async function renderOverlap(container) {
     const moPct = (a.moma/total*100).toFixed(0);
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;align-items:center;margin:4px 0;gap:8px';
-    row.innerHTML = `<div style="width:180px;font-size:13px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.name}</div>
+    row.innerHTML = `<div style="width:220px;font-size:13px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;justify-content:flex-end;gap:6px">
+        <span>${a.name}</span>
+        ${a.mplusUrl ? `<a href="${a.mplusUrl}" target="_blank" title="View on M+" style="color:${MPLUS};font-size:10px;text-decoration:none;flex-shrink:0">M+</a>` : ''}
+        ${a.momaUrl ? `<a href="${a.momaUrl}" target="_blank" title="View on MoMA" style="color:${MOMA};font-size:10px;text-decoration:none;flex-shrink:0">MoMA</a>` : ''}
+      </div>
       <div style="flex:1;display:flex;height:20px;border-radius:4px;overflow:hidden;background:rgba(255,255,255,0.05)">
         <div style="width:${mpPct}%;background:${MPLUS};opacity:0.6"></div>
         <div style="width:${moPct}%;background:${MOMA};opacity:0.6"></div>
