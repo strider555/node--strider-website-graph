@@ -501,6 +501,9 @@ function showArtworkPanel(artworkId) {
 function toggleSiggMode() {
   siggMode = !siggMode;
 
+  // Clear multi-select
+  clearTagSelection();
+
   // Update button state
   const siggToggle = document.getElementById('siggToggle');
   siggToggle.classList.toggle('active', siggMode);
@@ -632,38 +635,32 @@ function setupLegendSubmenus() {
     });
   });
 
-  // Handle legend group expand/collapse
-  document.querySelectorAll('.legend-group').forEach(group => {
-    const headerItem = group.querySelector('.legend-item');
-    headerItem.addEventListener('click', (e) => {
-      e.stopPropagation();
-      // Toggle this group
-      const wasOpen = group.classList.contains('open');
-
-      // Close all groups
-      document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
-
-      // Open this one if it was closed
-      if (!wasOpen) {
-        group.classList.add('open');
-      }
-
-      // Only apply type filter if no multi-select active
-      // Don't clear selection when just opening a different group
-      if (selectedTags.size === 0) {
-        filterByType(wasOpen ? 'all' : headerItem.dataset.type);
-      }
+  // Handle legend group expand/collapse (only bind once)
+  if (!setupLegendSubmenus._bound) {
+    setupLegendSubmenus._bound = true;
+    document.querySelectorAll('.legend-group').forEach(group => {
+      const headerItem = group.querySelector('.legend-item');
+      headerItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wasOpen = group.classList.contains('open');
+        document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+        if (!wasOpen) {
+          group.classList.add('open');
+        }
+        if (selectedTags.size === 0) {
+          filterByType(wasOpen ? 'all' : headerItem.dataset.type);
+        }
+      });
     });
-  });
 
-  // "All Types" button
-  const allItem = document.querySelector('.legend-item[data-type="all"]');
-  if (allItem) {
-    allItem.addEventListener('click', () => {
-      document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
-      clearTagSelection();
-      filterByType('all');
-    });
+    const allItem = document.querySelector('.legend-item[data-type="all"]');
+    if (allItem) {
+      allItem.addEventListener('click', () => {
+        document.querySelectorAll('.legend-group').forEach(g => g.classList.remove('open'));
+        clearTagSelection();
+        filterByType('all');
+      });
+    }
   }
 }
 
