@@ -325,9 +325,16 @@
     }
 
     async function loadData() {
-      const response = await fetch('./data/museum-index.json');
-      if (!response.ok) throw new Error('Failed to load collection data');
-      return response.json();
+      const [indexResp, fullResp] = await Promise.all([
+        fetch('./data/museum-index.json'),
+        fetch('./data/pulse.json')
+      ]);
+      if (!indexResp.ok) throw new Error('Failed to load collection data');
+      const index = await indexResp.json();
+      if (fullResp.ok) {
+        index._fullObjects = await fullResp.json();
+      }
+      return index;
     }
 
     function sortObjects(objects, sortBy) {
@@ -353,7 +360,28 @@
 
     function renderObjects(category, data, sortBy = 'default') {
       const tag = data.tags.find(t => t.id === category);
-      let objects = data.objectsByTag[category] || [];
+      
+      // Use full objects from pulse.json if available, filter by category
+      let objects;
+      if (data._fullObjects) {
+        objects = data._fullObjects.filter(o => 
+          o.area === category || o.category === category || 
+          o.medium === category || o.decade === category ||
+          o.artistName === category
+        ).map(o => ({
+          id: o.id,
+          title: o.title,
+          titleTC: o.titleTC,
+          areas: [o.area].filter(Boolean),
+          categories: [o.category].filter(Boolean),
+          medium: o.medium,
+          date: o.year ? String(o.year) : '',
+          artistName: o.artistName,
+          nationality: ''
+        }));
+      } else {
+        objects = data.objectsByTag[category] || [];
+      }
 
       currentTag = tag;
       currentObjects = objects;
@@ -361,9 +389,7 @@
       // Update tag info
       document.getElementById('tagTitle').textContent = category;
 
-      const displayCount = objects.length >= 50
-        ? `${objects.length} (showing sample of ${tag.count.toLocaleString()})`
-        : objects.length;
+      const displayCount = objects.length;
 
       document.getElementById('artworkCount').textContent = displayCount;
       document.getElementById('tagType').textContent = tag ? tag.type : 'unknown';
@@ -374,15 +400,23 @@
       // Render object cards
       const grid = document.getElementById('objectGrid');
       grid.innerHTML = '';
+      const oldBtn = document.getElementById('loadMoreBtn');
+      if (oldBtn) oldBtn.remove();
 
       if (objects.length === 0) {
         grid.innerHTML = '<div class="error">No artworks found for this tag.</div>';
         return;
       }
 
-      objects.forEach(obj => {
-        const card = document.createElement('div');
-        card.className = 'object-card';
+      let displayedCount = 0;
+      const PAGE_SIZE = 100;
+      const sortedObjects = sortObjects([...objects], sortBy);
+
+      function renderBatch() {
+        const batch = sortedObjects.slice(displayedCount, displayedCount + PAGE_SIZE);
+        batch.forEach(obj => {
+          const card = document.createElement('div');
+          card.className = 'object-card';
 
         const title = document.createElement('div');
         title.className = 'object-title';
@@ -465,6 +499,23 @@
         card.appendChild(meta);
         grid.appendChild(card);
       });
+        displayedCount += batch.length;
+
+        // Remove old load-more button
+        const oldBtn = document.getElementById('loadMoreBtn');
+        if (oldBtn) oldBtn.remove();
+
+        // Add load more if needed
+        if (displayedCount < sortedObjects.length) {
+          const btn = document.createElement('button');
+          btn.id = 'loadMoreBtn';
+          btn.textContent = `Load more (${displayedCount}/${sortedObjects.length})`;
+          btn.style.cssText = 'display:block;margin:20px auto;padding:10px 24px;background:var(--gold);color:var(--bg-dark);border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;';
+          btn.addEventListener('click', renderBatch);
+          grid.after(btn);
+        }
+      }
+      renderBatch();
     }
 
     async function init() {
