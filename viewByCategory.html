@@ -337,7 +337,12 @@
       if (!indexResp.ok) throw new Error('Failed to load collection data');
       const index = await indexResp.json();
       if (fullResp.ok) {
-        index._fullObjects = await fullResp.json();
+        let fullData = await fullResp.json();
+        // Filter to Sigg only if sigg=1 param
+        if (new URL(window.location.href).searchParams.get('sigg') === '1') {
+          fullData = fullData.filter(o => o.sigg);
+        }
+        index._fullObjects = fullData;
       }
       return index;
     }

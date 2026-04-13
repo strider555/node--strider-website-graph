@@ -147,7 +147,21 @@ function customizeGraph(radiusScale) {
 function showSidePanel(tagId) {
   const panel = document.getElementById('sidePanel');
   const currentData = getCurrentData();
-  const objects = currentData.objectsByTag[tagId] || [];
+  
+  // Use full objects if available, otherwise fall back to objectsByTag
+  let objects;
+  if (fullObjects) {
+    let source = siggMode ? fullObjects.filter(o => o.sigg) : fullObjects;
+    objects = source.filter(o => 
+      o.area === tagId || o.category === tagId ||
+      o.medium === tagId || o.decade === tagId ||
+      o.nationality === tagId ||
+      (o.areas && o.areas.includes(tagId)) ||
+      (o.categories && o.categories.includes(tagId))
+    );
+  } else {
+    objects = currentData.objectsByTag[tagId] || [];
+  }
 
   // Update panel header
   const tag = currentData.tags.find(t => t.id === tagId);
@@ -163,85 +177,105 @@ function showSidePanel(tagId) {
   document.getElementById('panelTypeLabel').textContent = tagType;
 
   // Update summary bar
-  const summaryText = objects.length >= 50
-    ? `${tagId} · ${tagType} · Showing ${objects.length} of ${totalCount.toLocaleString()} artworks`
-    : `${tagId} · ${tagType} · ${totalCount.toLocaleString()} artworks`;
+  const summaryText = `${tagId} · ${tagType} · ${objects.length.toLocaleString()} artworks`;
   document.getElementById('panelSummary').textContent = summaryText;
 
   // Set details button URL
   document.getElementById('viewDetailsBtn').href =
-    `./viewByCategory.html?category=${encodeURIComponent(tagId)}`;
+    `./viewByCategory.html?category=${encodeURIComponent(tagId)}${siggMode ? '&sigg=1' : ''}`;
   document.getElementById('viewDetailsBtn').classList.remove('disabled');
   document.getElementById('viewDetailsBtn').style.display = 'block';
 
-  // Render object cards
+  // Render object cards with pagination
   const grid = document.getElementById('objectGrid');
   grid.innerHTML = '';
 
-  objects.forEach(obj => {
-    const card = document.createElement('div');
-    card.className = 'object-card';
+  let panelDisplayed = 0;
+  const PANEL_PAGE = 50;
+  const sortedPanelObjs = objects;
 
-    const title = document.createElement('div');
-    title.className = 'object-title';
-    title.textContent = obj.title || 'Untitled';
+  function renderPanelBatch() {
+    const batch = sortedPanelObjs.slice(panelDisplayed, panelDisplayed + PANEL_PAGE);
+    batch.forEach(obj => {
+      const card = document.createElement('div');
+      card.className = 'object-card';
 
-    const titleTC = document.createElement('div');
-    titleTC.className = 'object-title-tc';
-    titleTC.textContent = obj.titleTC || '';
+      const title = document.createElement('div');
+      title.className = 'object-title';
+      title.textContent = obj.title || 'Untitled';
 
-    const meta = document.createElement('div');
-    meta.className = 'object-meta';
+      const titleTC = document.createElement('div');
+      titleTC.className = 'object-title-tc';
+      titleTC.textContent = obj.titleTC || '';
 
-    if (obj.date) {
-      const dateRow = document.createElement('div');
-      dateRow.className = 'object-meta-row';
-      dateRow.innerHTML = `<span class="object-meta-label">Date:</span><span>${obj.date}</span>`;
-      meta.appendChild(dateRow);
-    }
+      const meta = document.createElement('div');
+      meta.className = 'object-meta';
 
-    if (obj.artistName) {
-      const artistRow = document.createElement('div');
-      artistRow.className = 'object-meta-row';
-      const artistDisplay = obj.artistNameTC
-        ? `${obj.artistName} (${obj.artistNameTC})`
-        : obj.artistName;
-      const matchedArtist = museumData.artists.find(a => a.name === obj.artistName);
-      if (matchedArtist) {
-        artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><a class="artist-link" data-artist-id="${matchedArtist.id}">${artistDisplay}</a>`;
-        artistRow.querySelector('.artist-link').addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (window._setPanelNavigating) window._setPanelNavigating();
-          showArtistPanel(matchedArtist.id);
-        });
-      } else {
-        artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><span>${artistDisplay}</span>`;
+      const dateVal = obj.date || (obj.year ? String(obj.year) : '');
+      if (dateVal) {
+        const dateRow = document.createElement('div');
+        dateRow.className = 'object-meta-row';
+        dateRow.innerHTML = `<span class="object-meta-label">Date:</span><span>${dateVal}</span>`;
+        meta.appendChild(dateRow);
       }
-      meta.appendChild(artistRow);
+
+      if (obj.artistName) {
+        const artistRow = document.createElement('div');
+        artistRow.className = 'object-meta-row';
+        const artistDisplay = obj.artistNameTC
+          ? `${obj.artistName} (${obj.artistNameTC})`
+          : obj.artistName;
+        const matchedArtist = museumData.artists.find(a => a.name === obj.artistName);
+        if (matchedArtist) {
+          artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><a class="artist-link" data-artist-id="${matchedArtist.id}">${artistDisplay}</a>`;
+          artistRow.querySelector('.artist-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window._setPanelNavigating) window._setPanelNavigating();
+            showArtistPanel(matchedArtist.id);
+          });
+        } else {
+          artistRow.innerHTML = `<span class="object-meta-label">Artist:</span><span>${artistDisplay}</span>`;
+        }
+        meta.appendChild(artistRow);
+      }
+
+      if (obj.medium) {
+        const mediumRow = document.createElement('div');
+        mediumRow.className = 'object-meta-row';
+        mediumRow.innerHTML = `<span class="object-meta-label">Medium:</span><span>${obj.medium}</span>`;
+        meta.appendChild(mediumRow);
+      }
+
+      const areas = obj.areas || (obj.area ? [obj.area] : []);
+      if (areas.length > 0) {
+        const areaRow = document.createElement('div');
+        areaRow.className = 'object-meta-row';
+        areaRow.innerHTML = `<span class="object-meta-label">Area:</span><span>${areas.join(', ')}</span>`;
+        meta.appendChild(areaRow);
+      }
+
+      card.appendChild(title);
+      if (titleTC.textContent) card.appendChild(titleTC);
+      card.appendChild(meta);
+      grid.appendChild(card);
+    });
+    panelDisplayed += batch.length;
+
+    // Remove old load more
+    const oldMore = grid.querySelector('.panel-load-more');
+    if (oldMore) oldMore.remove();
+
+    if (panelDisplayed < sortedPanelObjs.length) {
+      const more = document.createElement('div');
+      more.className = 'object-card panel-load-more';
+      more.style.cssText = 'cursor:pointer;text-align:center;background:rgba(230,168,23,0.1);border:1px dashed var(--gold);';
+      more.innerHTML = `<div class="object-meta" style="color:var(--gold);">Load more (${panelDisplayed}/${sortedPanelObjs.length.toLocaleString()})</div>`;
+      more.addEventListener('click', renderPanelBatch);
+      grid.appendChild(more);
     }
-
-    if (obj.medium) {
-      const mediumRow = document.createElement('div');
-      mediumRow.className = 'object-meta-row';
-      mediumRow.innerHTML = `<span class="object-meta-label">Medium:</span><span>${obj.medium}</span>`;
-      meta.appendChild(mediumRow);
-    }
-
-    if (obj.areas && obj.areas.length > 0) {
-      const areaRow = document.createElement('div');
-      areaRow.className = 'object-meta-row';
-      areaRow.innerHTML = `<span class="object-meta-label">Area:</span><span>${obj.areas.join(', ')}</span>`;
-      meta.appendChild(areaRow);
-    }
-
-    card.appendChild(title);
-    if (titleTC.textContent) card.appendChild(titleTC);
-    card.appendChild(meta);
-
-    grid.appendChild(card);
-  });
-
+  }
+  renderPanelBatch();
   // Show panel
   panel.classList.add('open');
 }
@@ -757,7 +791,8 @@ function showMultiSelectPanel() {
 
   if (fullObjects) {
     // Cross-filter using full dataset
-    sharedObjs = fullObjects.filter(o => {
+    let source = siggMode ? fullObjects.filter(o => o.sigg) : fullObjects;
+    sharedObjs = source.filter(o => {
       return tags.every(tag => {
         return o.area === tag || o.category === tag ||
                o.medium === tag || o.decade === tag ||
@@ -810,7 +845,8 @@ function showMultiSelectPanel() {
 
   // Set View Full Details button
   const detailsBtn = document.getElementById('viewDetailsBtn');
-  const params = [...selectedTags].map(t => `tag=${encodeURIComponent(t)}`).join('&');
+  let params = [...selectedTags].map(t => `tag=${encodeURIComponent(t)}`).join('&');
+  if (siggMode) params += '&sigg=1';
   detailsBtn.href = `./viewByCategory.html?${params}`;
   detailsBtn.classList.remove('disabled');
   detailsBtn.style.display = 'block';
