@@ -112,10 +112,13 @@
   </div>
 
   <div class="tabs" id="tabs">
-    <div class="tab active" data-view="region">By Region</div>
-    <div class="tab" data-view="nationality">By Nationality</div>
-    <div class="tab" data-view="decade">By Decade</div>
-    <div class="tab" data-view="department">By Department</div>
+    <select id="viewSelect" style="padding:10px 16px;font-size:14px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;cursor:pointer;min-width:220px">
+      <option value="region">By Region</option>
+      <option value="nationality">By Nationality (Top 20)</option>
+      <option value="decade">By Decade</option>
+      <option value="department">By Department</option>
+      <option value="overlap">Artist Overlap Network</option>
+    </select>
   </div>
 
   <div class="chart-container" id="chartArea"></div>
@@ -137,14 +140,9 @@ async function init() {
     <div class="stat"><div class="stat-value">${(data.museums.moma.total / data.museums.mplus.total).toFixed(1)}×</div><div class="stat-label">Size Ratio</div></div>
   `;
 
-  // Tabs
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      renderView(tab.dataset.view);
-    });
-  });
+  // Dropdown
+  const sel = document.getElementById('viewSelect');
+  sel.addEventListener('change', () => renderView(sel.value));
 
   renderView('region');
 }
@@ -158,8 +156,8 @@ function renderView(view) {
     renderButterfly(area, data.nationality, 'Top Nationalities', 'Top 20 artist nationalities — percentage of total collection', 20);
   } else if (view === 'decade') {
     renderButterfly(area, data.decade, 'Artworks by Decade', 'When were the artworks created?');
-  } else if (view === 'department') {
-    renderHeatmap(area, data.department, data.category, 'Collection Departments & Categories');
+  } else if (view === 'overlap') {
+    renderOverlap(area);
   }
 }
 
@@ -252,6 +250,128 @@ function renderHeatmap(container, deptData, catData, title) {
 
   html += '</div>';
   container.innerHTML = html;
+}
+
+let overlapData = null;
+async function renderOverlap(container) {
+  if (!overlapData) {
+    container.innerHTML = '<div class="chart-title">Loading overlap data...</div>';
+    const resp = await fetch('./data/overlap.json');
+    overlapData = await resp.json();
+  }
+  const s = overlapData.stats;
+  const artists = overlapData.artists;
+
+  // Venn-style stats + force network
+  let html = `<div class="chart-title">Artist Overlap Network</div>
+    <div class="chart-subtitle">${s.both} artists appear in both collections</div>
+    <div style="display:flex;gap:24px;margin:16px 0;flex-wrap:wrap">
+      <div class="stat stat-mplus"><div class="stat-value">${s.mplusOnly.toLocaleString()}</div><div class="stat-label">M+ Only</div></div>
+      <div class="stat"><div class="stat-value" style="color:#c084fc">${s.both}</div><div class="stat-label">Both</div></div>
+      <div class="stat stat-moma"><div class="stat-value">${s.momaOnly.toLocaleString()}</div><div class="stat-label">MoMA Only</div></div>
+    </div>
+    <svg id="overlapSvg" width="100%" height="500" style="background:rgba(0,0,0,0.2);border-radius:12px"></svg>
+    <div id="overlapTooltip" style="position:fixed;display:none;padding:8px 12px;background:#000;border:1px solid var(--border);border-radius:6px;font-size:12px;pointer-events:none;z-index:100"></div>
+    <div style="margin-top:16px">
+      <div class="chart-title" style="font-size:14px">Top 30 Shared Artists</div>
+      <div id="overlapList"></div>
+    </div>`;
+  container.innerHTML = html;
+
+  // Force network of top 80 overlap artists
+  const top = artists.slice(0, 80);
+  const svg = d3.select('#overlapSvg');
+  const w = svg.node().getBoundingClientRect().width;
+  const h = 500;
+  svg.attr('width', w);
+  const g = svg.append('g');
+  svg.call(d3.zoom().scaleExtent([0.3,5]).on('zoom', e => g.attr('transform', e.transform)));
+
+  // Nodes = artists, sized by total works
+  const maxTotal = d3.max(top, d => d.total);
+  const r = d3.scaleSqrt().domain([1, maxTotal]).range([4, 30]);
+  const nodes = top.map(a => ({...a, radius: r(a.total)}));
+
+  // Color by bias: gold=M+ heavy, red=MoMA heavy, purple=balanced
+  function biasColor(a) {
+    const ratio = a.mplus / (a.mplus + a.moma);
+    if (ratio > 0.6) return '#e6a817';
+    if (ratio < 0.4) return '#e64a4a';
+    return '#c084fc';
+  }
+
+  // Links between artists that share nationality
+  const links = [];
+  for (let i=0; i<nodes.length; i++) {
+    for (let j=i+1; j<nodes.length; j++) {
+      if (nodes[i].nat && nodes[i].nat === nodes[j].nat && nodes[i].nat !== '') {
+        links.push({source:i, target:j});
+      }
+    }
+  }
+
+  const sim = d3.forceSimulation(nodes)
+    .force('charge', d3.forceManyBody().strength(-80))
+    .force('center', d3.forceCenter(w/2, h/2))
+    .force('collision', d3.forceCollide(d => d.radius + 6))
+    .force('link', d3.forceLink(links).distance(60).strength(0.1));
+
+  const link = g.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke','rgba(255,255,255,0.05)').attr('stroke-width',1);
+
+  const tip = document.getElementById('overlapTooltip');
+  const node = g.append('g').selectAll('circle').data(nodes).join('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => biasColor(d))
+    .attr('fill-opacity', 0.8)
+    .attr('stroke', 'rgba(255,255,255,0.2)').attr('stroke-width', 1)
+    .attr('cursor', 'pointer')
+    .on('mouseover', (e,d) => {
+      tip.style.display='block'; tip.style.left=(e.pageX+12)+'px'; tip.style.top=(e.pageY-10)+'px';
+      tip.innerHTML=`<strong>${d.name}</strong><br>M+: ${d.mplus} · MoMA: ${d.moma}<br>${d.nat||'Unknown'}`;
+    })
+    .on('mousemove', e => { tip.style.left=(e.pageX+12)+'px'; tip.style.top=(e.pageY-10)+'px'; })
+    .on('mouseout', () => { tip.style.display='none'; })
+    .call(d3.drag()
+      .on('start',(e,d)=>{if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;})
+      .on('drag',(e,d)=>{d.fx=e.x;d.fy=e.y;})
+      .on('end',(e,d)=>{if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
+
+  const label = g.append('g').selectAll('text').data(nodes.filter(d=>d.radius>10)).join('text')
+    .text(d => d.name.length > 20 ? d.name.slice(0,18)+'…' : d.name)
+    .attr('text-anchor','middle').attr('dy', d => d.radius+12)
+    .attr('fill','#aaa').attr('font-size','10px').attr('pointer-events','none');
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('cx',d=>d.x).attr('cy',d=>d.y);
+    label.attr('x',d=>d.x).attr('y',d=>d.y);
+  });
+
+  // List top 30
+  const list = document.getElementById('overlapList');
+  artists.slice(0,30).forEach(a => {
+    const total = a.mplus + a.moma;
+    const mpPct = (a.mplus/total*100).toFixed(0);
+    const moPct = (a.moma/total*100).toFixed(0);
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;margin:4px 0;gap:8px';
+    row.innerHTML = `<div style="width:180px;font-size:13px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.name}</div>
+      <div style="flex:1;display:flex;height:20px;border-radius:4px;overflow:hidden;background:rgba(255,255,255,0.05)">
+        <div style="width:${mpPct}%;background:${MPLUS};opacity:0.6"></div>
+        <div style="width:${moPct}%;background:${MOMA};opacity:0.6"></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);min-width:120px">${a.mplus} M+ · ${a.moma} MoMA</div>`;
+    list.appendChild(row);
+  });
+
+  // Legend for network colors
+  const legendHtml = document.createElement('div');
+  legendHtml.style.cssText = 'display:flex;gap:16px;justify-content:center;margin:12px 0;font-size:12px';
+  legendHtml.innerHTML = `<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#e6a817"></span>M+ heavy</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#c084fc"></span>Balanced</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:50%;background:#e64a4a"></span>MoMA heavy</span>`;
+  svg.node().parentNode.insertBefore(legendHtml, svg.node().nextSibling);
 }
 
 document.addEventListener('DOMContentLoaded', init);
