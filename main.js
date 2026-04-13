@@ -572,7 +572,7 @@ function setupLegendSubmenus() {
   if (!museumData) return;
 
   const currentData = getCurrentData();
-  const types = ['area', 'category', 'medium', 'nationality', 'decade', 'collection'];
+  const types = ['area', 'category', 'medium', 'nationality', 'decade'];
 
   types.forEach(type => {
     const subContainer = document.getElementById(`sub-${type}`);
