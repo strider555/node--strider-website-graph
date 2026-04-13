@@ -772,6 +772,12 @@ function showMultiSelectPanel() {
     grid.innerHTML = '<div class="object-card"><div class="object-title">No shared artworks</div><div class="object-meta">These categories do not overlap</div></div>';
   }
 
+  // Set View Full Details button
+  const detailsBtn = document.getElementById('viewDetailsBtn');
+  const searchQuery = [...selectedTags].join(' ');
+  detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${encodeURIComponent(searchQuery)}`;
+  detailsBtn.style.display = 'block';
+
   panel.classList.add('open');
 }
 
