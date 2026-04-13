@@ -1,5 +1,6 @@
 // M+ Museum Collection Explorer
 let museumData = null;
+let fullObjects = null; // All 13K objects from pulse.json
 let currentGraph = null;
 let currentFilter = 'all';
 let currentTypeFilter = 'all';
@@ -46,6 +47,11 @@ async function loadData() {
     if (!response.ok) throw new Error('Failed to load data');
     museumData = await response.json();
     console.log('Museum data loaded:', museumData.stats);
+    // Load full objects for cross-filtering
+    try {
+      const fullResp = await fetch('./data/pulse.json');
+      if (fullResp.ok) fullObjects = await fullResp.json();
+    } catch(e) { console.warn('pulse.json not available'); }
     return museumData;
   } catch (error) {
     console.error('Error loading data:', error);
@@ -746,42 +752,66 @@ function showMultiSelectPanel() {
   const grid = document.getElementById('objectGrid');
   const colorIndicator = document.getElementById('panelColorIndicator');
 
-  const tagArrays = [...selectedTags].map(id => {
-    const objs = currentData.objectsByTag[id] || [];
-    return new Set(objs.map(o => o.id || o.objectNumber || JSON.stringify(o)));
-  });
+  let sharedObjs = [];
+  const tags = [...selectedTags];
 
-  let commonIds = tagArrays[0] || new Set();
-  for (let i = 1; i < tagArrays.length; i++) {
-    commonIds = new Set([...commonIds].filter(x => tagArrays[i].has(x)));
+  if (fullObjects) {
+    // Cross-filter using full dataset
+    sharedObjs = fullObjects.filter(o => {
+      return tags.every(tag => {
+        return o.area === tag || o.category === tag ||
+               o.medium === tag || o.decade === tag ||
+               o.nationality === tag ||
+               (o.areas && o.areas.includes(tag)) ||
+               (o.categories && o.categories.includes(tag));
+      });
+    });
+  } else {
+    // Fallback: intersection from objectsByTag (limited to 50 per tag)
+    const tagArrays = tags.map(id => {
+      const objs = currentData.objectsByTag[id] || [];
+      return new Set(objs.map(o => o.id || o.objectNumber || JSON.stringify(o)));
+    });
+    let commonIds = tagArrays[0] || new Set();
+    for (let i = 1; i < tagArrays.length; i++) {
+      commonIds = new Set([...commonIds].filter(x => tagArrays[i].has(x)));
+    }
+    const firstTag = tags[0];
+    const allObjs = currentData.objectsByTag[firstTag] || [];
+    sharedObjs = allObjs.filter(o => commonIds.has(o.id || o.objectNumber || JSON.stringify(o)));
   }
 
-  title.textContent = [...selectedTags].join(' + ');
+  title.textContent = tags.join(' + ');
   typeLabel.textContent = 'Multi-select';
   colorIndicator.style.background = '#fff';
-  summary.textContent = `${selectedTags.size} tags selected \u00b7 ${commonIds.size} shared artworks`;
+  summary.textContent = `${tags.length} tags selected \u00b7 ${sharedObjs.length.toLocaleString()} shared artworks`;
 
   grid.innerHTML = '';
-  if (commonIds.size > 0) {
-    const firstTag = [...selectedTags][0];
-    const allObjs = currentData.objectsByTag[firstTag] || [];
-    const sharedObjs = allObjs.filter(o => commonIds.has(o.id || o.objectNumber || JSON.stringify(o)));
-    sharedObjs.slice(0, 20).forEach(obj => {
+  if (sharedObjs.length > 0) {
+    const displayObjs = sharedObjs.slice(0, 50);
+    displayObjs.forEach(obj => {
       const card = document.createElement('div');
       card.className = 'object-card';
-      const titleText = typeof obj.title === 'object' ? (obj.title.en || obj.title['zh-hant'] || '') : (obj.title || 'Untitled');
-      const artist = typeof obj.artist === 'object' ? (obj.artist.en || '') : (obj.artist || '');
-      card.innerHTML = `<div class="object-title">${titleText}</div><div class="object-meta">${artist}</div><div class="object-meta">${obj.date || obj.displayDate || ''}</div>`;
+      const titleText = obj.title || 'Untitled';
+      const artist = obj.artistName || '';
+      const date = obj.year || obj.date || obj.displayDate || '';
+      card.innerHTML = `<div class="object-title">${titleText}</div>${obj.titleTC ? `<div class="object-meta" style="color:var(--text-muted);font-size:12px;">${obj.titleTC}</div>` : ''}<div class="object-meta">${artist}${date ? ` \u00b7 ${date}` : ''}</div>${obj.medium ? `<div class="object-meta" style="font-size:11px;color:var(--text-muted);">${obj.medium}</div>` : ''}`;
       grid.appendChild(card);
     });
+    if (sharedObjs.length > 50) {
+      const more = document.createElement('div');
+      more.className = 'object-card';
+      more.innerHTML = `<div class="object-meta" style="text-align:center;">Showing 50 of ${sharedObjs.length.toLocaleString()} \u00b7 Click View Full Details for all</div>`;
+      grid.appendChild(more);
+    }
   } else {
     grid.innerHTML = '<div class="object-card"><div class="object-title">No shared artworks</div><div class="object-meta">These categories do not overlap</div></div>';
   }
 
   // Set View Full Details button
   const detailsBtn = document.getElementById('viewDetailsBtn');
-  const searchQuery = [...selectedTags].join(' ');
-  detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${encodeURIComponent(searchQuery)}`;
+  const params = [...selectedTags].map(t => `tag=${encodeURIComponent(t)}`).join('&');
+  detailsBtn.href = `./viewByCategory.html?${params}`;
   detailsBtn.classList.remove('disabled');
   detailsBtn.style.display = 'block';
 

@@ -324,6 +324,11 @@
       return url.searchParams.get(name);
     }
 
+    function getQueryParams(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.getAll(name);
+    }
+
     async function loadData() {
       const [indexResp, fullResp] = await Promise.all([
         fetch('./data/museum-index.json'),
@@ -364,20 +369,25 @@
       // Use full objects from pulse.json if available, filter by category
       let objects;
       if (data._fullObjects) {
-        objects = data._fullObjects.filter(o => 
-          o.area === category || o.category === category || 
-          o.medium === category || o.decade === category ||
-          o.artistName === category
-        ).map(o => ({
+        objects = data._fullObjects.filter(o => {
+          // Match against all fields: area, category, medium, nationality, decade
+          if (o.area === category || o.category === category ||
+              o.medium === category || o.decade === category ||
+              o.nationality === category || o.artistName === category) return true;
+          // Also check arrays
+          if (o.areas && o.areas.includes(category)) return true;
+          if (o.categories && o.categories.includes(category)) return true;
+          return false;
+        }).map(o => ({
           id: o.id,
           title: o.title,
           titleTC: o.titleTC,
-          areas: [o.area].filter(Boolean),
-          categories: [o.category].filter(Boolean),
+          areas: o.areas || [o.area].filter(Boolean),
+          categories: o.categories || [o.category].filter(Boolean),
           medium: o.medium,
           date: o.year ? String(o.year) : '',
           artistName: o.artistName,
-          nationality: ''
+          nationality: o.nationality || ''
         }));
       } else {
         objects = data.objectsByTag[category] || [];
@@ -518,10 +528,102 @@
       renderBatch();
     }
 
+    function renderMultiTag(tags, data) {
+      if (!data._fullObjects) {
+        document.getElementById('error').textContent = 'Full data not available';
+        document.getElementById('error').style.display = 'block';
+        return;
+      }
+
+      // Cross-filter: AND across tags
+      const objects = data._fullObjects.filter(o => {
+        return tags.every(tag => {
+          return o.area === tag || o.category === tag ||
+                 o.medium === tag || o.decade === tag ||
+                 o.nationality === tag ||
+                 (o.areas && o.areas.includes(tag)) ||
+                 (o.categories && o.categories.includes(tag));
+        });
+      }).map(o => ({
+        id: o.id,
+        title: o.title,
+        titleTC: o.titleTC,
+        areas: o.areas || [o.area].filter(Boolean),
+        categories: o.categories || [o.category].filter(Boolean),
+        medium: o.medium,
+        date: o.year ? String(o.year) : '',
+        artistName: o.artistName,
+        nationality: o.nationality || ''
+      }));
+
+      document.getElementById('tagTitle').textContent = tags.join(' + ');
+      document.getElementById('artworkCount').textContent = objects.length.toLocaleString();
+      document.getElementById('tagType').textContent = 'Cross-filter';
+
+      currentObjects = objects;
+
+      const grid = document.getElementById('objectGrid');
+      grid.innerHTML = '';
+      const oldBtn = document.getElementById('loadMoreBtn');
+      if (oldBtn) oldBtn.remove();
+
+      if (objects.length === 0) {
+        grid.innerHTML = '<div class="error">No artworks match all selected tags.</div>';
+        return;
+      }
+
+      let displayedCount = 0;
+      const PAGE_SIZE = 100;
+      const sortedObjects = objects;
+
+      function renderBatch() {
+        const batch = sortedObjects.slice(displayedCount, displayedCount + PAGE_SIZE);
+        batch.forEach(obj => {
+          const card = document.createElement('div');
+          card.className = 'object-card';
+          const titleEl = document.createElement('div');
+          titleEl.className = 'object-title';
+          titleEl.textContent = obj.title || 'Untitled';
+          card.appendChild(titleEl);
+          if (obj.titleTC) {
+            const tc = document.createElement('div');
+            tc.className = 'object-title-tc';
+            tc.textContent = obj.titleTC;
+            card.appendChild(tc);
+          }
+          const meta = document.createElement('div');
+          meta.className = 'object-meta';
+          [['Date', obj.date], ['Artist', obj.artistName], ['Nationality', obj.nationality], ['Medium', obj.medium]].forEach(([label, val]) => {
+            if (val) {
+              const row = document.createElement('div');
+              row.className = 'object-meta-row';
+              row.innerHTML = `<span class="object-meta-label">${label}</span><span>${val}</span>`;
+              meta.appendChild(row);
+            }
+          });
+          card.appendChild(meta);
+          grid.appendChild(card);
+        });
+        displayedCount += batch.length;
+        const old = document.getElementById('loadMoreBtn');
+        if (old) old.remove();
+        if (displayedCount < sortedObjects.length) {
+          const btn = document.createElement('button');
+          btn.id = 'loadMoreBtn';
+          btn.textContent = `Load more (${displayedCount}/${sortedObjects.length})`;
+          btn.style.cssText = 'display:block;margin:20px auto;padding:10px 24px;background:var(--gold);color:var(--bg-dark);border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;';
+          btn.addEventListener('click', renderBatch);
+          grid.after(btn);
+        }
+      }
+      renderBatch();
+    }
+
     async function init() {
       const category = getQueryParam('category');
+      const multiTags = getQueryParams('tag');
 
-      if (!category) {
+      if (!category && multiTags.length === 0) {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('error').style.display = 'block';
         document.getElementById('error').textContent = 'Missing category parameter';
@@ -530,7 +632,13 @@
 
       try {
         const data = await loadData();
-        renderObjects(category, data);
+        
+        if (multiTags.length > 0) {
+          // Multi-tag cross filter mode
+          renderMultiTag(multiTags, data);
+        } else {
+          renderObjects(category, data);
+        }
 
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
