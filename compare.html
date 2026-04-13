@@ -130,7 +130,7 @@ const MPLUS = '#e6a817';
 const MOMA = '#e64a4a';
 
 async function init() {
-  const resp = await fetch('./data/comparison.json');
+  const resp = await fetch('./data/comparison.json?v=' + Date.now());
   data = await resp.json();
 
   // Stats bar
@@ -257,7 +257,7 @@ let overlapData = null;
 async function renderOverlap(container) {
   if (!overlapData) {
     container.innerHTML = '<div class="chart-title">Loading overlap data...</div>';
-    const resp = await fetch('./data/overlap.json');
+    const resp = await fetch('./data/overlap.json?v=' + Date.now());
     overlapData = await resp.json();
   }
   const s = overlapData.stats;
