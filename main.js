@@ -825,9 +825,16 @@ function showMultiSelectPanel() {
       const card = document.createElement('div');
       card.className = 'object-card';
       const titleText = obj.title || 'Untitled';
-      const artist = obj.artistName || '';
+      const artistName = obj.artistName || '';
       const date = obj.year || obj.date || obj.displayDate || '';
-      card.innerHTML = `<div class="object-title">${titleText}</div>${obj.titleTC ? `<div class="object-meta" style="color:var(--text-muted);font-size:12px;">${obj.titleTC}</div>` : ''}<div class="object-meta">${artist}${date ? ` \u00b7 ${date}` : ''}</div>${obj.medium ? `<div class="object-meta" style="font-size:11px;color:var(--text-muted);">${obj.medium}</div>` : ''}`;
+      let artistHtml = artistName;
+      if (artistName && museumData && museumData.artists) {
+        const matchedArtist = museumData.artists.find(a => a.name === artistName);
+        if (matchedArtist && matchedArtist.mplusUrl) {
+          artistHtml = `<a href="${matchedArtist.mplusUrl}" target="_blank" class="artist-card-link">${artistName}</a>`;
+        }
+      }
+      card.innerHTML = `<div class="object-title">${titleText}</div>${obj.titleTC ? `<div class="object-meta" style="color:var(--text-muted);font-size:12px;">${obj.titleTC}</div>` : ''}<div class="object-meta">${artistHtml}${date ? ` \u00b7 ${date}` : ''}</div>${obj.medium ? `<div class="object-meta" style="font-size:11px;color:var(--text-muted);">${obj.medium}</div>` : ''}`;
       grid.appendChild(card);
     });
     if (sharedObjs.length > 50) {

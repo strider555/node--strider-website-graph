@@ -1257,3 +1257,13 @@ html, body {
   color: #f0c040;
   border-bottom-color: #f0c040;
 }
+.artist-card-link {
+  color: #e6a817;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(230, 168, 23, 0.4);
+  transition: all 0.2s;
+}
+.artist-card-link:hover {
+  color: #f0c040;
+  border-bottom-color: #f0c040;
+}
