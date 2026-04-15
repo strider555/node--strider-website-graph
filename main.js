@@ -1,6 +1,7 @@
 // M+ Museum Collection Explorer
 let museumData = null;
 let fullObjects = null; // All 13K objects from pulse.json
+let libguidesData = null; // Research Guide entries from libguides.json
 let currentGraph = null;
 let currentFilter = 'all';
 let currentTypeFilter = 'all';
@@ -52,6 +53,12 @@ async function loadData() {
       const fullResp = await fetch('./data/pulse.json');
       if (fullResp.ok) fullObjects = await fullResp.json();
     } catch(e) { console.warn('pulse.json not available'); }
+    // Load Research Guide data
+    try {
+      const lgResp = await fetch('./data/libguides.json');
+      if (lgResp.ok) libguidesData = await lgResp.json();
+      console.log('Research Guides loaded:', libguidesData ? libguidesData.length : 0);
+    } catch(e) { console.warn('libguides.json not available'); }
     return museumData;
   } catch (error) {
     console.error('Error loading data:', error);
@@ -143,6 +150,37 @@ function customizeGraph(radiusScale) {
     });
 }
 
+// Find matching Research Guide for a name (artist or tag)
+function findResearchGuide(name) {
+  if (!libguidesData || !name) return null;
+  const lower = name.toLowerCase().trim();
+  return libguidesData.find(g => {
+    const gn = g.name.toLowerCase().trim();
+    // Exact match
+    if (gn === lower) return true;
+    // Partial: guide name contains search or vice versa
+    if (gn.includes(lower) || lower.includes(gn)) return true;
+    // Handle parenthetical names like "Anothermountainman (Stanley Wong Ping Pui)"
+    const paren = gn.match(/^(.+?)\s*\((.+?)\)$/);
+    if (paren) {
+      if (paren[1].trim() === lower || paren[2].trim() === lower) return true;
+    }
+    return false;
+  });
+}
+
+function updateResearchGuideBtn(name) {
+  const btn = document.getElementById('researchGuideBtn');
+  if (!btn) return;
+  const guide = findResearchGuide(name);
+  if (guide) {
+    btn.href = guide.url;
+    btn.style.display = 'block';
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
 // Show side panel with objects
 function showSidePanel(tagId) {
   const panel = document.getElementById('sidePanel');
@@ -185,6 +223,9 @@ function showSidePanel(tagId) {
     `./viewByCategory.html?category=${encodeURIComponent(tagId)}${siggMode ? '&sigg=1' : ''}`;
   document.getElementById('viewDetailsBtn').classList.remove('disabled');
   document.getElementById('viewDetailsBtn').style.display = 'block';
+
+  // Research Guide link
+  updateResearchGuideBtn(tagId);
 
   // Render object cards with pagination
   const grid = document.getElementById('objectGrid');
@@ -343,6 +384,9 @@ function showArtistPanel(artistId) {
     detailsBtn.style.display = 'block';
   }
 
+  // Research Guide link for artist
+  updateResearchGuideBtn(artist.name);
+
   // Render object cards
   const grid = document.getElementById('objectGrid');
   grid.innerHTML = '';
@@ -436,6 +480,10 @@ function showArtworkPanel(artworkId) {
   detailsBtn.href = `https://www.mplus.org.hk/en/collection/?q=${searchTitle}`;
   detailsBtn.classList.remove('disabled');
   detailsBtn.style.display = 'block';
+
+  // Hide research guide for artwork panels
+  const rgBtn = document.getElementById('researchGuideBtn');
+  if (rgBtn) rgBtn.style.display = 'none';
 
   // Render artwork details
   const grid = document.getElementById('objectGrid');

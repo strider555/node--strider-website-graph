@@ -573,6 +573,16 @@ html, body {
   box-shadow: 0 4px 12px rgba(230, 168, 23, 0.3);
 }
 
+.research-guide-btn {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+  margin-top: 8px;
+}
+.research-guide-btn:hover {
+  background: rgba(96, 165, 250, 0.25);
+  color: #93bbfc;
+}
+
 .detail-btn.disabled {
   background: rgba(255,255,255,0.1);
   color: var(--text-muted);
