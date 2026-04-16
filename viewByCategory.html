@@ -347,6 +347,24 @@
       return index;
     }
 
+    // Build artist name -> URL lookup
+    function buildArtistMap(data) {
+      const map = {};
+      if (data && data.artists) {
+        data.artists.forEach(a => {
+          if (a.name && a.mplusUrl) map[a.name] = a.mplusUrl;
+          if (a.nameTC && a.mplusUrl) map[a.nameTC] = a.mplusUrl;
+        });
+      }
+      return map;
+    }
+
+    function artistLink(name, artistMap) {
+      const url = artistMap[name];
+      if (url) return `<a href="${url}" target="_blank" style="color:var(--gold);text-decoration:none;">${name}</a>`;
+      return name;
+    }
+
     function sortObjects(objects, sortBy) {
       if (sortBy === 'title') {
         return objects.sort((a, b) => {
@@ -426,6 +444,7 @@
       let displayedCount = 0;
       const PAGE_SIZE = 100;
       const sortedObjects = sortObjects([...objects], sortBy);
+      const artistMap = buildArtistMap(data);
 
       function renderBatch() {
         const batch = sortedObjects.slice(displayedCount, displayedCount + PAGE_SIZE);
@@ -461,9 +480,10 @@
         if (obj.artistName) {
           const row = document.createElement('div');
           row.className = 'object-meta-row';
+          const linkedName = artistLink(obj.artistName, artistMap);
           const artistDisplay = obj.artistNameTC
-            ? `${obj.artistName} (${obj.artistNameTC})`
-            : obj.artistName;
+            ? `${linkedName} (${obj.artistNameTC})`
+            : linkedName;
           row.innerHTML = `
             <span class="object-meta-label">Artist</span>
             <span>${artistDisplay}</span>
@@ -580,6 +600,7 @@
       let displayedCount = 0;
       const PAGE_SIZE = 100;
       const sortedObjects = objects;
+      const artistMap = buildArtistMap(data);
 
       function renderBatch() {
         const batch = sortedObjects.slice(displayedCount, displayedCount + PAGE_SIZE);
@@ -602,7 +623,11 @@
             if (val) {
               const row = document.createElement('div');
               row.className = 'object-meta-row';
-              row.innerHTML = `<span class="object-meta-label">${label}</span><span>${val}</span>`;
+              if (label === 'Artist') {
+                row.innerHTML = `<span class="object-meta-label">${label}</span><span>${artistLink(val, artistMap)}</span>`;
+              } else {
+                row.innerHTML = `<span class="object-meta-label">${label}</span><span>${val}</span>`;
+              }
               meta.appendChild(row);
             }
           });
