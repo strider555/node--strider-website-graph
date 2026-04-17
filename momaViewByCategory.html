@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tag View - MoMA Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-card: #1a1f2e;
+      --border-color: #30363d;
+      --text-primary: #e6e8eb;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --gold: #E6A817;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg-dark); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+    header { border-bottom: 1px solid var(--border-color); background: var(--bg-secondary); padding: 12px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    h1 { font-size: 20px; color: var(--gold); font-weight: 700; }
+    .breadcrumb { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+    .breadcrumb a { color: var(--gold); font-weight: 600; padding: 4px 10px; background: rgba(230,168,23,0.1); border-radius: 6px; }
+    main { padding: 24px 0; }
+    .tag-info { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+    .tag-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .tag-stats { font-size: 13px; color: var(--text-secondary); display: flex; gap: 20px; flex-wrap: wrap; }
+    .stat-value { font-weight: 600; color: var(--gold); }
+    .sort-controls { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .sort-btn { padding: 5px 10px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: inherit; }
+    .sort-btn:hover { border-color: var(--gold); color: var(--text-primary); }
+    .sort-btn.active { background: var(--gold); border-color: var(--gold); color: var(--bg-dark); font-weight: 600; }
+    .object-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .object-card { background: var(--bg-card); border: 1px solid var(--border-color); border-left: 3px solid var(--gold); border-radius: 10px; padding: 16px; transition: all 0.2s; }
+    .object-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    .object-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+    .object-meta { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-muted); }
+    .object-meta-row { display: grid; grid-template-columns: 70px 1fr; gap: 8px; }
+    .object-meta-label { font-weight: 500; color: var(--text-secondary); }
+    .moma-link { display: inline-block; margin-top: 8px; font-size: 11px; color: var(--gold); }
+    .loading { text-align: center; padding: 48px; color: var(--text-secondary); }
+    .spinner { width: 36px; height: 36px; border: 3px solid var(--border-color); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: #ff6b6b; padding: 16px; background: rgba(255,107,107,0.1); border-radius: 8px; text-align: center; }
+    @media (max-width: 768px) { .object-grid { grid-template-columns: 1fr; } .tag-title { font-size: 22px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>MoMA Collection</h1>
+      <div class="breadcrumb"><a href="./moma.html">← Back to Explorer</a></div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div id="loading" class="loading"><div class="spinner"></div><div>Loading artworks...</div></div>
+      <div id="content" style="display:none;">
+        <div class="tag-info">
+          <div class="tag-title" id="tagTitle">Loading...</div>
+          <div class="tag-stats">
+            <div class="stat"><span>Artworks:</span> <span class="stat-value" id="artworkCount">0</span></div>
+            <div class="stat"><span>Type:</span> <span class="stat-value" id="tagType">-</span></div>
+          </div>
+          <div class="sort-controls">
+            <span style="font-size:12px;color:var(--text-muted);margin-right:4px">Sort:</span>
+            <button class="sort-btn active" data-sort="default">Default</button>
+            <button class="sort-btn" data-sort="title">Title</button>
+            <button class="sort-btn" data-sort="date">Date</button>
+          </div>
+        </div>
+        <div class="object-grid" id="objectGrid"></div>
+        <div id="loadMoreWrap"></div>
+      </div>
+      <div id="error" class="error" style="display:none;"></div>
+    </div>
+  </main>
+  <script>
+    function getParam(n) { return new URL(location.href).searchParams.get(n); }
+
+    async function init() {
+      const category = getParam('category');
+      const type = getParam('type') || '';
+      if (!category) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = 'Missing category parameter';
+        return;
+      }
+
+      try {
+        const [graphResp, pulseResp, artistResp] = await Promise.all([
+          fetch('./data/moma-graph.json'),
+          fetch('./data/moma-pulse.json'),
+          fetch('./data/moma-artists.json')
+        ]);
+        const graphData = await graphResp.json();
+        const pulseRaw = await pulseResp.json();
+        let artistData = null;
+        try { artistData = await artistResp.json(); } catch(e) {}
+
+        // Expand compact pulse format
+        function expand(o) {
+          if (typeof o === 'object' && !Array.isArray(o) && o.t !== undefined) {
+            return { id: o.i, title: o.t, date: o.d, artistName: o.a, medium: o.m, department: o.dp, classification: o.c, nationality: o.n, decade: o.de };
+          }
+          return o;
+        }
+        const pulse = pulseRaw.map(expand);
+
+        // Find tag
+        const tag = graphData.tags.find(t => t.name === category || t.id === category);
+        const fieldMap = { Department: 'department', Classification: 'classification', Nationality: 'nationality', Decade: 'decade' };
+        const field = type ? fieldMap[type] : (tag ? fieldMap[tag.type] : null);
+
+        // Filter objects
+        let objects = field ? pulse.filter(o => o[field] === category) : pulse.filter(o =>
+          o.department === category || o.classification === category || o.nationality === category || o.decade === category
+        );
+
+        document.getElementById('tagTitle').textContent = category;
+        document.getElementById('artworkCount').textContent = objects.length.toLocaleString();
+        document.getElementById('tagType').textContent = tag ? tag.type : type || 'Tag';
+
+        // Build artist URL map
+        const artistMap = {};
+        if (artistData) {
+          (artistData.artists || artistData).forEach(a => {
+            const url = a.momaUrl || (a.ConstituentID ? `https://www.moma.org/artists/${a.ConstituentID}` : null);
+            if (url && a.DisplayName) artistMap[a.DisplayName] = url;
+            if (url && a.name) artistMap[a.name] = url;
+          });
+        }
+
+        let currentSort = 'default';
+        let sorted = [...objects];
+
+        function sortObjs(arr, by) {
+          if (by === 'title') return [...arr].sort((a,b) => (a.title||'').localeCompare(b.title||''));
+          if (by === 'date') return [...arr].sort((a,b) => (parseInt(b.date)||0) - (parseInt(a.date)||0));
+          return arr;
+        }
+
+        function render() {
+          sorted = sortObjs(objects, currentSort);
+          const grid = document.getElementById('objectGrid');
+          grid.innerHTML = '';
+          document.getElementById('loadMoreWrap').innerHTML = '';
+          if (sorted.length === 0) { grid.innerHTML = '<div class="error">No artworks found.</div>'; return; }
+          let shown = 0;
+          const BATCH = 100;
+
+          function batch() {
+            const items = sorted.slice(shown, shown + BATCH);
+            items.forEach(obj => {
+              const card = document.createElement('div');
+              card.className = 'object-card';
+              let artistHtml = obj.artistName || '';
+              if (artistHtml && artistMap[artistHtml]) {
+                artistHtml = `<a href="${artistMap[artistHtml]}" target="_blank">${artistHtml}</a>`;
+              }
+              card.innerHTML =
+                `<div class="object-title">${obj.title || 'Untitled'}</div>` +
+                `<div class="object-meta">` +
+                (obj.date ? `<div class="object-meta-row"><span class="object-meta-label">Date</span><span>${obj.date}</span></div>` : '') +
+                (obj.artistName ? `<div class="object-meta-row"><span class="object-meta-label">Artist</span><span>${artistHtml}</span></div>` : '') +
+                (obj.nationality ? `<div class="object-meta-row"><span class="object-meta-label">Nationality</span><span>${obj.nationality}</span></div>` : '') +
+                (obj.medium ? `<div class="object-meta-row"><span class="object-meta-label">Medium</span><span>${obj.medium}</span></div>` : '') +
+                `</div>` +
+                (obj.id ? `<a href="https://www.moma.org/collection/works/${obj.id}" target="_blank" class="moma-link">View on MoMA →</a>` : '');
+              grid.appendChild(card);
+            });
+            shown += items.length;
+            document.getElementById('loadMoreWrap').innerHTML = '';
+            if (shown < sorted.length) {
+              const btn = document.createElement('button');
+              btn.textContent = `Load more (${shown.toLocaleString()}/${sorted.length.toLocaleString()})`;
+              btn.style.cssText = 'display:block;margin:20px auto;padding:10px 24px;background:var(--gold);color:var(--bg-dark);border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;';
+              btn.addEventListener('click', batch);
+              document.getElementById('loadMoreWrap').appendChild(btn);
+            }
+          }
+          batch();
+        }
+
+        render();
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSort = btn.dataset.sort;
+            render();
+          });
+        });
+
+      } catch(e) {
+        console.error(e);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').textContent = 'Error: ' + e.message;
+      }
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  </script>
+</body>
+</html>
