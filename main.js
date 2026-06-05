@@ -197,8 +197,14 @@ function showSidePanel(tagId) {
       o.medium === tagId || o.decade === tagId ||
       o.nationality === tagId ||
       (o.areas && o.areas.includes(tagId)) ||
-      (o.categories && o.categories.includes(tagId))
+      (o.categories && o.categories.includes(tagId)) ||
+      (o.movements && o.movements.includes(tagId)) ||
+      (o.groups && o.groups.includes(tagId))
     );
+    // Fallback to objectsByTag if no results (e.g. movement/group tags)
+    if (objects.length === 0) {
+      objects = currentData.objectsByTag[tagId] || [];
+    }
   } else {
     objects = currentData.objectsByTag[tagId] || [];
   }
