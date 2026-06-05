@@ -15,7 +15,9 @@ const tagColors = {
   medium: '#ff6b6b',     // Coral
   nationality: '#45b7d1', // Blue
   decade: '#96ceb4',     // Green
-  collection: '#c084fc'  // Purple
+  collection: '#c084fc', // Purple
+  movement: '#f59e0b',   // Amber
+  group: '#8b5cf6'       // Violet
 };
 
 // Get current data source based on mode
@@ -560,6 +562,11 @@ function toggleSiggMode() {
   const graphContainer = document.getElementById('graph-container');
   graphContainer.classList.toggle('sigg-mode', siggMode);
 
+  // Show/hide sigg-only legend items (movement + group)
+  document.querySelectorAll('.sigg-only-legend').forEach(el => {
+    el.style.display = siggMode ? '' : 'none';
+  });
+
   // Rebuild graph with current filter
   filterByArea(currentFilter);
 
@@ -657,7 +664,7 @@ function setupLegendSubmenus() {
   if (!museumData) return;
 
   const currentData = getCurrentData();
-  const types = ['area', 'category', 'medium', 'nationality', 'decade'];
+  const types = ['area', 'category', 'medium', 'nationality', 'decade', 'movement', 'group'];
 
   types.forEach(type => {
     const subContainer = document.getElementById(`sub-${type}`);
