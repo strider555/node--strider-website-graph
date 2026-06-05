@@ -685,6 +685,8 @@ function setupLegendSubmenus() {
       item.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleTagSelection(tag.id, item);
+        // Auto-zoom to the node in the graph
+        focusNode(tag.id);
       });
       subContainer.appendChild(item);
     });
