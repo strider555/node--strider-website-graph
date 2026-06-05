@@ -46,7 +46,7 @@ function getCurrentData() {
 // Load museum data
 async function loadData() {
   try {
-    const response = await fetch('./data/museum-index.json');
+    const response = await fetch('./data/museum-index.json?v=2');
     if (!response.ok) throw new Error('Failed to load data');
     museumData = await response.json();
     console.log('Museum data loaded:', museumData.stats);
