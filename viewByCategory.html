@@ -330,9 +330,10 @@
     }
 
     async function loadData() {
+      const cacheBust = `v=${Date.now()}`;
       const [indexResp, fullResp] = await Promise.all([
-        fetch('./data/museum-index.json'),
-        fetch('./data/pulse.json')
+        fetch(`./data/museum-index.json?${cacheBust}`),
+        fetch(`./data/pulse.json?${cacheBust}`)
       ]);
       if (!indexResp.ok) throw new Error('Failed to load collection data');
       const index = await indexResp.json();
@@ -562,15 +563,35 @@
     }
 
     function renderMultiTag(tags, data) {
+      const isSigg = new URL(window.location.href).searchParams.get('sigg') === '1';
+
+      // If single tag in sigg mode and it's a movement/group, delegate to renderObjects
+      if (tags.length === 1 && isSigg && data.siggObjectsByTag && data.siggObjectsByTag[tags[0]]) {
+        renderObjects(tags[0], data);
+        return;
+      }
+
       if (!data._fullObjects) {
         document.getElementById('error').textContent = 'Full data not available';
         document.getElementById('error').style.display = 'block';
         return;
       }
 
+      // Build lookup sets from siggObjectsByTag for movement/group tags
+      const siggIdSets = {};
+      if (isSigg && data.siggObjectsByTag) {
+        tags.forEach(tag => {
+          if (data.siggObjectsByTag[tag]) {
+            siggIdSets[tag] = new Set(data.siggObjectsByTag[tag].map(o => o.id));
+          }
+        });
+      }
+
       // Cross-filter: AND across tags
       const objects = data._fullObjects.filter(o => {
         return tags.every(tag => {
+          // Check siggObjectsByTag lookup first (for movement/group tags)
+          if (siggIdSets[tag]) return siggIdSets[tag].has(o.id);
           return o.area === tag || o.category === tag ||
                  o.medium === tag || o.decade === tag ||
                  o.nationality === tag ||
