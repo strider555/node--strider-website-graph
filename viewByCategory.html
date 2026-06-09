@@ -387,11 +387,19 @@
     let currentTag = null;
 
     function renderObjects(category, data, sortBy = 'default') {
-      const tag = data.tags.find(t => t.id === category);
+      const isSigg = new URL(window.location.href).searchParams.get('sigg') === '1';
+      // Look up tag from siggTags first in sigg mode, then fall back to tags
+      const tag = isSigg
+        ? (data.siggTags || []).find(t => t.id === category) || data.tags.find(t => t.id === category)
+        : data.tags.find(t => t.id === category);
       
       // Use full objects from pulse.json if available, filter by category
       let objects;
-      if (data._fullObjects) {
+
+      // For movement/group tags in sigg mode, use siggObjectsByTag directly
+      if (isSigg && data.siggObjectsByTag && data.siggObjectsByTag[category]) {
+        objects = data.siggObjectsByTag[category];
+      } else if (data._fullObjects) {
         objects = data._fullObjects.filter(o => {
           // Match against all fields: area, category, medium, nationality, decade
           if (o.area === category || o.category === category ||
@@ -413,7 +421,7 @@
           nationality: o.nationality || ''
         }));
       } else {
-        objects = data.objectsByTag[category] || [];
+        objects = (isSigg && data.siggObjectsByTag ? data.siggObjectsByTag[category] : null) || data.objectsByTag[category] || [];
       }
 
       currentTag = tag;
